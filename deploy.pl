@@ -7,6 +7,10 @@ use strict;
 use Net::FTP;
 use Digest::MD5;
 
+open(PWD,"C:\\pass.txt");
+my $pass = <PWD>;
+close PWD;
+
 print "Uploading files to AZ\n";
 
 my $host = "allegiancezone.cloudapp.net";
@@ -19,7 +23,7 @@ my $size= (stat("C:\\Allegiance.exe"))[7];
 my $ftp = Net::FTP->new($host, Debug => 0, Port => 21122)
       or die "Cannot connect to beta $@";
 
-    $ftp->login("deploy",'allegftp')
+    $ftp->login("deploy",$pass)
       or die "Cannot login ", $ftp->message;
        $ftp->put("C:\\build\\AZDev.cfg")
       or die "put failed ", $ftp->message;
