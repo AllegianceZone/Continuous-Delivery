@@ -38,6 +38,8 @@ my $ftp = Net::FTP->new($host, Debug => 0, Port => 21122)
       or die "put failed ", $ftp->message;       
        $ftp->put("C:\\build\\Allegiance\\objs10\\FZRetail\\Lobby\\AllLobby.pdb")
       or die "put failed ", $ftp->message;
+       $ftp->put("C:\\build\\Allegiance\\src\\Lobby\\zgameinfo.h")
+      or die "put failed ", $ftp->message;  
 
        $ftp->put("C:\\AutoUpdate.exe","autoupdate\\Game\\Server\\standalone\\AutoUpdate.exe")
       or die "put failed ", $ftp->message;           

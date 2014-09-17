@@ -1,4 +1,4 @@
-These files go onto the allegiancezone server.
+These files go onto the allegiancezone Azure VM.
 
 service.pl is instsrv'ed as deploy service using srvany
 
