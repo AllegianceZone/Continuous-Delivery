@@ -2,6 +2,7 @@ use strict;
 use Net::FTP;
 use WWW::Mechanize;
 use Data::Dumper;
+use File::Slurp;
 
 my $host = "allegiancezone.cloudapp.net";
 my $build = $ARGV[0];
@@ -46,9 +47,7 @@ if (grep $_ =~ /bitten\.xml/, @lines) {
 	open(PWD,"C:\\admin.txt");
 	my $admin = <PWD>;
 	close PWD;
-	open(XML,"C:\\build\\Continuous-Delivery\\trac\\bitten.xml");
-	my $xml = <XML>;
-	close XML;
+	my $xml = read_file("C:\\build\\Continuous-Delivery\\trac\\bitten.xml") ;
 	my $mech = WWW::Mechanize->new();
 	$mech->get("http://trac.allegiancezone.com/login");
 	$mech->form_id("acctmgr_loginform");

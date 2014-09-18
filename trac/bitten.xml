@@ -52,8 +52,8 @@
 
 		<sh:exec file="echo" args="Copying objects"/>
 		<sh:exec file="C:\\build\\Allegiance\\Sh_GetRetail.bat" args="C:\\build\\Allegiance\\x86 C:\\build\\Allegiance\\"/>
-		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegBetaPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9 --mmt=off" />
-		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9 --mmt=off" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegBetaPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9 -mmt=off" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.exe C:\\Allegiance.exe /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.pdb C:\\Allegiance.pdb /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allsrv.exe C:\\Allsrv.exe /Y" />
@@ -70,7 +70,7 @@
 		<sh:exec file="echo" args="Copying externals"/>
 		<sh:exec file="del" args=" C:\\build\\Package\\External.7z"/>
 		<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>
-		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\External.7z C:\\build\\External\\* -mx9 -x!ASGS*"/>
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\External.7z C:\\build\\External\\* -mx9 -mmt=off"/>
 		<sh:exec file="echo" args="Copying externals completed"/>
 
 		<sh:exec file="echo" args="Copying artwork"/>
@@ -87,7 +87,7 @@
 		<sh:exec file="echo" args="Attaching Lite"/>
 		<attach file="C:\\build\\Package\\Beta_b${build}_${revision}.exe" resource="build" description="Lite 1.3 version" />
 		<sh:exec file="echo" args="Download: ftp://azbuildslave.cloudapp.net:2121/Beta_b${build}_${revision}.exe"/>
-		<sh:exec file="perl" args="C:\\build\\announce-dl.pl ${build} ${revision} &quot;Download:  ftp://azbuildslave.cloudapp.net:2121/Beta_b${build}_${revision}.exe [Beta]&quot;"/>
+		<sh:exec file="perl" args="C:\\build\\announce-dl.pl ${build} ${revision} &quot;Download:  ftp://azbuildslave.cloudapp.net:2121/Beta_b${build}_${revision}.exe&quot;"/>
 	</step>
 	<!-- REMOVED PRODUCTION BUILDING UNTIL NEEDED !! -->
 																								<!--
