@@ -1,7 +1,6 @@
 use strict;
 use Net::FTP;
 use WWW::Mechanize;
-use Data::Dumper;
 use File::Slurp;
 
 my $host = "allegiancezone.cloudapp.net";
@@ -12,8 +11,8 @@ my @lines = <LOG>;
 close LOG;
 
 if (-e "C:\\self-updated") {
-	print "Build & Deploy tools were last updated:\n";
-	print Dumper(\@lines);
+	print "Build & Deploy tool updates for this run:\n";
+	foreach (@lines) {print $_};
 	exit 0;
 } else {
 	print "Build & Deploy tools getting updated first...\n";
