@@ -39,6 +39,11 @@ system($cmd);
 my $cmd = $dir."\\azure-sync.bat";
 system($cmd);
 
+print "waiting for lobby to become idle...\n";
+my $cmd = "perl ".$dir."\\busy.pl";
+system($cmd);
+
+
 my $cmd = "perl ".$dir."\\upgrade.pl";
 system($cmd);
 

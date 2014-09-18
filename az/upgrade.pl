@@ -8,30 +8,17 @@ my $dir = "C:\\deploy";
 my $host = "AllegianceZone";
 my $serverpath = "C:\\Server";
 my $lobbypath = "C:\\Lobby";
-
 my $audir = "$dir\\autoupdate";
-my $bSstopped = 0;
-my $bLstopped = 0;
-
-my $s = Win32::OLE->GetObject("WinNT://$host/AllSrv,service");
-if ($s && $s->Status() == 4) {
-	#TODO block for up to an hour untill no running games
-	print "Stopping AllSrv service\n";	
-	$s->Stop();
-	$bSstopped = 1;
-	sleep(10);
-}
 
 
 my $sl = Win32::OLE->GetObject("WinNT://$host/AllLobby,service");
-if ($sl && $sl->Status() == 4 && (!$s || $s->Status() != 4)) {
+if ($sl && $sl->Status() == 4) {
 	print "Stopping AllLobby service\n";	
 	$sl->Stop();
-	$bLstopped = 1;
 	sleep(6);
 }
 
-if (($s && $s->Status == 4) || ($sl && $sl->Status == 4)) {
+if ($sl && $sl->Status == 4)) {
 	print "Services wouldn't shut down!\n";
 	exit 1;	
 }
@@ -58,17 +45,9 @@ my $cmd = "regsvr32 $serverpath\\AGC.dll /s";
 system($cmd);
 
 
-#if ($bLstopped && $sl) {
-	print "Starting Lobby service\n";	
-	$sl->Start();
-	sleep(20);
-#}
-
-
-if ($bSstopped && $s) {
-	print "Starting AllSrv service\n";	
-	$s->Start();
-}
+print "Starting Lobby service\n";	
+$sl->Start();
+sleep(20);
 
 exit 0;
 
