@@ -20,8 +20,7 @@ binmode(FILE);
 my $hash = Digest::MD5->new->addfile(*FILE)->hexdigest;
 close FILE;
 my $size= (stat("C:\\Allegiance.exe"))[7];
-my $ftp = Net::FTP->new($host, Debug => 0, Port => 21122)
-      or die "Cannot connect to beta $@";
+my $ftp = Net::FTP->new($host, Debug => 0, Port => 21122) or die "Cannot connect to $host $@";
 
     $ftp->login("deploy",$pass)
       or die "Cannot login ", $ftp->message;
