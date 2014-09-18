@@ -24,7 +24,7 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Artwork.7z C:\\build\\Package\\Artwork\\ -xr!*.git -mx9 --mmt=off";
+	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Artwork.7z C:\\build\\Package\\Artwork\\ -xr!*.git -mx9 -mmt=off";
 	system($cmd);
 } else {
 	print "skipping artwork 7z process, not changed!\n";

@@ -15,15 +15,9 @@ while (<PS>) {
 close PS;
 
 if ($pid != 0) {
-	
-	#### shutdown.pl
-	#TODO block for up to an hour untill no running games
-	####
-	
 	my $cmd = "C:\\build\\pskill 2>crap $pid";
 	print "Killing AllSrv executable $pid\n";
 	`$cmd`;
-	$bSkilled = 1;
 	sleep(5);
 	my $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
 	`$cmd`;

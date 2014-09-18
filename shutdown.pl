@@ -118,10 +118,7 @@ if ($hasships && $stats{$biggameid}) {
 	$utl->Stop;
 }
 
-print "Stopping AllSrv service\n";	
-my $s = Win32::OLE->GetObject("WinNT://$host/AllSrv,service");
-$s->Stop();
-
+print "OK to kill AllSrv\n";	
 exit(0);
 
 

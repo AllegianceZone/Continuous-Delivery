@@ -40,9 +40,9 @@
 	</step>
 	<step id="Release Compile Beta">
 		<sh:exec file="perl" args="C:\\build\\announce-step.pl ${build} ${revision} &quot;Smoke Test passed!&quot;"/>
-		<!-- UNCOMMENT BELOW TO BUILD AGAINST VC9 -->
+		<!-- UNCOMMENT BELOW TO BUILD AGAINST VC9 !! -->
 		<!-- <sh:exec file="perl" args="C:\\build\\vcxproj.pl 0 1"/> -->
-		<!-- UNCOMMENT ABOVE TO BUILD AGAINST VC9 -->
+		<!-- UNCOMMENT ABOVE TO BUILD AGAINST VC9 ^^ -->
 		<sh:exec file="echo" args="FZRetail Beta rebuild started"/>
 		<sh:exec file="msbuild.exe" args="/m C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=FZRetail /t:build"/>
 		<sh:exec file="C:\\perl\\bin\\perl.exe" args="C:\\build\\msbuild-result.pl ${path} ${build}"/>
@@ -139,6 +139,7 @@
 		<sh:exec file="perl" args="C:\\build\\deploy.pl ${build} ${revision}" />
 	</step>
 	<step id="Upgrade">
+		<sh:exec file="perl" args="C:\\build\\shutdown.pl" />
 		<sh:exec file="perl" args="C:\\build\\upgrade.pl" />
 	</step>
 	<step id="Finished">

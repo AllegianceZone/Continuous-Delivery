@@ -123,7 +123,7 @@ close LIST;
 print "Appending client binaries to Filelist...\n";
 
 open(LIST,">>C:\\build\\betalist.txt");
-my @objs = ("C:\\Allegiance.exe","C:\\build\\External\\Reloader.exe");
+my @objs = ("C:\\Allegiance.exe","C:\\Reloader.exe");
 foreach my $file (@objs) {
 	my $cmd = "C:\\build\\crc32.exe $file";
 	my $cmd2 = "C:\\build\\mscompress.exe $file";
@@ -145,7 +145,7 @@ foreach my $file (@objs) {
 close LIST;
 
 print "Compressing Game Files for AU...\n";
-my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Game.7z C:\\build\\AutoUpdate\\Game\\* -xr!*Server -mx1 -mmt=off";
+my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Game.7z C:\\build\\AutoUpdate\\Game\\* -xr!*Server -mx0 -mmt=off -ms=off -up3q3r2x0y2z0w2";
 system($cmd3);
 
 
@@ -198,7 +198,7 @@ foreach my $file (@objs) {
 close LIST;
 
 print "Compressing Server Files for AU...\n";
-my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Server.7z C:\\build\\AutoUpdate\\Game\\Server\\* -mx1 -mmt=off";
+my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Server.7z C:\\build\\AutoUpdate\\Game\\Server\\* -mx0 -mmt=off -ms=off -up3q3r2x0y2z0w2";
 system($cmd3);
 exit 0;
 
