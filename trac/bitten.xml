@@ -4,7 +4,7 @@ description="Building master branch">
 <step id="Build/Deploy Update">
 	<sh:exec file="perl" args="C:\\build\\touch.pl 1"/>
 	<sh:exec file="perl" args="C:\\build\\self-update.pl ${build}"/>
-	<sh:exec file="del" args=" C:\\self-updated"/>	
+	<sh:exec file="del" args="C:\\self-updated"/>	
 </step>
 
  <step id="Checkout">
