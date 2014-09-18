@@ -145,7 +145,7 @@ foreach my $file (@objs) {
 close LIST;
 
 print "Compressing Game Files for AU...\n";
-my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Game.7z C:\\build\\AutoUpdate\\Game\\* -xr!*Server";
+my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Game.7z C:\\build\\AutoUpdate\\Game\\* -xr!*Server -mx1 --mmt=off";
 system($cmd3);
 
 
@@ -198,7 +198,7 @@ foreach my $file (@objs) {
 close LIST;
 
 print "Compressing Server Files for AU...\n";
-my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Server.7z C:\\build\\AutoUpdate\\Game\\Server\\*";
+my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Server.7z C:\\build\\AutoUpdate\\Game\\Server\\* -mx1 --mmt=off";
 system($cmd3);
 exit 0;
 

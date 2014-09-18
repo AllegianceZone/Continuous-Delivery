@@ -52,8 +52,8 @@
 
 		<sh:exec file="echo" args="Copying objects"/>
 		<sh:exec file="C:\\build\\Allegiance\\Sh_GetRetail.bat" args="C:\\build\\Allegiance\\x86 C:\\build\\Allegiance\\"/>
-		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegBetaPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9" />
-		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegBetaPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9 --mmt=off" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9 --mmt=off" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.exe C:\\Allegiance.exe /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.pdb C:\\Allegiance.pdb /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allsrv.exe C:\\Allsrv.exe /Y" />
@@ -74,7 +74,7 @@
 		<sh:exec file="echo" args="Copying externals completed"/>
 
 		<sh:exec file="echo" args="Copying artwork"/>
-		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Artwork.7z C:\\build\\Package\\Artwork\\ -xr!*.git -mx9" />
+		<sh:exec file="perl" args="C:\\build\\cached-artwork-7z.pl"/>
 		<sh:exec file="copy" args="C:\\build\\Package\\Artwork.7z C:\\build\\Package\\AllegArt_b${build}_${revision}.exe /Y"/>
 		<sh:exec file="echo" args="Copying artwork completed"/>
 	</step>
