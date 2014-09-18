@@ -12,7 +12,7 @@ if (-e "C:\\self-updated") {
 	print "Build & Deploy tools getting updated first...\n";
 }
 
-my $cmd = "C:\\build\\self-update.bat > self-update.log";
+my $cmd = "C:\\build\\self-update.bat > C:\\build\\self-update.log 2>&1";
 system($cmd);
 $cmd = "copy C:\\build\\Continuous-Delivery\\* C:\\build /Y";
 system($cmd);
