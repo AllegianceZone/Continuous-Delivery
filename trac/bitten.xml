@@ -56,6 +56,7 @@
 		<sh:exec file="echo" args="Copying objects"/>
 		<sh:exec file="C:\\build\\Allegiance\\Sh_GetRetail.bat" args="C:\\build\\Allegiance\\x86 C:\\build\\Allegiance\\"/>
 		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegBetaPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9 -mmt=off" />
+		<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>
 		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.exe C:\\Allegiance.exe /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.pdb C:\\Allegiance.pdb /Y" />
@@ -72,7 +73,6 @@
 
 		<sh:exec file="echo" args="Copying externals"/>
 		<sh:exec file="del" args=" C:\\build\\Package\\External.7z"/>
-		<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>
 		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\External.7z C:\\build\\External\\* -mx9 -mmt=off"/>
 		<sh:exec file="echo" args="Copying externals completed"/>
 
@@ -110,14 +110,12 @@
 																									<sh:exec file="echo" args="Copying objects"/>
 																									<sh:exec file="C:\\build\\Allegiance\\Sh_GetRetail.bat" args="C:\\build\\Allegiance\\x86 C:\\build\\Allegiance\\"/>
 																									<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9" />
+																									<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>
 																									<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9" />
 																									<sh:exec file="echo" args="Copying objects completed"/>
 
 																									<sh:exec file="echo" args="Copying externals"/>
-																									<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>
 																									<sh:exec file="del" args=" C:\\build\\Package\\External.7z"/>
-																									<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Reloader.pdb C:\\build\\External\\Reloader.pdb /Y" />
-																									<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Reloader.exe C:\\build\\External\\Reloader.exe /Y" />
 																									<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\External.7z C:\\build\\External\\* -mx9"/>
 																									<sh:exec file="echo" args="Copying externals completed"/>
 																								</step>
