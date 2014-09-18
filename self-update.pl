@@ -1,12 +1,18 @@
 use strict;
 use Net::FTP;
 use WWW::Mechanize;
+use Data::Dumper;
 
 my $host = "allegiancezone.cloudapp.net";
 my $build = $ARGV[0];
 
+open(LOG,"C:\\build\\self-update.log");
+my @lines = <LOG>;
+close LOG;
+
 if (-e "C:\\self-updated") {
-	print "Build & Deploy tools were updated!\n";
+	print "Build & Deploy tools were last updated:\n";
+	print Dumper(\@lines);
 	exit 0;
 } else {
 	print "Build & Deploy tools getting updated first...\n";
@@ -34,9 +40,6 @@ foreach (@files) {
 }
 $ftp->quit();
 
-open(LOG,"C:\\build\\self-update.log");
-my @lines = <LOG>;
-close LOG;
 my $restart = 0;
 if (grep $_ =~ /bitten\.xml/, @lines) {
 	print "Logging into bitten...\n";
