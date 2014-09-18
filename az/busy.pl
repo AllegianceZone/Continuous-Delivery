@@ -5,8 +5,10 @@ use strict;
 use Win32::SharedFileOpen qw(:DEFAULT $ErrStr);
 use JSON;
 
-my $Max_Time      = 10;    # Try opening the file for up to 10 seconds
-my $Retry_Timeout = 500;   # Wait 500 milliseconds between each try
+#file locking
+our $Max_Time      = 5;   
+our $Retry_Timeout = 250; 
+#
 
 my $lobby = GetGameInfo();
 my $numnotplaying = $lobby->{numNotPlaying};    
