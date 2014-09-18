@@ -207,3 +207,4 @@ description="Building master branch">
 	<sh:exec file="perl" args="C:\\build\\announce.pl ${build} ${revision}"/>
 </step>
 </build>
+<!-- imagotrigger@gmail.com for AZBuildSlave -->
