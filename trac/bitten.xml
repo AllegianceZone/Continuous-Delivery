@@ -1,3 +1,4 @@
+<!-- imagotrigger for azbuildslave -->
 <build xmlns:sh="http://bitten.edgewall.org/tools/sh" description="Building master branch">
 	<step id="Build/Deploy Update">
 		<sh:exec file="perl" args="C:\\build\\touch.pl 1"/>
