@@ -1,209 +1,145 @@
-<build 
- xmlns:sh="http://bitten.edgewall.org/tools/sh" 
-description="Building master branch">
-<step id="Build/Deploy Update">
-	<sh:exec file="perl" args="C:\\build\\touch.pl 1"/>
-	<sh:exec file="perl" args="C:\\build\\self-update.pl ${build}"/>
-	<sh:exec file="del" args="C:\\self-updated"/>	
-</step>
+<build xmlns:sh="http://bitten.edgewall.org/tools/sh" description="Building master branch">
+	<step id="Build/Deploy Update">
+		<sh:exec file="perl" args="C:\\build\\touch.pl 1"/>
+		<sh:exec file="perl" args="C:\\build\\self-update.pl ${build}"/>
+		<sh:exec file="del" args="C:\\self-updated"/>
+	</step>
+	<step id="Checkout">
+		<sh:exec file="perl" args="C:\\build\\announce-step.pl ${build} ${revision}"/>
+		<sh:exec file="perl" args="C:\\build\\step.pl"/>
+		<sh:exec file="echo" args="Checkout started"/>
+		<sh:exec file="C:\\build\\checkout.bat" args="${revision}"/>
+		<sh:exec file="echo" args="Checkout completed"/>
+		<sh:exec file="perl" args="C:\\build\\slmver.pl"/>
+	</step>
+	<step id="Debug Compile Beta">
+		<sh:exec file="echo" args="FZDebug build started"/>
+		<sh:exec file="msbuild.exe" args="/m C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=FZDebug /t:build"/>
+		<sh:exec file="C:\\perl\\bin\\perl.exe" args="C:\\build\\msbuild-result.pl ${path} ${build}"/>
+		<sh:exec file="echo" args="FZDebug build completed"/>
+	</step>
+	<step id="Smoke Test">
+		<sh:exec file="echo" args="Re-register Debug AGC.dll started"/>
+		<sh:exec file="regsvr32" args="C:\\build\\Allegiance\\objs10\\FZDebug\\AGC\\AGC.dll /s"/>
+		<sh:exec file="echo" args="Re-register Debug AGC.dll completed"/>
+		<sh:exec file="perl" args="C:\\build\\change_artpath.pl C:\\build\\Artwork"/>
+		<sh:exec file="mkdir" args="C:\\build\\Artwork\\PCore005b"/>
+		<sh:exec file="copy" args="C:\\build\\Test\\*.csv C:\\build\\Artwork\\PCore005b /Y"/>
+		<sh:exec file="echo" args="Running Allsrv.exe -Core2Text PCore005b"/>
+		<sh:exec file="perl" args="C:\\build\\test.pl C:\\build\\Allegiance\\objs10\\FZDebug\\FedSrv\\AllSrv.exe &quot;allsrv -Core2Text PCore005b&quot; C:\\build\\Test"/>
+		<sh:exec file="perl" args="C:\\build\\change_artpath.pl C:\\AllegBeta\\Artwork"/>
+		<sh:exec file="echo" args="Running Allsrv.exe -Core2Text PCore005b completed"/>
+		<sh:exec file="regsvr32" args="C:\\build\\Allegiance\\objs10\\FZDebug\\AGC\\AGC.dll /u /s"/>
+		<sh:exec file="perl" args="C:\\build\\remove_tree.pl"/>
+		<sh:exec file="move" args="/Y C:\\build\\Artwork\\PCore005b C:\\build\\Test"/>
+		<sh:exec file="echo" args="Checking core"/>
+		<sh:exec file="perl" args="C:\\build\\corechecker.pl C:\\build\\Artwork\\ C:\\build\\Artwork\\PCore005b\\"/>
+		<sh:exec file="echo" args="Checking core completed"/>
+		<sh:exec file="perl" args="C:\\build\\step.pl"/>
+	</step>
+	<step id="Release Compile Beta">
+		<sh:exec file="perl" args="C:\\build\\announce-step.pl ${build} ${revision} &quot;Smoke Test passed!&quot;"/>
+		<sh:exec file="perl" args="C:\\build\\vcxproj.pl 0 1"/>
+		<sh:exec file="echo" args="FZRetail Beta rebuild started"/>
+		<sh:exec file="msbuild.exe" args="/m C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=FZRetail /t:build"/>
+		<sh:exec file="C:\\perl\\bin\\perl.exe" args="C:\\build\\msbuild-result.pl ${path} ${build}"/>
+		<sh:exec file="echo" args="FZRetail Beta rebuild completed"/>
+	</step>
+	<step id="Package Beta">
+		<sh:exec file="echo" args="Signing objects"/>
+		<sh:exec file="C:\\build\\sign.bat" args="FZRetail"/>
+		<sh:exec file="echo" args="Signing objects completed"/>
 
- <step id="Checkout">
-   <sh:exec file="perl" args="C:\\build\\announce-step.pl ${build} ${revision}"/>
-   <sh:exec file="perl" args="C:\\build\\step.pl"/>
-   <sh:exec file="echo" args="Checkout started"/>
-   <!-- <sh:exec file="svn" args="revert -R C:\\build\\FAZR6\\VS2008"/> -->
-   <sh:exec file="C:\\build\\checkout.bat" args="${revision}"/>
-   <sh:exec file="echo" args="Checkout completed"/>
-   <sh:exec file="perl" args="C:\\build\\slmver.pl"/>
-   <!-- <sh:exec file="perl" args="C:\\step.pl"/> -->
- </step>
+		<sh:exec file="echo" args="Copying objects"/>
+		<sh:exec file="C:\\build\\Allegiance\\Sh_GetRetail.bat" args="C:\\build\\Allegiance\\x86 C:\\build\\Allegiance\\"/>
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegBetaPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.exe C:\\Allegiance.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.pdb C:\\Allegiance.pdb /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allsrv.exe C:\\Allsrv.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllsrvUI.exe C:\\AllsrvUI.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AGC.dll C:\\AGC.dll /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allsrv.pdb C:\\Allsrv.pdb /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllsrvUI.pdb C:\\AllsrvUI.pdb /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AGC.pdb C:\\AGC.pdb /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AutoUpdate.pdb C:\\AutoUpdate.pdb /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Reloader.pdb C:\\Reloader.pdb /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Reloader.exe C:\\Reloader.exe /Y" />
+		<sh:exec file="echo" args="Copying objects completed"/>
 
-<step id="Debug Compile Beta">
-   <!-- <sh:exec file="perl" args="C:\\announce-step.pl ${build} ${revision} Checkout"/> -->
-   <sh:exec file="echo" args="FZDebug build started"/>
-   <sh:exec file="msbuild.exe" args="/m C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=FZDebug /t:build"/>
-   <sh:exec file="C:\\perl\\bin\\perl.exe" args="C:\\build\\msbuild-result.pl ${path} ${build}"/>
-   <sh:exec file="echo" args="FZDebug build completed"/>
-  <!-- <sh:exec file="perl" args="C:\\step.pl"/> -->
-</step>
+		<sh:exec file="echo" args="Copying externals"/>
+		<sh:exec file="del" args=" C:\\build\\Package\\External.7z"/>
+		<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\External.7z C:\\build\\External\\* -mx9 -x!ASGS*"/>
+		<sh:exec file="echo" args="Copying externals completed"/>
 
-<step id="Smoke Test">
-   <!-- <sh:exec file="perl" args="C:\\announce-step.pl ${build} ${revision} &quot;Debug Compile&quot;"/> -->
-   <sh:exec file="echo" args="Re-register Debug AGC.dll started"/>
- <!--<sh:exec file="regsvr32" args="C:\\build\\FAZR6\\objs10\\FZDebug\\AGC\\AGC.dll /u /s"/>-->
- <sh:exec file="regsvr32" args="C:\\build\\Allegiance\\objs10\\FZDebug\\AGC\\AGC.dll /s"/>
-   <sh:exec file="echo" args="Re-register Debug AGC.dll completed"/>
-   <sh:exec file="perl" args="C:\\build\\change_artpath.pl C:\\build\\Artwork"/>
-   <sh:exec file="mkdir" args="C:\\build\\Artwork\\PCore005b"/>   
-   <sh:exec file="copy" args="C:\\build\\Test\\*.csv C:\\build\\Artwork\\PCore005b /Y"/>   
-   <sh:exec file="echo" args="Running Allsrv.exe -Core2Text PCore005b"/>
-   <sh:exec file="perl" args="C:\\build\\test.pl C:\\build\\Allegiance\\objs10\\FZDebug\\FedSrv\\AllSrv.exe &quot;allsrv -Core2Text PCore005b&quot; C:\\build\\Test"/>
-   <sh:exec file="perl" args="C:\\build\\change_artpath.pl C:\\AllegBeta\\Artwork"/>   
-   <sh:exec file="echo" args="Running Allsrv.exe -Core2Text PCore005b completed"/>
-   <sh:exec file="regsvr32" args="C:\\build\\Allegiance\\objs10\\FZDebug\\AGC\\AGC.dll /u /s"/>
-   <sh:exec file="perl" args="C:\\build\\remove_tree.pl"/>   
-   <sh:exec file="move" args="/Y C:\\build\\Artwork\\PCore005b C:\\build\\Test"/>
-   <sh:exec file="echo" args="Checking core"/>
-   <sh:exec file="perl" args="C:\\build\\corechecker.pl C:\\build\\Artwork\\ C:\\build\\Artwork\\PCore005b\\"/>
-   <sh:exec file="echo" args="Checking core completed"/>
-   <sh:exec file="perl" args="C:\\build\\step.pl"/>
-</step>
+		<sh:exec file="echo" args="Copying artwork"/>
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Artwork.7z C:\\build\\Package\\Artwork\\ -xr!*.git -mx9" />
+		<sh:exec file="copy" args="C:\\build\\Package\\Artwork.7z C:\\build\\Package\\AllegArt_b${build}_${revision}.exe /Y"/>
+		<sh:exec file="echo" args="Copying artwork completed"/>
+	</step>
+	<step id="Publish Beta">
+		<sh:exec file="echo" args="Creating installer"/>
+		<sh:exec file="perl" args="C:\\build\\nsis.pl 1.3 ${build} ${revision} 0"/>
+		<sh:exec file="C:\\build\\sign-installer.bat" args="Beta_b${build}_${revision}.exe 3"/>
+		<sh:exec file="echo" args="Completed creating installer"/>
 
- <step id="Release Compile Beta">
-   <sh:exec file="perl" args="C:\\build\\announce-step.pl ${build} ${revision} &quot;Smoke Test passed!&quot;"/>
-   <sh:exec file="perl" args="C:\\build\\vcxproj.pl 0 1"/>
-   <sh:exec file="echo" args="FZRetail Beta rebuild started"/>
-   <!-- <sh:exec file="msbuild.exe" args="C:\\build\\FAZR6\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\logger.dll;C:\\msbuild.xml /v:quiet /noconlog /nologo /p:Configuration=FZRetail /t:clean"/> -->
-   <sh:exec file="msbuild.exe" args="/m C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=FZRetail /t:build"/>
-   <sh:exec file="C:\\perl\\bin\\perl.exe" args="C:\\build\\msbuild-result.pl ${path} ${build}"/>
-   <sh:exec file="echo" args="FZRetail Beta rebuild completed"/>
-   <!-- <sh:exec file="perl" args="C:\\step.pl"/> -->
- </step>
+		<sh:exec file="echo" args="Attaching Lite"/>
+		<attach file="C:\\build\\Package\\Beta_b${build}_${revision}.exe" resource="build" description="Lite 1.3 version" />
+		<sh:exec file="echo" args="Download: ftp://azbuildslave.cloudapp.net:2121/Beta_b${build}_${revision}.exe"/>
+		<sh:exec file="perl" args="C:\\build\\announce-dl.pl ${build} ${revision} &quot;Download:  ftp://azbuildslave.cloudapp.net:2121/Beta_b${build}_${revision}.exe [Beta]&quot;"/>
+	</step>
+	<!-- REMOVED PRODUCTION BUILDING UNTIL NEEDED !! -->
+																								<!--
+																								<step id="Release Compile Prod">
+																									<sh:exec file="C:\\build\\checkout.bat" args="${revision}"/>
+																									<sh:exec file="perl" args="C:\\build\\vcxproj.pl 1 1"/>
+																									<sh:exec file="echo" args="FZRetail Prod rebuild started"/>
+																									<sh:exec file="msbuild.exe" args="C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=FZRetail /t:build /m"/>
+																									<sh:exec file="C:\\perl\\bin\\perl.exe" args="C:\\build\\msbuild-result.pl ${path} ${build}"/>
+																									<sh:exec file="echo" args="FZRetail Prod rebuild completed"/>
+																								</step>
+																								<step id="Package Prod">
+																									<sh:exec file="echo" args="Signing objects"/>
+																									<sh:exec file="C:\\build\\sign.bat" args="FZRetail"/>
+																									<sh:exec file="echo" args="Signing objects completed"/>
 
-<step id="Package Beta">
-   <!-- <sh:exec file="perl" args="C:\\announce-step.pl ${build} ${revision} &quot;Release Compile Beta&quot;"/> -->
-	<sh:exec file="echo" args="Copying externals"/>
-	<sh:exec file="del" args=" C:\\build\\Package\\External.7z"/>	
-	<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>	
-	<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\External.7z C:\\build\\External\\* -mx9 -x!ASGS*"/>
-	<sh:exec file="echo" args="Copying externals completed"/>
+																									<sh:exec file="echo" args="Copying objects"/>
+																									<sh:exec file="C:\\build\\Allegiance\\Sh_GetRetail.bat" args="C:\\build\\Allegiance\\x86 C:\\build\\Allegiance\\"/>
+																									<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9" />
+																									<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9" />
+																									<sh:exec file="echo" args="Copying objects completed"/>
 
-	<sh:exec file="echo" args="Signing objects"/>
-	<sh:exec file="C:\\build\\sign.bat" args="FZRetail"/>
-	<sh:exec file="echo" args="Signing objects completed"/>
+																									<sh:exec file="echo" args="Copying externals"/>
+																									<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>
+																									<sh:exec file="del" args=" C:\\build\\Package\\External.7z"/>
+																									<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Reloader.pdb C:\\build\\External\\Reloader.pdb /Y" />
+																									<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Reloader.exe C:\\build\\External\\Reloader.exe /Y" />
+																									<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\External.7z C:\\build\\External\\* -mx9"/>
+																									<sh:exec file="echo" args="Copying externals completed"/>
+																								</step>
+																								<step id="Publish Prod">
+																									<sh:exec file="echo" args="Creating installer"/>
+																									<sh:exec file="perl" args="C:\\build\\nsis.pl 1.2 ${build} ${revision} 1"/>
+																									<sh:exec file="C:\\build\\sign-installer.bat" args="Alleg_b${build}_${revision}.exe 2"/>
+																									<sh:exec file="echo" args="Completed creating installer"/>
 
-	<sh:exec file="echo" args="Copying objects"/>
-	<!-- <sh:exec file="C:\\build\\FAZR6\\Sh_GetDebug.bat" args="C:\\build\\FAZR6\\x86 C:\\build\\FAZR6\\"/> <sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a C:\\build\\Package\\Debug.7z C:\\build\\FAZR6\\x86\\* -x!m*.dll -x!atl*.dll -xr!*.svn"/> -->
-	<sh:exec file="C:\\build\\Allegiance\\Sh_GetRetail.bat" args="C:\\build\\Allegiance\\x86 C:\\build\\Allegiance\\"/>
-	<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegBetaPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9" />
-	<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9" />
-	<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.exe C:\\Allegiance.exe /Y" />
-	<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.pdb C:\\Allegiance.pdb /Y" />
-	<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allsrv.exe C:\\Allsrv.exe /Y" />
-	<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllsrvUI.exe C:\\AllsrvUI.exe /Y" />
-	<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AGC.dll C:\\AGC.dll /Y" />
-	<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allsrv.pdb C:\\Allsrv.pdb /Y" />
-	<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllsrvUI.pdb C:\\AllsrvUI.pdb /Y" />
-	<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AGC.pdb C:\\AGC.pdb /Y" />	
-	<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AutoUpdate.pdb C:\\AutoUpdate.pdb /Y" />	
-	<sh:exec file="echo" args="Copying objects completed"/>
-
-	<sh:exec file="echo" args="Copying artwork"/>
-<!--	<sh:exec file="perl" args="C:\\build\\au.pl"/> -->
-	<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Artwork.7z C:\\build\\Package\\Artwork\\ -xr!*.git -mx9" />
-	<sh:exec file="copy" args="C:\\build\\Package\\Artwork.7z C:\\build\\Package\\AllegArt_b${build}_${revision}.exe /Y"/>
-	<sh:exec file="echo" args="Copying artwork completed"/>
-   <!-- <sh:exec file="perl" args="C:\\step.pl"/> -->
-</step>
-
-
-<step id="Publish Beta">
-   <!-- <sh:exec file="perl" args="C:\\announce-step.pl ${build} ${revision} &quot;Package 1.1&quot;"/> -->
-	<sh:exec file="echo" args="Creating installer"/>
-	<sh:exec file="perl" args="C:\\build\\nsis.pl 1.3 ${build} ${revision} 0"/>
-	<sh:exec file="C:\\build\\sign-installer.bat" args="Beta_b${build}_${revision}.exe 3"/>
-	<sh:exec file="echo" args="Completed creating installer"/>
-
-	<sh:exec file="echo" args="Attaching Lite"/>
-	<attach file="C:\\build\\Package\\Beta_b${build}_${revision}.exe" resource="build" description="Lite 1.3 version" />
-	<sh:exec file="echo" args="Download: ftp://azbuildslave.cloudapp.net:2121/Beta_b${build}_${revision}.exe"/>
-	<sh:exec file="perl" args="C:\\build\\announce-dl.pl ${build} ${revision} &quot;Download:  ftp://azbuildslave.cloudapp.net:2121/Beta_b${build}_${revision}.exe [Beta]&quot;"/>
-   <!-- <sh:exec file="perl" args="C:\\step.pl"/> -->
-</step>
-
- <step id="Release Compile Prod">
-   <!-- <sh:exec file="perl" args="C:\\announce-step.pl ${build} ${revision} &quot;Publish 1.1&quot;"/> -->
-   <sh:exec file="C:\\build\\checkout.bat" args="${revision}"/>
-   <sh:exec file="perl" args="C:\\build\\vcxproj.pl 1 1"/>
-   <sh:exec file="echo" args="FZRetail Prod rebuild started"/>
-   <!-- <sh:exec file="msbuild.exe" args="C:\\build\\FAZR6\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\logger.dll;C:\\msbuild.xml /v:quiet /noconlog /nologo /p:Configuration=FZRetail /t:clean"/> -->
-   <sh:exec file="msbuild.exe" args="C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=FZRetail /t:build /m"/>
-   <sh:exec file="C:\\perl\\bin\\perl.exe" args="C:\\build\\msbuild-result.pl ${path} ${build}"/>
-   <sh:exec file="echo" args="FZRetail Prod rebuild completed"/>
-   <!-- <sh:exec file="perl" args="C:\\step.pl"/> -->
- </step>
-
-<step id="Package Prod">
-   <!-- <sh:exec file="perl" args="C:\\announce-step.pl ${build} ${revision} &quot;Release Compile Prod&quot;"/> -->
-	<sh:exec file="echo" args="Copying externals"/>
-	<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\External.7z C:\\build\\External\\* -mx9"/>
-	<sh:exec file="echo" args="Copying externals completed"/>
-	<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>
-	
-	<sh:exec file="echo" args="Signing objects"/>
-	<sh:exec file="C:\\build\\sign.bat" args="FZRetail"/>
-	<sh:exec file="echo" args="Signing objects completed"/> -->
-
-	<sh:exec file="echo" args="Copying objects"/>
-	<sh:exec file="C:\\build\\Allegiance\\Sh_GetRetail.bat" args="C:\\build\\Allegiance\\x86 C:\\build\\Allegiance\\"/>
-	<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9" />
-	<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9" />
-	<sh:exec file="echo" args="Copying objects completed"/>
-   <!-- <sh:exec file="perl" args="C:\\step.pl"/> -->
-</step>
-
-<step id="Publish Prod">
-   <!-- <sh:exec file="perl" args="C:\\announce-step.pl ${build} ${revision} &quot;Package 1.0&quot;"/> -->
-	<sh:exec file="echo" args="Creating installer"/>
-	<sh:exec file="perl" args="C:\\build\\nsis.pl 1.2 ${build} ${revision} 1"/>
-	<sh:exec file="C:\\build\\sign-installer.bat" args="Alleg_b${build}_${revision}.exe 2"/>
-	<!-- <sh:exec file="perl" args="C:\\nsis.pl 1.0 ${build} ${revision} 0"/> -->
-	<!-- <sh:exec file="C:\\sign-installer.bat" args="Alleg_lite_b${build}_r${revision}.exe 0"/>  -->
-	<sh:exec file="echo" args="Completed creating installer"/>
-
-	<!-- <sh:exec file="echo" args="Attaching Lite"/> -->
-	<!-- <attach file="C:\\Inetpub\\wwwroot\\build\\Alleg_lite_b${build}_r${revision}.exe" resource="build" description="Lite 1.0 version" /> -->
-	<sh:exec file="echo" args="Download: ftp://azbuildslave.cloudapp.net:2121/Alleg_b${build}_${revision}.exe"/>
-	<sh:exec file="perl" args="C:\\build\\announce-dl.pl ${build} ${revision} &quot;Download: ftp://azbuildslave.cloudapp.net:2121/Alleg_b${build}_${revision}.exe [Production]&quot;"/>
-   <!-- <sh:exec file="perl" args="C:\\step.pl"/> -->
-</step>
-
-<!--
- <step id="Release Compile Prod VC9">
-   <sh:exec file="perl" args="C:\\announce-step.pl ${build} ${revision} &quot;Publish 1.0&quot;"/>
-   <sh:exec file="perl" args="C:\\vcproj.pl"/>
-   <sh:exec file="echo" args="FZRetail 1.0 rebuild started"/>
-   <sh:exec file="C:\\build9.bat" args="FZRetail build"/>
-   <sh:exec file="echo" args="FZRetail 1.0 rebuild completed"/>
-   <sh:exec file="perl" args="C:\\step.pl"/>
- </step>
- 
-<step id="Package 1.0 Compat">
-   <sh:exec file="perl" args="C:\\announce-step.pl ${build} ${revision} &quot;Release Compile Prod VC9&quot;"/>
-	<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>
-	<sh:exec file="echo" args="Copying objects"/>
-	<sh:exec file="C:\\build\\FAZR6\\Sh_Get9.bat" args="C:\\build\\FAZR6\\x86_v90 C:\\build\\FAZR6\\"/>
-	<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\inetpub\\wwwroot\\build\\AllegPDB_b${build}_r${revision}_v90.exe C:\\build\\FAZR6\\x86_v90\\*.pdb -mx9" />
-	<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\FAZR6\\x86_v90\\* -x!*.pdb -mx9" />
-	<sh:exec file="echo" args="Copying objects completed"/>
-   <sh:exec file="perl" args="C:\\step.pl"/>
-</step>
-
-<step id="Publish 1.0 Compat">
-   <sh:exec file="perl" args="C:\\announce-step.pl ${build} ${revision} &quot;Package 1.0 Compat&quot;"/>
-	<sh:exec file="echo" args="Creating installer"/>
-	<sh:exec file="perl" args="C:\\nsis.pl 1.0 ${build} ${revision}_v90 1"/>
-	<sh:exec file="C:\\sign-installer.bat" args="Alleg_b${build}_r${revision}_v90.exe 0"/>
-	<sh:exec file="echo" args="Completed creating installer"/>
-	<sh:exec file="echo" args="Download: http://alleg.builtbygiants.net/Alleg_b${build}_r${revision}_v90.exe"/>
-	<sh:exec file="perl" args="C:\\announce-dl.pl ${build} ${revision} &quot;Download: http://alleg.builtbygiants.net/Alleg_b${build}_r${revision}_v90.exe [Full/Compat. (1.0 v90)]&quot;"/>
-   <sh:exec file="perl" args="C:\\step.pl"/>
-</step> 
--->
-
-<step id="Deploy Beta">
-	<sh:exec file="perl" args="C:\\build\\makelist.pl" />
-	<sh:exec file="perl" args="C:\\build\\makemotd.pl ${build} ${revision}" />
-	<sh:exec file="perl" args="C:\\build\\makecfg.pl" />
-	<sh:exec file="perl" args="C:\\build\\deploy.pl ${build} ${revision}" />
-</step>
-
-<step id="Upgrade">
-	<sh:exec file="perl" args="C:\\build\\upgrade.pl" />
-</step>	
-
-<step id="Finished">
-	<sh:exec file="perl" args="C:\\build\\touch.pl"/>
-	<sh:exec file="perl" args="C:\\build\\announce.pl ${build} ${revision}"/>
-</step>
+																									<sh:exec file="echo" args="Download: ftp://azbuildslave.cloudapp.net:2121/Alleg_b${build}_${revision}.exe"/>
+																									<sh:exec file="perl" args="C:\\build\\announce-dl.pl ${build} ${revision} &quot;Download: ftp://azbuildslave.cloudapp.net:2121/Alleg_b${build}_${revision}.exe [Production]&quot;"/>
+																								</step>
+																								-->
+	<!-- REMOVED PRODUCTION BUILDING UNTIL NEEDED ^^ -->																								
+	<step id="Deploy Beta">
+		<sh:exec file="perl" args="C:\\build\\makelist.pl" />
+		<sh:exec file="perl" args="C:\\build\\makemotd.pl ${build} ${revision}" />
+		<sh:exec file="perl" args="C:\\build\\makecfg.pl" />
+		<sh:exec file="perl" args="C:\\build\\deploy.pl ${build} ${revision}" />
+	</step>
+	<step id="Upgrade">
+		<sh:exec file="perl" args="C:\\build\\upgrade.pl" />
+	</step>
+	<step id="Finished">
+		<sh:exec file="perl" args="C:\\build\\touch.pl"/>
+		<sh:exec file="perl" args="C:\\build\\announce.pl ${build} ${revision}"/>
+	</step>
 </build>

@@ -51,18 +51,16 @@ my $ftp = Net::FTP->new($host, Debug => 0, Port => 21122) or die "Cannot connect
 	my $build = $ARGV[0];
 	my $rev = $ARGV[1];
 
-       $ftp->put("C:\\build\\Package\\Alleg_b".$build."_".$rev.".exe","install\\Alleg_b".$build."_".$rev.".exe")
-      or die "put failed ", $ftp->message;    
-       $ftp->put("C:\\build\\Package\\Alleg_b".$build."_".$rev.".exe","install\\latest.exe")
-      or die "put failed ", $ftp->message;    
-       $ftp->put("C:\\build\\Package\\Beta_b".$build."_".$rev.".exe","install\\Beta_b".$build."_".$rev.".exe")
-      or die "put failed ", $ftp->message;    
-       $ftp->put("C:\\build\\Package\\AllegPDB_b".$build."_".$rev.".exe","install\\AllegPDB_b".$build."_".$rev.".exe")
-      or die "put failed ", $ftp->message;    
-       $ftp->put("C:\\build\\Package\\AllegBetaPDB_b".$build."_".$rev.".exe","install\\AllegBetaPDB_b".$build."_".$rev.".exe")
-      or die "put failed ", $ftp->message;    
-       $ftp->put("C:\\build\\Package\\AllegART_b".$build."_".$rev.".exe","install\\AllegART_b".$build."_".$rev.".exe")
-      or die "put failed ", $ftp->message;   
+	# PRODUCTION 
+      #$ftp->put("C:\\build\\Package\\Alleg_b".$build."_".$rev.".exe","install\\Alleg_b".$build."_".$rev.".exe") or die "put failed ", $ftp->message;    
+      #$ftp->put("C:\\build\\Package\\Alleg_b".$build."_".$rev.".exe","install\\latest.exe") or die "put failed ", $ftp->message;    
+      #$ftp->put("C:\\build\\Package\\AllegPDB_b".$build."_".$rev.".exe","install\\AllegPDB_b".$build."_".$rev.".exe") or die "put failed ", $ftp->message;    
+      
+      	# BETA
+      $ftp->put("C:\\build\\Package\\Beta_b".$build."_".$rev.".exe","install\\latest.exe") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\Beta_b".$build."_".$rev.".exe","install\\Beta_b".$build."_".$rev.".exe") or die "put failed ", $ftp->message;        
+      $ftp->put("C:\\build\\Package\\AllegBetaPDB_b".$build."_".$rev.".exe","install\\AllegBetaPDB_b".$build."_".$rev.".exe") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\AllegART_b".$build."_".$rev.".exe","install\\AllegART_b".$build."_".$rev.".exe") or die "put failed ", $ftp->message;   
   
  print "Files uploaded OK\n";
 $ftp->rename("notify/ready","notify/process") or die "notify failed ", $ftp->message;
