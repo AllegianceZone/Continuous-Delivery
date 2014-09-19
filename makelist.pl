@@ -36,8 +36,8 @@ foreach my $line (@lines) {
 	$files{$vals[4]} = $vals[3];
 }
 
-#my ($num_of_files,$num_of_dirs,$depth) = dircopy("C:\\build\\Artwork","C:\\build\\Package\\Artwork\\");
-#print "Copied $num_of_files files in $num_of_dirs directories ($depth deep) from Artwork to Package\\Artwork\n";
+my ($num_of_files,$num_of_dirs,$depth) = dircopy("C:\\build\\Artwork","C:\\build\\Package\\Artwork\\");
+print "Copied $num_of_files files in $num_of_dirs directories ($depth deep) from Artwork to Package\\Artwork\n";
 my ($num_of_files,$num_of_dirs,$depth) = dircopy("C:\\build\\Allegiance\\artwork","C:\\build\\Package\\Artwork\\");
 print "Copied $num_of_files files in $num_of_dirs directories ($depth deep) from Allegiance\\artwork to Package\\Artwork\n";
 
@@ -70,6 +70,7 @@ foreach my $line (@lines) {
 	my $file = $vals[4];
 	next if ($file eq 'Allegiance.exe');
 	next if ($file eq 'Reloader.exe');
+	next if ($file eq 'inputmap1.mdl');
 	if (grep { $file eq $_ } @changed) {
 		my $cmd = "C:\\build\\crc32.exe C:\\build\\Package\\Artwork\\$file";
 		my $cmd2 = "C:\\build\\mscompress.exe C:\\build\\Package\\Artwork\\$file";
@@ -104,6 +105,7 @@ foreach my $file (@changed) {
 		my $cmd2 = "C:\\build\\mscompress.exe C:\\build\\Package\\Artwork\\$file";
 		my ($modtime,$size)= (stat("C:\\build\\Package\\Artwork\\$file"))[9,7];
 		next if (!$size);
+		next if ($file eq 'inputmap1.mdl');
 		my $crc = `$cmd`;
 		chomp $crc;
 		$size = sprintf("%09d",$size);
@@ -145,7 +147,7 @@ foreach my $file (@objs) {
 close LIST;
 
 print "Compressing Game Files for AU...\n";
-my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Game.7z C:\\build\\AutoUpdate\\Game\\* -xr!*Server -mx0 -mmt=off -ms=off -up3q3r2x0y2z0w2";
+my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Game.7z C:\\build\\AutoUpdate\\Game\\* -xr!*Server -mx0 -mmt=off";
 system($cmd3);
 
 
@@ -198,7 +200,7 @@ foreach my $file (@objs) {
 close LIST;
 
 print "Compressing Server Files for AU...\n";
-my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Server.7z C:\\build\\AutoUpdate\\Game\\Server\\* -mx0 -mmt=off -ms=off -up3q3r2x0y2z0w2";
+my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Server.7z C:\\build\\AutoUpdate\\Game\\Server\\* -mx0 -mmt=off";
 system($cmd3);
 exit 0;
 
