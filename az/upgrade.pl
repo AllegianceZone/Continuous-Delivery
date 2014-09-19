@@ -18,6 +18,15 @@ if ($sl && $sl->Status() == 4) {
 	sleep(6);
 }
 
+my $gi = Win32::OLE->GetObject("WinNT://$host/gameinfod,service");
+if ($gi && $gi->Status() == 4) {
+	print "Stopping gameinfod service\n";	
+	$gi->Stop();
+	sleep(3);
+}
+
+unlink "D:\\gameinfod.json";
+
 if ($sl && $sl->Status == 4)) {
 	print "Services wouldn't shut down!\n";
 	exit 1;	
@@ -45,7 +54,8 @@ my $cmd = "regsvr32 $serverpath\\AGC.dll /s";
 system($cmd);
 
 
-print "Starting Lobby service\n";	
+print "Starting Lobby service\n";
+$gi->start();
 $sl->Start();
 sleep(20);
 

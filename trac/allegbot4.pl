@@ -100,15 +100,13 @@ sub doIdle {
 		my $notify = $dbh->pg_notifies;
 		if ($notify) {
 			my ($name, $pid, $payload) = @$notify;
-			############
-			#TODO GitHub!
 			if ($name eq 'ticket_update' || $name eq 'ticket_insert') {
 				$seltl->execute() or die $!;
 				my $tl = $seltl->fetchrow_hashref;
 				my $status = ($name eq 'ticket_update') ? String::IRC->new('Modified')->inverse->bold : String::IRC->new('Added')->inverse->bold;
 				#TODO: Make ticket update messages 'smarter' (look in ticket_change table)!
 			 	$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, GetTicket($tl->{id}).' '.$status);
-			 	$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$tracurl/ticket/".$tl->{id})->light_blue);
+			 	$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$githuburl/issues/".$tl->{id})->light_blue);
 			} elsif($name eq 'revision_insert') {
 				$selrl->execute() or die $!;
 				my $rl = $selrl->fetchrow_hashref;
@@ -116,9 +114,7 @@ sub doIdle {
 				my $rev = $rl->{rev};
 				$rev =~ s/^0*//;
 			 	$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, GetChange($rev).' '.$status);
-			 	$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$tracurl/changeset/".$rev)->light_blue);
-			 # ^
-			 ###########
+			 	$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$githuburl/commit/".$rev)->light_blue);
 			} elsif($name eq 'bitten_insert') {
 				$sels->execute() or die $!;
 				my $s = $sels->fetchrow_hashref;
@@ -156,23 +152,21 @@ sub doMsg { # TODO: timer! (no flood)
 	while ($str =~ /((http:\/\/|https:\/\/|www\.){1}.+)/gi) {
 		my $match = $1;
 		$match =~ s/^www\./http:\/\/www./gi;
-		if (my $title = GetTitle($match)) {$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $title);}
+		my @parts = split(/\s/,$match);
+		if (my $title = GetTitle($parts[0])) {$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $title);}
 	}	
-	#tickets via Trac RPC API Plugin  #TODO GITHUB!
+	#tickets via Trac RPC API Plugin
 	while ($str =~ /(ticket|bug|issue){1}\s?\#?\s?(\d+)/gi) {
-		print "matched: $1 $2\n";
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, GetTicketGithub($2));
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$githuburl/issues/$2")->light_blue);
 	}
 	#changesets via Trac IRCAnnouncer Plugin #TODO GITHUB!
 	while ($str =~ /(change|changeset|commit){1}\s?\#?\s?(\w{7,})/gi) {
-		print "matched: $1 $2\n";
-		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, GetChange($2));
+		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, GetChangeGithub($2));
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$githuburl/commit/$2")->light_blue);
 	}	
 	#builds via PgSQL
 	while ($str =~ /(build|install|installer){1}\s?\#?\s?(\d+)/gi) {
-		print "matched: $1 $2\n";
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, GetBuild($2));
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$tracurl/build/Allegiance/$2")->light_blue);
 		
@@ -210,12 +204,11 @@ sub GetTicketGithub {
 	if ($mech->success()) {
 		my $res = $mech->res();
 		my $ticket = decode_json($res->decoded_content);
-		my $intro = String::IRC->new('Ticket')->bold->underline;
+		my $intro = String::IRC->new('Issue')->bold->underline;
 		return $intro.' '.$ticket->{state}.' '.@{$ticket->{labels}}[0]->{name}." #$issue:  By ".$ticket->{user}->{login}.' - '.$ticket->{title}.' updated '.$ticket->{updated_at};
 	}
 }
 
-#Helper when doMsg has a rev# - Formats IRC reply #TODO GITHUB
 sub GetChange {
 	my $rev = shift;
 	my $resp = $cli->simple_request('ircannouncer.getChangeset',$rev); 
@@ -226,8 +219,19 @@ sub GetChange {
 		return $intro.' in '.$resp->{path}.' ('.$resp->{file_count}." files) for change $rev: By ".$resp->{author}.' - '.$desc;
 	}
 }
+sub GetChangeGithub {
+	my $rev = shift;
+	$mech->get("https://api.github.com/repos/AllegianceZone/Allegiance/commits/$rev");
+	if ($mech->success()) {
+		my $res = $mech->res();
+		my $commit = decode_json($res->decoded_content);
+		my $intro = String::IRC->new('Commit')->bold->underline;
+		my $desc = $commit->{commit}->{message};
+		$desc =~ s/\n+/ ** /gi;		
+		return $intro.' in '.$githuburl.' ('.scalar @{$commit->{files}}." files) for change $rev: By ".$commit->{commit}->{author}->{name}.' - '.$desc;
+	}
+}
 
-#Helper when doMsg has a b# - Formats IRC reply
 sub GetBuild {
 	my $bid = shift;
 	$selb->execute($bid) or die $!;
