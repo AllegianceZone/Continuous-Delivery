@@ -27,7 +27,7 @@ if ($gi && $gi->Status() == 4) {
 
 unlink "D:\\gameinfod.json";
 
-if ($sl && $sl->Status == 4)) {
+if ($sl && $sl->Status == 4) {
 	print "Services wouldn't shut down!\n";
 	exit 1;	
 }
