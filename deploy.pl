@@ -45,7 +45,20 @@ my $ftp = Net::FTP->new($host, Debug => 0, Port => 21122) or die "Cannot connect
       or die "put failed ", $ftp->message;  
 
        $ftp->put("C:\\AutoUpdate.exe","autoupdate\\Game\\Server\\standalone\\AutoUpdate.exe")
-      or die "put failed ", $ftp->message;           
+      or die "put failed ", $ftp->message;   
+      
+       $ftp->put("C:\\build\\Allegiance\\src\\Lib\\Net\\Microsoft.ServiceBus.dll")
+      or die "put failed ", $ftp->message;      
+       $ftp->put("C:\\build\\Allegiance\\src\\Lib\\Net\\Microsoft.ServiceBus.xml")
+      or die "put failed ", $ftp->message;  
+       $ftp->put("C:\\build\\Allegiance\\src\\Lib\\Net\\Microsoft.WindowsAzure.Configuration.dll")
+      or die "put failed ", $ftp->message;  
+       $ftp->put("C:\\build\\Allegiance\\src\\Lib\\Net\\Microsoft.WindowsAzure.Configuration.xml")
+      or die "put failed ", $ftp->message;  
+       $ftp->put("C:\\build\\Allegiance\\src\\Lib\\Net\\Newtonsoft.Json.dll")
+      or die "put failed ", $ftp->message;  
+       $ftp->put("C:\\build\\Allegiance\\src\\Lib\\Net\\Newtonsoft.Json.xml")
+      or die "put failed ", $ftp->message;        
 
 
 	my $build = $ARGV[0];
