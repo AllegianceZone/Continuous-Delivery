@@ -70,7 +70,9 @@
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Reloader.pdb C:\\Reloader.pdb /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Reloader.exe C:\\Reloader.exe /Y" />
 		<sh:exec file="echo" args="Copying objects completed"/>
-
+		<sh:exec file="echo" args="Making FileLists"/>
+		<sh:exec file="perl" args="C:\\build\\makelist.pl" />
+		<sh:exec file="echo" args="Making FileLists completed"/>
 		<sh:exec file="echo" args="Copying externals"/>
 		<sh:exec file="del" args=" C:\\build\\Package\\External.7z"/>
 		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\External.7z C:\\build\\External\\* -mx9 -mmt=off"/>
@@ -131,7 +133,6 @@
 																								-->
 	<!-- REMOVED PRODUCTION BUILDING UNTIL NEEDED ^^ -->																								
 	<step id="Deploy Beta">
-		<sh:exec file="perl" args="C:\\build\\makelist.pl" />
 		<sh:exec file="perl" args="C:\\build\\makemotd.pl ${build} ${revision}" />
 		<sh:exec file="perl" args="C:\\build\\makecfg.pl" />
 		<sh:exec file="perl" args="C:\\build\\deploy.pl ${build} ${revision}" />
