@@ -58,7 +58,7 @@ our $sele = $dbh->prepare(q{SELECT * FROM bitten_error WHERE build = ? ORDER BY 
 our $sell = $dbh->prepare(q{SELECT * FROM bitten_build WHERE config = 'Allegiance' AND status = 'S' ORDER BY id DESC LIMIT 1}) or die $!;
 our $selrl = $dbh->prepare(q{SELECT * FROM revision ORDER BY time DESC LIMIT 1}) or die $!;
 our $seltl = $dbh->prepare(q{SELECT * FROM ticket ORDER BY changetime DESC LIMIT 1}) or die $!;
-our $sels = $dbh->prepare(q{SELECT bitten_step.build, bitten_step.status, bitten_step.name, bitten_step.started, bitten_step.stopped FROM bitten_step, bitten_build WHERE 
+our $sels = $dbh->prepare(q{SELECT bitten_step.build, bitten_step.status, bitten_step.name, bitten_step.started, bitten_step.stopped bitten_build.rev FROM bitten_step, bitten_build WHERE 
 	bitten_build.id = bitten_step.build AND slave = 'azbuildslave' ORDER BY bitten_step.stopped DESC LIMIT 1;}) or die $!;
 	
 #DB events (yay postgres!)
@@ -127,10 +127,30 @@ sub doIdle {
 				if ($s->{name} eq 'Checkout' && $valid && !$sent) {
 					$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $msgstart); #start
 					$sent = 1;
-				} elsif (($s->{status} eq 'F' || $s->{name} eq 'Done') && $valid && $sent) {
+				} elsif (($s->{status} eq 'F' || $s->{name} eq 'Finished') && $valid && $sent) {
 					$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, GetBuild($s->{build})); #finish
 					$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$tracurl/build/Allegiance/".$s->{build})->light_blue);
 					$sent = 0;
+					if ($s->{status} eq 'S') {
+						my $build = $s->{build};
+						my $rev = $s->{rev};
+						open(LATEST,'>/etc/nginx/conf.d/installer.conf');
+						print LATEST qq{server {
+    listen   80;
+    server_name installer.allegiancezone.com installer;
+    location / {      
+      rewrite ^ http://cdn.allegiancezone.com/install/Beta_b${build}_$rev.exe permanent;
+    }
+    location /latest {
+      rewrite ^ http://cdn.allegiancezone.com/install/Beta_b${build}_$rev.exe permanent;
+    }
+    location /latest.exe {
+      rewrite ^ http://cdn.allegiancezone.com/install/Beta_b${build}_$rev.exe permanent;
+    }
+}};
+						close LATEST;
+						system("sv reload nginx");
+					}
 				} else {
 					#$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $msgprog) if ($valid); #step
 				}
@@ -147,14 +167,15 @@ sub doIdle {
 sub doMsg { # TODO: timer! (no flood)
 	my $msg = shift;
 	my $str = $msg->{params}[1];
-	my $tickets = "";
 	#URL titles just for fun...
-	while ($str =~ /((http:\/\/|https:\/\/|www\.){1}.+)/gi) {
-		my $match = $1;
-		$match =~ s/^www\./http:\/\/www./gi;
-		my @parts = split(/\s/,$match);
-		if (my $title = GetTitle($parts[0])) {$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $title);}
-	}	
+	if ($msg->{prefix} !~ /AllegGitHubBot/)  {
+		while ($str =~ /((http:\/\/|https:\/\/|www\.){1}.+)/gi) {
+			my $match = $1;
+			$match =~ s/^www\./http:\/\/www./gi;
+			my @parts = split(/\s/,$match);
+			if (my $title = GetTitle($parts[0])) {$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $title);}
+		}	
+	}
 	#tickets via Trac RPC API Plugin
 	while ($str =~ /(ticket|bug|issue){1}\s?\#?\s?(\d+)/gi) {
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, GetTicketGithub($2));
