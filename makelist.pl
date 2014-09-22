@@ -38,8 +38,10 @@ foreach my $line (@lines) {
 
 my ($num_of_files,$num_of_dirs,$depth) = dircopy("C:\\build\\Artwork","C:\\build\\Package\\Artwork\\");
 print "Copied $num_of_files files in $num_of_dirs directories ($depth deep) from Artwork to Package\\Artwork\n";
-my ($num_of_files,$num_of_dirs,$depth) = dircopy("C:\\build\\Allegiance\\artwork","C:\\build\\Package\\Artwork\\");
-print "Copied $num_of_files files in $num_of_dirs directories ($depth deep) from Allegiance\\artwork to Package\\Artwork\n";
+
+# No longer needed, our build is and always will be compatible
+#my ($num_of_files,$num_of_dirs,$depth) = dircopy("C:\\build\\Allegiance\\artwork","C:\\build\\Package\\Artwork\\");
+#print "Copied $num_of_files files in $num_of_dirs directories ($depth deep) from Allegiance\\artwork to Package\\Artwork\n";
 
 opendir(DIR, "C:\\build\\Package\\Artwork\\");
 my @art = readdir(DIR); 
