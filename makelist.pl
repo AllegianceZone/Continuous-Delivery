@@ -18,7 +18,7 @@ if ($offset =~ /Daylight/i) {
 	$offset = 6;
 }
 
-my $dontcompress_re = ".avi|.ogg|.png|.ffe";
+my $dontcompress_re = ".avi|.ogg|.png|.ffe|faohbstac.mdl|ta_drac_tp.mdl";
 
 my @lines;
 
