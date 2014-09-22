@@ -16,6 +16,7 @@ if (length $data < 36) {
 	exit 0;
 };
 
+our $now = time;
 our @lobbyinfos;
 my $c = new Convert::Binary::C;
 $c->parse_file("/var/www/lobbyinfo.h");
@@ -57,7 +58,7 @@ sub UnpackData {
 	delete $hash{ibszPrivilegedUsers}, delete $hash{cbszPrivilegedUsers}, $hash{szPrivilegedUsers} = $srvadmin;
 	my $servvers = substr($data,$hash{ibszServerVersion},$hash{cbszServerVersion});
 	delete $hash{ibszServerVersion}, delete $hash{cbszServerVersion}, $hash{szServerVersion} = $servvers;
-	$hash{lobbyinfod} = time;
+	$hash{lobbyinfod} = $now;
 	$size = $hash{cbmsg};
 	return \%hash;
 }
