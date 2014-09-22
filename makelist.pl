@@ -150,7 +150,7 @@ print "Compressing Game Files for AU...\n";
 my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Game.7z C:\\build\\AutoUpdate\\Game\\* -xr!*Server -mx0 -mmt=off";
 system($cmd3);
 
-copy("C:\\build\\betalist.txt", "C:\\build\\External\FileList.txt");
+copy("C:\\build\\betalist.txt", "C:\\build\\External\\FileList.txt");
 
 #TODO only changed like client...
 open(LIST,">C:\\build\\serverlist.txt");
