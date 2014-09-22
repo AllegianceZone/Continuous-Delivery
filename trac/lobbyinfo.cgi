@@ -2,24 +2,23 @@
 
 # ImagoTrigger@gmail.com
 use common::sense;
-use Convert::Binary::C::Cached;
+use Convert::Binary::C;
 use File::Slurp;
 use JSON;
 use CGI qw(:standard -nph);
 use CGI::Carp qw (fatalsToBrowser); 
-use Fcntl ':flock';
 
 my $q = CGI->new;
 print $q->header();
 my $data = $q->param( 'POSTDATA' );
+$data = read_file("/var/www/lobbyinfo.dat");
 if (length $data < 36) {
-	print read_file("lobbyinfo.json");
+	print read_file("/var/www/lobbyinfo.json");
 	exit 0;
 };
 
-my $c = new Convert::Binary::C::Cached->new(Cache => 'cache.c');
-my $json = JSON->new->allow_nonref;
-$c->parse_file("lobbyinfo.h");
+my $c = new Convert::Binary::C;
+$c->parse_file("/var/www/lobbyinfo.h");
 $c->configure(Bitfields => {Engine => 'Microsoft'});
 my $perl = $c->unpack('LobbyInfoMsg', $data);
 my %hash = %$perl;
@@ -42,11 +41,11 @@ my $servvers = substr($data,$hash{ibszServerVersion},$hash{cbszServerVersion});
 delete $hash{ibszServerVersion}, delete $hash{cbszServerVersion}, $hash{szServerVersion} = $servvers;
 
 $hash{lobbyinfod} = time;
+my $json = JSON->new->allow_nonref;
 my $js = $json->pretty->encode(\%hash);
-open(my $MEM,'>lobbyinfo.json');
-flock($MEM, LOCK_EX);
-print $MEM $js;
-close $MEM;
+open(MEM,'>/var/www/lobbyinfo.json');
+print MEM $js;
+close MEM;
 
 print $js;
 exit 0;
