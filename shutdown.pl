@@ -6,6 +6,7 @@ use strict;
 use Win32::OLE;
 
 my $host = "azbuildslave";
+our $utl;
 
 open (PS,"C:\\build\\pslist.exe 2>crap AllSrv |");
 my $pid = 0;
@@ -23,7 +24,7 @@ if ($pid != 0) {
 	`$cmd`;
 	sleep(3);
 
-	my $utl  = Win32::OLE->new("AllSrv.AdminSession");
+	$utl  = Win32::OLE->new("AllSrv.AdminSession");
 	my $srv = $utl->Server;
 	exit 0 if (!$srv);
 	my $games = $srv->Games;

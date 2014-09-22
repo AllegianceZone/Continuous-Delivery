@@ -127,7 +127,7 @@ close LIST;
 print "Appending client binaries to Filelist...\n";
 
 open(LIST,">>C:\\build\\betalist.txt");
-my @objs = ("C:\\Allegiance.exe","C:\\Reloader.exe");
+my @objs = ("C:\\Allegiance.exe");
 foreach my $file (@objs) {
 	my $cmd = "C:\\build\\crc32.exe $file";
 	my $cmd2 = "C:\\build\\mscompress.exe $file";
