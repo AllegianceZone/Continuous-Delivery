@@ -359,9 +359,10 @@ Section -Post
   WriteRegStr \${PRODUCT_UNINST_ROOT_KEY} "\${PRODUCT_UNINST_KEY}" "URLInfoAbout" "\${PRODUCT_WEB_SITE}"
   WriteRegStr \${PRODUCT_UNINST_ROOT_KEY} "\${PRODUCT_UNINST_KEY}" "Publisher" "\${PRODUCT_PUBLISHER}"
   
-  WriteRegStr HKCR "Allegiance" "URL PRotocol" ""
+  WriteRegStr HKCR "Allegiance" "URL Protocol" ""
   WriteRegStr HKCR "Allegiance" "" "URL:Allegiance Protocol"
-  WriteRegStr HKCR "Allegiance\\shell\\open\\command" "" "\"\$INSTDIR\\Allegiance.exe\" -autojoin %1 %2 %3 %4 %5 %6"
+  WriteRegStr HKCR "Allegiance\\shell\\open\\command" "" '"\$INSTDIR\\Allegiance.exe" -autojoin %1 %2 %3 %4 %5 %6'
+
 SectionEnd
 
 Section "DirectX Install" SEC_DIRECTX
