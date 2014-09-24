@@ -27,7 +27,9 @@ my $ftp = Net::FTP->new($host, Debug => 1, Port => 21122, Timeout => 9999) or di
        $ftp->put("C:\\build\\AZDev.cfg")
       or die "put failed ", $ftp->message;
        $ftp->put("C:\\build\\motd.mdl")
-      or die "put failed ", $ftp->message;      
+      or die "put failed ", $ftp->message; 
+       $ftp->put("C:\\build\\events.mdl")
+      or die "put failed ", $ftp->message;       
        $ftp->put("C:\\build\\serverlist.txt")
       or die "put failed ", $ftp->message;      
        $ftp->binary;     

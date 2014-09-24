@@ -1,0 +1,8 @@
+events = [
+	("Date", "Time", "Event Name", "Event Description", "http://azforum.cloudapp.net/events.cgi?signup=0", ["pcore006.igc","pcore005b.igc"]),
+	("9/25/2014", "23:00", "A Super Event", "This is the best event description ever made!", "http://azforum.cloudapp.net/events.cgi?signup=1", ["pcore006.igc","pcore005b.igc"]),
+	("9/26/2014", "18:00", "Squad Game: Z vs BS", "Map TBD - Commanders TBD - For 5th place", "http://azforum.cloudapp.net/events.cgi?signup=2", ["pcore006.igc","pcore005b.igc"]),
+	("Date", "Time", "Event Name", "Event Description", "http://azforum.cloudapp.net/events.cgi?signup=3", ["pcore006.igc","pcore005b.igc"]),
+	("Date", "Time", "Event Name", "Event Description", "http://azforum.cloudapp.net/events.cgi?signup=4", ["pcore006.igc","pcore005b.igc"]),
+	("Date", "Time", "Event Name", "Event Description", "http://azforum.cloudapp.net/events.cgi?signup=5", ["pcore006.igc","pcore005b.igc"]),
+];

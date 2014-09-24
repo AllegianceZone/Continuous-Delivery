@@ -18,19 +18,15 @@ open(PID,">".$dir."\\process.pid");
 print PID $$;
 close(PID);
 
+copy($dir."\\AZDev.cfg",$dir."\\config\\AZ.cfg"); #<-- same thing now
 copy($dir."\\AZDev.cfg",$dir."\\config\\AZDev.cfg");
 copy($dir."\\FileList.txt",$dir."\\autoupdate\\Game\\FileList.txt");
 copy($dir."\\serverlist.txt",$dir."\\autoupdate\\Game\\Server\\standalone\\FileList.txt");
-copy($dir."\\motd.mdl",$dir."\\config\\beta\\motd.mdl");
-
-#TODO- 
-copy($dir."\\AZDev.cfg",$dir."\\config\\AZ.cfg");
-copy($dir."\\motd.mdl",$dir."\\config\\event\\motd.mdl");
-copy($dir."\\motd.mdl",$dir."\\config\\event\\details.mdl");
 copy($dir."\\motd.mdl",$dir."\\config\\club\\motd.mdl");	#<-- actual one used now USEAZ
+copy($dir."\\motd.mdl",$dir."\\config\\beta\\motd.mdl");
+copy($dir."\\events.mdl",$dir."\\config\\event\\events.mdl");
+copy($dir."\\motd.mdl",$dir."\\config\\event\\details.mdl");
 copy($dir."\\motd.mdl",$dir."\\config\\motd.mdl");
-#
-
 
 my $cmd = "$lzma x -y -o".$dir."\\autoupdate\\Game ".$dir."\\Game.7z";
 system($cmd);
