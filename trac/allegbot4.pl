@@ -315,7 +315,7 @@ sub DiscourseBuildPost {
 	(?,?,?,?,?,NOW(),NOW(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),?,?,?,?,?,?,?,?,?,?,?,NOW(),?,?,?,?,?)}) or die $!;
 	
 	my $inst3 = $dbh->prepare(q{INSERT INTO topic_links (topic_id, post_id, user_id, url, domain, internal, link_topic_id, created_at, updated_at, reflection, clicks, 
-	link_post_id, title, crawled_at, quote)  VALUES (?,?,?,?,?,?,?,NOW(),NOW(),?,?,?,?,?,?)}) or die $!;;
+	link_post_id, title, crawled_at, quote)  VALUES (?,?,?,?,?,?,?,NOW(),NOW(),?,?,?,?,?,?)}) or die $!;
 	
 	$inst->execute($title,3,1,-1,-1,0,undef,undef,undef,undef,undef,1,undef,0,0,0,0,0,9,'t',0,'f','f','f',0,'regular',undef,0,0,0,0,undef,0,0,0,undef,$meta,undef,undef,undef,undef,1,128,"This is an AllegZoneBot generated message from: $link",'f');
 	my $tid = $dbh->last_insert_id(undef,undef,"topics",undef);
