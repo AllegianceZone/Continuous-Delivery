@@ -127,7 +127,7 @@ sub doIdle {
 				if ($s->{name} eq 'Checkout' && $valid && !$sent) {
 					$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $msgstart); #start
 					$sent = 1;
-				} elsif (($s->{status} eq 'F' || $s->{name} eq 'Finished') && $valid) {
+				} elsif (($s->{status} eq 'F' || $s->{name} eq 'Finished') && $valid && $sent) {
 					$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, GetBuild($s->{build})); #finish
 					$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$tracurl/build/Allegiance/".$s->{build})->light_blue);
 					$sent = 0;
