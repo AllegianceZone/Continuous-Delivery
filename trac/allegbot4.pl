@@ -127,7 +127,7 @@ sub doIdle {
 				if ($s->{name} eq 'Checkout' && $valid && !$sent) {
 					$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $msgstart); #start
 					$sent = 1;
-				} elsif (($s->{status} eq 'F' || $s->{name} eq 'Finished') && $valid && $sent) {
+				} elsif (($s->{status} eq 'F' || $s->{name} eq 'Finished') && $valid) {
 					$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, GetBuild($s->{build})); #finish
 					$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$tracurl/build/Allegiance/".$s->{build})->light_blue);
 					$sent = 0;
@@ -150,7 +150,7 @@ sub doIdle {
 }};
 						close LATEST;
 						system("sv reload nginx");
-						DiscourseBuildPost("New update delivered! (build $build)","deployed-b${build}_$rev","The Allegiance Zone continuous delivery system has published a new version of the game!  Get it here: <a href=\"http://cdn.allegiancezone.com/install/Beta_b${build}_$rev.exe\">http://installer.allegiancezone.com/latest.exe?$snow</a><hr>$tracurl/build/Allegiance/$build","$tracurl/build/Allegiance/$build");
+						DiscourseBuildPost("New update delivered! (build $build)","deployed-b${build}_$rev","The Allegiance Zone continuous delivery system has published a new version of the game!  Get it here: <a href=\"http://cdn.allegiancezone.com/install/Beta_b${build}_$rev.exe\">http://installer.allegiancezone.com/latest.exe?$snow</a><hr>$tracurl/build/Allegiance/$build","$tracurl/build/Allegiance/$build","http://cdn.allegiancezone.com/install/Beta_b${build}_$rev.exe");
 					}
 				} else {
 					#$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $msgprog) if ($valid); #step
@@ -298,26 +298,36 @@ sub Echo {
 }
 
 sub DiscourseBuildPost {
-	my ($title,$meta,$text,$link) = @_;
+	my ($title,$meta,$text,$link,$dl) = @_;
 	my $dbh = DBI->connect('dbi:Pg:dbname=discourse', 'discourse', undef) or die "$!";
+	
 	my $inst = $dbh->prepare(q{INSERT INTO topics (title, last_posted_at, created_at, updated_at, views, posts_count, user_id, last_post_user_id, reply_count, featured_user1_id, 
 	featured_user2_id, featured_user3_id, avg_time, deleted_at, highest_post_number, image_url, off_topic_count, like_count, incoming_link_count, bookmark_count, star_count, 
 	category_id, visible, moderator_posts_count, closed, archived, bumped_at, has_summary, vote_count, archetype, featured_user4_id, notify_moderators_count, spam_count, 
 	illegal_count, inappropriate_count, pinned_at, score, percent_rank, notify_user_count, subtype, slug, auto_close_at, auto_close_user_id, auto_close_started_at, 
 	deleted_by_id, participant_count, word_count, excerpt, pinned_globally) VALUES
 	(?,NOW(),NOW(),NOW(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}) or die $!;
+	
 	my $inst2 = $dbh->prepare(q{INSERT INTO posts (user_id, topic_id, post_number, raw, cooked, created_at, updated_at, reply_to_post_number, reply_count, quote_count, deleted_at, 
 	off_topic_count, like_count, incoming_link_count, bookmark_count, avg_time, score, reads, post_type, vote_count, sort_order, last_editor_id, hidden, hidden_reason_id, 
 	notify_moderators_count, spam_count, illegal_count, inappropriate_count, last_version_at, user_deleted, reply_to_user_id, percent_rank, notify_user_count, like_score, 
 	deleted_by_id, edit_reason, word_count, version, cook_method, wiki, baked_at, baked_version, hidden_at, self_edits, reply_quoted, via_email) VALUES
 	(?,?,?,?,?,NOW(),NOW(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),?,?,?,?,?,?,?,?,?,?,?,NOW(),?,?,?,?,?)}) or die $!;
 	
+	my $inst3 = $dbh->prepare(q{INSERT INTO topic_links (topic_id, post_id, user_id, url, domain, internal, link_topic_id, created_at, updated_at, reflection, clicks, 
+	link_post_id, title, crawled_at, quote)  VALUES (?,?,?,?,?,?,?,NOW(),NOW(),?,?,?,?,?,?)}) or die $!;;
+	
 	$inst->execute($title,3,1,-1,-1,0,undef,undef,undef,undef,undef,1,undef,0,0,0,0,0,9,'t',0,'f','f','f',0,'regular',undef,0,0,0,0,undef,0,0,0,undef,$meta,undef,undef,undef,undef,1,128,"This is an AllegZoneBot generated message from: $link",'f');
 	my $tid = $dbh->last_insert_id(undef,undef,"topics",undef);
+	
 	$inst2->execute(-1,$tid,1,$text,$text,undef,0,0,undef,0,0,0,0,0,2,3,1,0,1,-1,0,undef,0,0,0,0,0,undef,0,0,0,undef,undef,43,2,2,'f',1,undef,0,0,0);
+	my $pid = $dbh->last_insert_id(undef,undef,"posts",undef);
+	
+	$inst3->execute($tid,$pid,-1,$dl,"cdn.allegiancezone.com",'t',undef,'f',0,undef,undef,undef,'f');	
 	
 	$inst->finish;
 	$inst2->finish;
+	$inst3->finish;
 	$dbh->disconnect;	
 }
 

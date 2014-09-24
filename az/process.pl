@@ -26,7 +26,8 @@ copy($dir."\\motd.mdl",$dir."\\config\\beta\\motd.mdl");
 #TODO- 
 copy($dir."\\AZDev.cfg",$dir."\\config\\AZ.cfg");
 copy($dir."\\motd.mdl",$dir."\\config\\event\\motd.mdl");
-copy($dir."\\motd.mdl",$dir."\\config\\club\\motd.mdl");
+copy($dir."\\motd.mdl",$dir."\\config\\event\\details.mdl");
+copy($dir."\\motd.mdl",$dir."\\config\\club\\motd.mdl");	#<-- actual one used now USEAZ
 copy($dir."\\motd.mdl",$dir."\\config\\motd.mdl");
 #
 
