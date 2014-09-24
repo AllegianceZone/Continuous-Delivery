@@ -70,13 +70,14 @@ VoS000090=VoS
 cc_09=CC 9
 cc_09b=CC 9b
 PCore005b=P-Core v0.5b
+PCore006=P-Core v0.6
 
 [OfficialCores]
-PCore005b=P-Core v0.5b
+PCore006=P-Core v0.6
 
 [OfficialServers]
-AZ=191.236.96.140
-AZDev=191.239.1.217
+allegiancezone=191.236.96.140
+azbuildslave=191.239.1.217
 
 [AllSrvUI]
 Site=http://autoupdate.allegiancezone.com
