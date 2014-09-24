@@ -71,6 +71,7 @@ foreach my $line (@lines) {
 	my @vals = split(/\s/,$line);
 	my $file = $vals[4];
 	next if ($file eq 'Allegiance.exe');
+	next if ($file eq 'Allegiance.pdb');
 	next if ($file eq 'Reloader.exe');
 	next if ($file eq 'inputmap1.mdl');
 	if (grep { $file eq $_ } @changed) {
