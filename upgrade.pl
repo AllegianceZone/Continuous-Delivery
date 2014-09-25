@@ -10,18 +10,19 @@ my $pid = 0;
 while (<PS>) {
 	if ($_ =~ /AllSrv\s+(\d+)/) {
 		$pid = $1;
+		my $cmd = "C:\\build\\pskill 2>crap $pid";
+		print "Killing AllSrv executable $pid\n";
+		`$cmd`;		
 	}
 }
 close PS;
 
-if ($pid != 0) {
-	my $cmd = "C:\\build\\pskill 2>crap $pid";
-	print "Killing AllSrv executable $pid\n";
-	`$cmd`;
-	sleep(5);
-	my $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
-	`$cmd`;
-}
+sleep(5) if ($pid);
+
+my $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
+`$cmd`;
+
+sleep(2);
 
 my $cmd = "copy C:\\AGC.dll C:\\AllegBeta\\AGC.dll /Y";
 `$cmd`;
