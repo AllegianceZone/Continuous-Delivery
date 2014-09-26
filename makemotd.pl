@@ -32,7 +32,7 @@ txtPrimaryHdg = "This message last updated $now\\nAZ R8 beta has been released";
 txtPrimaryTxt = "\\nWatch this space for AZ R8 beta updates\\nP-Core v6 IS OUT!\\n";
 txtSecondaryHdg = "\\nBeta Test Wed's are NOT BACK\\n\\n";
 txtSecondaryTxt = "\\nCome to irc.quakenet.org #FreeAllegiance!\\n";
-txtDetails = "AZ Team Members\\n--------------------------\\nAstn\\nImago\\n---------------------\\nWith special thanks to all previous devs and server admins.\\nogg decoder by Xiph.org";
+txtDetails = "AZ Team Members\\n--------------------------\\nAstn\\nImago\\n\\Metz\\n---------------------\\nWith special thanks to all previous devs and server admins.\\nogg decoder by Xiph.org";
 txtPadding      = "\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n";
 
 // END PROGRAM GENERATED SECTION
