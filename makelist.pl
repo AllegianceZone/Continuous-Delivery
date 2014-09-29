@@ -37,7 +37,13 @@ foreach my $line (@lines) {
 }
 
 my ($num_of_files,$num_of_dirs,$depth) = dircopy("C:\\build\\Artwork","C:\\build\\Package\\Artwork\\");
-print "Copied $num_of_files files in $num_of_dirs directories ($depth deep) from Artwork to Package\\Artwork\n";
+print "Copied $num_of_files files in $num_of_dirs directories from Artwork to Package\\Artwork\n";
+
+my ($num_of_files,$num_of_dirs,$depth) = dircopy("C:\\build\\Artwork_minimal","C:\\build\\Package\\Artwork_minimal\\");
+print "Copied $num_of_files files in $num_of_dirs directories from Artwork_minimal to Package\\Artwork_minimal\n";
+
+my ($num_of_files,$num_of_dirs,$depth) = dircopy("C:\\build\\Artwork_detailed","C:\\build\\Package\\Artwork_detailed\\");
+print "Copied $num_of_files files in $num_of_dirs directories from Artwork_detailed to Package\\Artwork_detailed\n";
 
 # No longer needed, our build is and always will be compatible
 #my ($num_of_files,$num_of_dirs,$depth) = dircopy("C:\\build\\Allegiance\\artwork","C:\\build\\Package\\Artwork\\");
@@ -128,7 +134,7 @@ close LIST;
 print "Appending client binaries to Filelist...\n";
 
 open(LIST,">>C:\\build\\betalist.txt");
-my @objs = ("C:\\Allegiance.exe", "C:\\Allegiance.pdb");
+my @objs = ("C:\\Allegiance.exe");
 foreach my $file (@objs) {
 	my $cmd = "C:\\build\\crc32.exe $file";
 	my $cmd2 = "C:\\build\\mscompress.exe $file";
@@ -149,8 +155,33 @@ foreach my $file (@objs) {
 }
 close LIST;
 
+open(LIST,">C:\\build\\list.txt");
+my @objs = ("C:\\Allegiance.exe");
+foreach my $file (@objs) {
+	my $cmd = "C:\\build\\crc32.exe $file";
+	my $cmd2 = "C:\\build\\mscompress.exe $file";
+	my ($modtime,$size)= (stat("$file"))[9,7];
+	next if (!$size);
+	my $crc = `$cmd`;
+	chomp $crc;
+	$size = sprintf("%09d",$size);
+	my $dt = strftime("%Y/%m/%d %H:%M:%S",localtime($modtime + (3600 * $offset)));
+	my $crc2 = "0" x ( 8 - length($crc) ) . $crc; 
+	my $bin = "Gurgle.crap";
+	if ($file =~ /.*\\([^\\]+$)/) {
+		$bin = $1;
+	}	
+	print LIST "$dt $size $crc2 $bin\n";
+	`$cmd2`;
+	move("${file}_","C:\\build\\AutoUpdate\\Noart\\$bin");
+}
+close LIST;
+
+
 print "Compressing Game Files for AU...\n";
 my $cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Game.7z C:\\build\\AutoUpdate\\Game\\* -xr!*Server -mx0 -mmt=off";
+system($cmd3);
+$cmd3 = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\AutoUpdate\\Noart.7z C:\\build\\AutoUpdate\\Noart\\* -xr!*Server -mx0 -mmt=off";
 system($cmd3);
 
 #TODO only changed like client...
@@ -158,7 +189,7 @@ open(LIST,">C:\\build\\serverlist.txt");
 print "Creating server list (cvh, igc, txt)\n";
 foreach my $file (@art) {
 	next if ($file =~ /^\./);
-	next if ($file !~ /\.igc|\.txt|\.cvh/i);
+	next if ($file !~ /\.igc|\.txt|\.cvh|\.ini/i);
 	my $cmd = "C:\\build\\crc32.exe C:\\build\\Package\\Artwork\\$file";
 	my $cmd2 = "C:\\build\\mscompress.exe C:\\build\\Package\\Artwork\\$file";
 	my ($modtime,$size)= (stat("C:\\build\\Package\\Artwork\\$file"))[9,7];
@@ -175,12 +206,13 @@ foreach my $file (@art) {
 		`$cmd2`;
 		move("C:\\build\\Package\\Artwork\\${file}_","C:\\build\\AutoUpdate\\Game\\Server\\$file");
 	}
+	copy("C:\\build\\Package\\Artwork\\${file}","C:\\build\\Package\\Server\\Artwork\\$file");
 }
 close LIST;
 
 print "Appending server binaries' to serverlist...\n";
 open(LIST,">>C:\\build\\serverlist.txt");
-my @objs = ("C:\\AllSrv.exe","C:\\AllSrv.pdb","C:\\AGC.dll","C:\\AGC.pdb","C:\\AllSrvUI.exe","C:\\AllSrvUI.pdb","C:\\AutoUpdate.pdb");
+my @objs = ("C:\\AllSrv.exe","C:\\AGC.dll","C:\\AllSrvUI.exe");
 foreach my $file (@objs) {
 	my $cmd = "C:\\build\\crc32.exe $file";
 	my $cmd2 = "C:\\build\\mscompress.exe $file";
@@ -198,6 +230,8 @@ foreach my $file (@objs) {
 	print LIST "$dt $size $crc2 $bin\n";
 	`$cmd2`;
 	move("${file}_","C:\\build\\AutoUpdate\\Game\\Server\\$bin");
+	next if ($file =~ /\.pdb/);
+	copy("${file}","C:\\build\\Package\\Server\\$bin");
 }
 close LIST;
 

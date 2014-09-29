@@ -34,7 +34,8 @@ my $cmd = "copy C:\\AllSrv.pdb C:\\AllegBeta\\AllSrv.pdb /Y";
 `$cmd`;
 my $cmd = "copy C:\\AllLobby.pdb C:\\AllegBeta\\AllLobby.pdb /Y";
 `$cmd`;
-
+my $cmd = "copy C:\\AutoUpdate.exe C:\\AllegBeta\\AutoUpdate.exe /Y";
+`$cmd`;
 my $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /s";
 `$cmd`;
 

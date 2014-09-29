@@ -139,13 +139,13 @@ sub doIdle {
     listen   80;
     server_name installer.allegiancezone.com installer;
     location / {      
-      rewrite ^ http://cdn.allegiancezone.com/install/Beta_b${build}_$rev.exe permanent;
+      rewrite ^ http://cdn.allegiancezone.com/install/AllegSetup_${build}.exe permanent;
     }
     location /latest {
-      rewrite ^ http://cdn.allegiancezone.com/install/Beta_b${build}_$rev.exe permanent;
+      rewrite ^ http://cdn.allegiancezone.com/install/AllegSetup_${build}.exe permanent;
     }
     location /latest.exe {
-      rewrite ^ http://cdn.allegiancezone.com/install/Beta_b${build}_$rev.exe permanent;
+      rewrite ^ http://cdn.allegiancezone.com/install/AllegSetup_${build}.exe permanent;
     }
 }};
 						close LATEST;

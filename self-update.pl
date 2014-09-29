@@ -23,6 +23,17 @@ system($cmd);
 $cmd = "copy C:\\build\\Continuous-Delivery\\* C:\\build /Y";
 system($cmd);
 
+$cmd = "copy C:\\build\\Continuous-Delivery\\Package\\Tools\\* C:\\build\\Package\\Tools /Y";
+system($cmd);
+$cmd = "copy C:\\build\\Continuous-Delivery\\Package\\Music\\* C:\\build\\Package\\Music /Y";
+system($cmd);
+$cmd = "copy C:\\build\\Continuous-Delivery\\Package\\Client\\* C:\\build\\Package\\Client /Y";
+system($cmd);
+$cmd = "copy C:\\build\\Continuous-Delivery\\Package\\Server\\* C:\\build\\Package\\Server /Y";
+system($cmd);
+$cmd = "copy C:\\build\\Continuous-Delivery\\Package\\Lobby\\* C:\\build\\Package\\Lobby /Y";
+system($cmd);
+
 print "Uploading deploy scripts to allegiancezone...\n";
 open(PWD,"C:\\pass.txt");
 my $pass = <PWD>;

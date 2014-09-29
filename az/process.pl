@@ -20,6 +20,7 @@ close(PID);
 
 copy($dir."\\AZDev.cfg",$dir."\\config\\AZ.cfg"); #<-- same thing now
 copy($dir."\\AZDev.cfg",$dir."\\config\\AZDev.cfg");
+copy($dir."\\AZNoart.cfg",$dir."\\config\\AZNoart.cfg");
 
 copy($dir."\\motd.mdl",$dir."\\config\\club\\motd.mdl");	#<-- actual one used now USEAZ
 copy($dir."\\motd.mdl",$dir."\\config\\beta\\motd.mdl");
@@ -34,6 +35,8 @@ copy($dir."\\details.mdl",$dir."\\config\\event\\details.mdl");
 my $cmd = "$lzma x -y -o".$dir."\\autoupdate\\Game ".$dir."\\Game.7z";
 system($cmd);
 my $cmd = "$lzma x -y -o".$dir."\\autoupdate\\Game\\Server ".$dir."\\Server.7z";
+system($cmd);
+my $cmd = "$lzma x -y -o".$dir."\\autoupdate\\Noart ".$dir."\\Noart.7z";
 system($cmd);
 
 my $cmd = $dir."\\azure-sync.bat";

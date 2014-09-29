@@ -55,9 +55,19 @@
 
 		<sh:exec file="echo" args="Copying objects"/>
 		<sh:exec file="C:\\build\\Allegiance\\Sh_GetRetail.bat" args="C:\\build\\Allegiance\\x86 C:\\build\\Allegiance\\"/>
-		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\AllegBetaPDB_b${build}_${revision}.exe C:\\build\\Allegiance\\x86\\*.pdb -mx9 -mmt=off" />
-		<sh:exec file="del" args=" C:\\build\\Package\\Release.7z"/>
-		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Release.7z C:\\build\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.exe C:\\build\\Package\\Client\\Allegiance.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Reloader.exe C:\\build\\Package\\Client\\Reloader.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllSrv.exe C:\\build\\Package\\Server\\AllSrv.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllSrvUI.exe C:\\build\\Package\\Server\\AllSrvUI.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AutoUpdate.exe C:\\build\\Package\\Server\\AutoUpdate.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AGC.dll C:\\build\\Package\\Server\\AGC.dll /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllLobby.exe C:\\build\\Package\\Lobby\\AllLobby.exe /Y" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Pdb_${build}.7z C:\\build\\Allegiance\\x86\\*.pdb -mx9 -mmt=off" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Client_${build}.7z C:\\build\\Package\\Client\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Server_${build}.7z C:\\build\\Package\\Server\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Lobby_${build}.7z C:\\build\\Package\\Lobby\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Music_${build}.7z C:\\build\\Package\\Music\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
+		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\Tools_${build}.7z C:\\build\\Package\\Tools\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.exe C:\\Allegiance.exe /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allegiance.pdb C:\\Allegiance.pdb /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Allsrv.exe C:\\Allsrv.exe /Y" />
@@ -73,26 +83,21 @@
 		<sh:exec file="echo" args="Making FileLists"/>
 		<sh:exec file="perl" args="C:\\build\\makelist.pl" />
 		<sh:exec file="echo" args="Making FileLists completed"/>
-		<sh:exec file="echo" args="Copying externals"/>
-		<sh:exec file="del" args=" C:\\build\\Package\\External.7z"/>
-		<sh:exec file="C:\\Program Files\\7-Zip\\7z.exe" args="a -t7z C:\\build\\Package\\External.7z C:\\build\\External\\* -mx9 -mmt=off"/>
-		<sh:exec file="echo" args="Copying externals completed"/>
-
 		<sh:exec file="echo" args="Copying artwork"/>
 		<sh:exec file="perl" args="C:\\build\\cached-artwork-7z.pl"/>
-		<sh:exec file="copy" args="C:\\build\\Package\\Artwork.7z C:\\build\\Package\\AllegArt_b${build}_${revision}.exe /Y"/>
 		<sh:exec file="echo" args="Copying artwork completed"/>
 	</step>
 	<step id="Publish Beta">
 		<sh:exec file="echo" args="Creating installer"/>
-		<sh:exec file="perl" args="C:\\build\\nsis.pl 1.3 ${build} ${revision} 0"/>
-		<sh:exec file="C:\\build\\sign-installer.bat" args="Beta_b${build}_${revision}.exe 3"/>
+		<sh:exec file="perl" args="C:\\build\\nsis-build.pl 1.3 ${build} ${revision}"/>
+		<sh:exec file="C:\\NSIS\\makensis.exe" args="/V2 C:\\build\\installer.nsi"/>
+		<sh:exec file="C:\\build\\sign-installer.bat" args="AllegSetup_${build}.exe 3"/>
 		<sh:exec file="echo" args="Completed creating installer"/>
 
 		<sh:exec file="echo" args="Attaching Lite"/>
-		<attach file="C:\\build\\Package\\Beta_b${build}_${revision}.exe" resource="build" description="Lite 1.3 version" />
-		<sh:exec file="echo" args="Download: ftp://azbuildslave.cloudapp.net:2121/Beta_b${build}_${revision}.exe"/>
-		<sh:exec file="perl" args="C:\\build\\announce-dl.pl ${build} ${revision} &quot;Download:  ftp://azbuildslave.cloudapp.net:2121/Beta_b${build}_${revision}.exe&quot;"/>
+		<attach file="C:\\build\\Package\\AllegSetup_${build}.exe" resource="build" description="Lite 1.3 version" />
+		<sh:exec file="echo" args="Download: ftp://azbuildslave.cloudapp.net:2121/AllegSetup_${build}.exe"/>
+		<sh:exec file="perl" args="C:\\build\\announce-dl.pl ${build} ${revision} &quot;Download:  ftp://azbuildslave.cloudapp.net:2121/AllegSetup_${build}.exe&quot;"/>
 	</step>
 	<!-- REMOVED PRODUCTION BUILDING UNTIL NEEDED !! -->
 																								<!--
