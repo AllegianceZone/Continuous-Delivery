@@ -68,15 +68,15 @@ my $ftp = Net::FTP->new($host, Debug => 1, Port => 21122, Timeout => 9999) or di
       
       	# BETA
       $ftp->put("C:\\build\\Package\\AllegSetup_".$build.".exe","install\\AllegSetup_".$build.".exe") or die "put failed ", $ftp->message;        
-      $ftp->put("C:\\build\\Package\\Minimal_".$build."7z","install\\Minimal_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Regular_".$build."7z","install\\Regular_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Hires_".$build."7z","install\\Hires_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Client_".$build."7z","install\\Client_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Server_".$build."7z","install\\Server_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Lobby_".$build."7z","install\\Lobby_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Tools_".$build."7z","install\\Tools_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Music_".$build."7z","install\\Music_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Pdb_".$build."7z","install\\Pdb_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\Minimal_".$build.".7z","install\\Minimal_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\Regular_".$build.".7z","install\\Regular_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\Hires_".$build.".7z","install\\Hires_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\Client_".$build.".7z","install\\Client_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\Server_".$build.".7z","install\\Server_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\Lobby_".$build.".7z","install\\Lobby_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\Tools_".$build.".7z","install\\Tools_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\Music_".$build.".7z","install\\Music_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("C:\\build\\Package\\Pdb_".$build.".7z","install\\Pdb_".$build.".7z") or die "put failed ", $ftp->message;    
   
  print "Files uploaded OK\n";
 $ftp->rename("notify/ready","notify/process") or die "notify failed ", $ftp->message;

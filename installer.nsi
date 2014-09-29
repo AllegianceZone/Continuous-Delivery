@@ -554,7 +554,7 @@ Function .onInit
     System::Call "user32::SetForegroundWindow(i r1) i."  
     Abort
   launch:
-  !insertmacro INSTALLOPTIONS_EXTRACT "C:\build\installer.ini"
+  !insertmacro INSTALLOPTIONS_EXTRACT "installer.ini"
   StrCpy $1 ${g1o3}
   AccessControl::GrantOnRegKey HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance" "(BU)" "FullAccess"
   AccessControl::GrantOnRegKey HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance" "(BU)" "FullAccess"

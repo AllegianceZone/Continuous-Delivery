@@ -72,11 +72,11 @@ FunctionEnd
 
 Function PageCreate
   !insertmacro MUI_HEADER_TEXT "$(READYPAGE_TITLE)" "$(READYPAGE_SUBTITLE)"
-  !insertmacro INSTALLOPTIONS_DISPLAY "C:\build\installer.ini"
+  !insertmacro INSTALLOPTIONS_DISPLAY "installer.ini"
 FunctionEnd
 
 Function PageLeave
-  !insertmacro INSTALLOPTIONS_READ $R0 "C:\build\installer.ini" "Settings" "State"
+  !insertmacro INSTALLOPTIONS_READ $R0 "installer.ini" "Settings" "State"
   ${Select} $R0
     ${Case} 0
       StrCpy $PAGETOKEEP "none"
@@ -180,8 +180,6 @@ FunctionEnd
 Function SetupDX
 	DetailPrint "DX Setup..."
 	SetOutPath "$TEMP"
-	;TODO Imago NYI
-	;File External\dxwebsetup.exe
 	ExecWait "$TEMP\dxwebsetup.exe"
 	Delete "$TEMP\dxwebsetup.exe"
 	SetOutPath "$INSTDIR"
@@ -205,7 +203,6 @@ Var GameExplorer_ContextId
     !ifdef GAME_EXPLORER_HELPER_PATH
       File "/oname=GameuxInstallHelper.dll" "${GAME_EXPLORER_HELPER_PATH}"
     !else
-    	;TODO Imago NYI
      File "C:\build\GameuxInstallHelper.dll"
     !endif
     !define GAME_EXPLORER_DLL_EXISTS
@@ -315,7 +312,6 @@ Var GameExplorer_ContextId
     !ifdef GAME_EXPLORER_HELPER_PATH
       File "/oname=GameuxInstallHelper.dll" "${GAME_EXPLORER_HELPER_PATH}"
     !else
-    	;TODO Imago NYI
       File "C:\build\GameuxInstallHelper.dll"
     !endif
     !define UNGAME_EXPLORER_DLL_EXISTS
