@@ -1,5 +1,16 @@
 use strict;
 
+my $build = $ARGV[0];
+
+my $lastbuild = $build;
+while(! -e "C:\\build\\Package\\Regular_${lastbuild}.7z") {
+	$lastbuild = $build - 1;
+	if ($lastbuild <= 1) {
+		print "couldn't find a last build!\n";
+		last;
+	}
+}
+
 my $dir = "C:\\build\\Package\\Artwork_minimal";
 
 opendir(DIR, $dir) or die "Can't open $dir $!";
@@ -24,10 +35,11 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Minimal.7z C:\\build\\Package\\Artwork_minimal\\ -xr!*.git -mx9 -mmt=off";
+	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Minimal_${build}.7z C:\\build\\Package\\Artwork_minimal\\ -xr!*.git -mx9 -mmt=off";
 	system($cmd);
 } else {
 	print "skipping minimal artwork 7z process, not changed!\n";
+	copy("C:\\build\\Package\\Minimal_${lastbuild}.7z","C:\\build\\Package\\Minimal_${build}.7z");
 };
 
 open(LA,">C:\\lastart-minimal");
@@ -60,10 +72,11 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Hires.7z C:\\build\\Package\\Artwork_detailed\\ -xr!*.git -mx9 -mmt=off";
+	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Hires_${build}.7z C:\\build\\Package\\Artwork_detailed\\ -xr!*.git -mx9 -mmt=off";
 	system($cmd);
 } else {
 	print "skipping detailed artwork 7z process, not changed!\n";
+	copy("C:\\build\\Package\\Hires_${lastbuild}.7z","C:\\build\\Package\\Hires_${build}.7z");
 };
 
 open(LA,">C:\\lastart-detailed");
@@ -96,10 +109,11 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Regular.7z C:\\build\\Package\\Artwork\\ -xr!*.git -mx9 -mmt=off";
+	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Regular_${build}.7z C:\\build\\Package\\Artwork\\ -xr!*.git -mx9 -mmt=off";
 	system($cmd);
 } else {
 	print "skipping regular artwork 7z process, not changed!\n";
+	copy("C:\\build\\Package\\Regular_${lastbuild}.7z","C:\\build\\Package\\Regular_${build}.7z");
 };
 
 open(LA,">C:\\lastart-regular");

@@ -84,7 +84,7 @@
 		<sh:exec file="perl" args="C:\\build\\makelist.pl" />
 		<sh:exec file="echo" args="Making FileLists completed"/>
 		<sh:exec file="echo" args="Copying artwork"/>
-		<sh:exec file="perl" args="C:\\build\\cached-artwork-7z.pl"/>
+		<sh:exec file="perl" args="C:\\build\\cached-artwork-7z.pl ${build}"/>
 		<sh:exec file="echo" args="Copying artwork completed"/>
 	</step>
 	<step id="Publish Beta">
