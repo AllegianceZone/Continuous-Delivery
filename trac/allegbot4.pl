@@ -150,7 +150,7 @@ sub doIdle {
 }};
 						close LATEST;
 						system("sv reload nginx");
-						DiscourseBuildPost("New update delivered! (build $build)","deployed-b${build}_$rev","The Allegiance Zone continuous delivery system has published a new version of the game!  Get it here: <a href=\"http://cdn.allegiancezone.com/install/Beta_b${build}_$rev.exe\">http://installer.allegiancezone.com/latest.exe?$snow</a><hr>$tracurl/build/Allegiance/$build","$tracurl/build/Allegiance/$build","http://cdn.allegiancezone.com/install/AllegSetup_${build}.exe");
+						DiscourseBuildPost("New update delivered! (build $build)","deployed-b${build}_$rev","The Allegiance Zone continuous delivery system has published a new version of the game!  Get it here: <a href=\"http://cdn.allegiancezone.com/install/AllegSetup_${build}.exe\">http://installer.allegiancezone.com/latest.exe?$snow</a><hr>$tracurl/build/Allegiance/$build","$tracurl/build/Allegiance/$build","http://cdn.allegiancezone.com/install/AllegSetup_${build}.exe");
 					}
 				} else {
 					#$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $msgprog) if ($valid); #step
