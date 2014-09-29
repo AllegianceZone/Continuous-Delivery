@@ -127,7 +127,7 @@ Section /o "Client"
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Client.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	  Delete Client.7z
+  	  Delete "$INSTDIR\Client.7z"
 	WriteIniStr "$INSTDIR\Allegiance Training.url" "InternetShortcut" "URL" "http://www.allegiancezone.com/#Training"
 	  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 	  	CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
@@ -167,7 +167,7 @@ Section /o "Minimal Artwork" g1o1
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Minimal.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	  Delete Minimal.7z  	
+  	  Delete "$INSTDIR\Minimal.7z"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZ.cfg"
@@ -202,7 +202,7 @@ Section /o "Regular Artwork" g1o2
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Regular.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	  Delete Regular.7z   	
+  	  Delete "$INSTDIR\Regular.7z"
   	
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"  	
@@ -238,7 +238,7 @@ Section  "Detailed Artwork" g1o3
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Hires.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	  Delete Hires.7z    	
+  	  Delete "$INSTDIR\Hires.7z"
   	
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"  	
@@ -323,7 +323,7 @@ Section /o "Music"
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Music.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	  Delete Music.7z    	
+  	  Delete  "$INSTDIR\Music.7z" 	
 SectionEnd
 
 Section /o "Program Databases"
@@ -349,7 +349,7 @@ Section /o "Program Databases"
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Pdb.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	  Delete Pdb.7z    	
+  	  Delete "$INSTDIR\Pdb.7z"
 SectionEnd
 
 Section /o "Artwork Tools"
@@ -377,7 +377,7 @@ Section /o "Artwork Tools"
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Tools.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	  Delete Tools.7z    	
+  	  Delete "$INSTDIR\Tools.7z"
   	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Artwork Tools.lnk" "$INSTDIR\Tools"
   	CreateShortCut "$DESKTOP\Allegiance Artwork Tools.lnk" "$INSTDIR\Tools"
 SectionEnd
@@ -419,7 +419,7 @@ Section /o "Server"
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Server.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	  Delete Server.7z  	
+  	  Delete "$INSTDIR\Server.7z"
 	
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}\Server" "ArtPath" "$INSTDIR\Server\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}\Server" "ArtPAth" "$INSTDIR\Server\Artwork"  		
