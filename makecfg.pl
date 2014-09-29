@@ -8,10 +8,13 @@ print "Updating AZDev.cfg\n";
 
 unlink "C:\\build\\FileList.txt";
 my $cmd5 = "C:\\build\\crc32.exe C:\\build\\list.txt";
-unlink "C:\\list.txt_";
-my $cmd6 = "C:\\build\\mscompress.exe C:\\build\\list.txt";
-`$cmd6`;
-move("C:\\build\\list.txt_","C:\\build\\FileList.txt");
+
+#unlink "C:\\list.txt_";
+#my $cmd6 = "C:\\build\\mscompress.exe C:\\build\\list.txt";
+#`$cmd6`;
+#move("C:\\build\\list.txt_","C:\\build\\FileList.txt");
+copy("C:\\build\\list.txt","C:\\build\\FileList.txt");
+
 my $crc0 = `$cmd5`;
 chomp $crc0;
 my $size0 = (stat("C:\\build\\list.txt"))[7];
