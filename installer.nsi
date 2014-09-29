@@ -19,7 +19,7 @@
 XPStyle "on"
 SetCompressor /SOLID lzma
 Name "Allegiance"
-OutFile "C:\build\AllegSetup_${BUILD}.exe"
+OutFile "C:\build\Package\AllegSetup_${BUILD}.exe"
 InstallDir "$PROGRAMFILES\Allegiance ${VERSION}"
 RequestExecutionLevel user
 BrandingText "Allegiance Zone - http://www.allegiancezone.com" 
