@@ -145,8 +145,8 @@ Section /o "Minimal Artwork" g1o1
 	AddSize 6000
 	SetOutPath "$INSTDIR"
 	DetailPrint "Minimal Artwork..."
-	CreateDirectory "$INSTDIR\Artwork"
-  	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
+	CreateDirectory "$INSTDIR\Artwork_minimal"
+  	AccessControl::GrantOnFile "$INSTDIR\Artwork_minimal" "(BU)" "GenericRead + GenericWrite"
   	StrCpy $1 "$INSTDIR\Minimal.7z"
 	IfFileExists $1 +1 DoesntExist
 	  Push $1
@@ -168,6 +168,8 @@ Section /o "Minimal Artwork" g1o1
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Minimal.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
   	  Delete "$INSTDIR\Minimal.7z"
+  	!insertmacro MoveFolder "$INSTDIR\Artwork_minimal\" "$INSTDIR\Artwork\" "*.*"
+  	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZ.cfg"
@@ -216,9 +218,9 @@ Section  "Detailed Artwork" g1o3
 	SetOutPath "$INSTDIR"
 	SectionIn 1
 	DetailPrint "Hires Artwork..."
-	CreateDirectory "$INSTDIR\Artwork"
-  	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
-  	
+	CreateDirectory "$INSTDIR\Artwork_detailed"
+  	AccessControl::GrantOnFile "$INSTDIR\Artwork_detailed" "(BU)" "GenericRead + GenericWrite"
+  	StrCpy $1 "$INSTDIR\Hires.7z"
 	IfFileExists $1 +1 DoesntExist
 	  Push $1
 	  Call FileSizeNew
@@ -239,7 +241,8 @@ Section  "Detailed Artwork" g1o3
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Hires.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
   	  Delete "$INSTDIR\Hires.7z"
-  	
+  	!insertmacro MoveFolder "$INSTDIR\Artwork_detailed\" "$INSTDIR\Artwork\" "*.*"
+  	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"  	
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZNoart.cfg"
@@ -302,8 +305,10 @@ SectionGroupEnd
 
 Section /o "Music"
 	AddSize 20000
-	SetOutPath "$INSTDIR"
+	ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
+	SetOutPath "$ARTPATH"
 	DetailPrint "Music..."
+	StrCpy $1 "$INSTDIR\Music.7z"
 	IfFileExists $1 +1 DoesntExist
 	  Push $1
 	  Call FileSizeNew
@@ -323,13 +328,14 @@ Section /o "Music"
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Music.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	  Delete  "$INSTDIR\Music.7z" 	
+  	  Delete "$INSTDIR\Music.7z" 	
 SectionEnd
 
 Section /o "Program Databases"
 	AddSize 60000
 	SetOutPath "$INSTDIR"
 	DetailPrint "Program Databases..."
+	StrCpy $1 "$INSTDIR\Pdb.7z"
 	IfFileExists $1 +1 DoesntExist
 	  Push $1
 	  Call FileSizeNew
@@ -354,10 +360,11 @@ SectionEnd
 
 Section /o "Artwork Tools"
 	AddSize 2000
-	SetOutPath "$INSTDIR"
+	SetOutPath "$INSTDIR\Tools"
 	DetailPrint "Artwork Tools..."
 	CreateDirectory "$INSTDIR\Tools"
 	AccessControl::GrantOnFile "$INSTDIR\Tools" "(BU)" "GenericRead + GenericWrite"
+	StrCpy $1 "$INSTDIR\Tools.7z"
 	IfFileExists $1 +1 DoesntExist
 	  Push $1
 	  Call FileSizeNew
@@ -391,7 +398,7 @@ Section /o "Server"
 	Pop $0
 	Pop $1
 	${If} $1 == 1
-		SimpleFC::AddApplication "AllSrv" "$INSTDIR\AllSrv.exe" 0 2 "" 1
+		SimpleFC::AddApplication "AllSrv" "$INSTDIR\Server\AllSrv.exe" 0 2 "" 1
 		DetailPrint "Added firewall exception."
 		Pop $0
 	${Endif}		
@@ -399,7 +406,7 @@ Section /o "Server"
 	CreateDirectory "$INSTDIR\Server\Artwork"
 	AccessControl::GrantOnFile "$INSTDIR\Server" "(BU)" "GenericRead + GenericWrite"
 	AccessControl::GrantOnFile "$INSTDIR\Server\Artwork" "(BU)" "GenericRead + GenericWrite"
-
+	StrCpy $1 "$INSTDIR\Server.7z"
 	IfFileExists $1 +1 DoesntExist
 	  Push $1
 	  Call FileSizeNew
@@ -431,17 +438,19 @@ SectionEnd
 
 Section /o "Lobby"
 	AddSize 1000
-	SetOutPath "$INSTDIR"
+	SetOutPath "$INSTDIR\Lobby"
 	DetailPrint "Lobby..."
 	SimpleFC::IsFirewallEnabled 
 	Pop $0
 	Pop $1
 	${If} $1 == 1
-		SimpleFC::AddApplication "AllLobby" "$INSTDIR\AllLobby.exe" 0 2 "" 1
+		SimpleFC::AddApplication "AllLobby" "$INSTDIR\Lobby\AllLobby.exe" 0 2 "" 1
 		DetailPrint "Added firewall exception."
 		Pop $0
 	${Endif}		
-	
+	CreateDirectory "$INSTDIR\Lobby"
+	AccessControl::GrantOnFile "$INSTDIR\Lobby" "(BU)" "GenericRead + GenericWrite"	
+	StrCpy $1 "$INSTDIR\Lobby.7z"
 	IfFileExists $1 +1 DoesntExist
 	  Push $1
 	  Call FileSizeNew
@@ -461,7 +470,7 @@ Section /o "Lobby"
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Lobby.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	  Delete Lobby.7z  	
+  	  Delete "$INSTDIR\Lobby.7z"
 	
 	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Lobby.lnk" "$INSTDIR\AllLobby.exe"
   	CreateShortCut "$DESKTOP\AllLobby.lnk" "$INSTDIR\AllLobby.exe"	
@@ -539,6 +548,7 @@ Function .onInstSuccess
 FunctionEnd
 
 Function .onInit
+  StrCpy $switch_overwrite 1
   BringToFront
   System::Call "kernel32::CreateMutexA(i 0, i 0, t '$(^Name)') i .r0 ?e"
   Pop $0
