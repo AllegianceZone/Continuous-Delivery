@@ -32,27 +32,33 @@ if ($pid != 0) {
 	my %stats;
 
 	my $biggameid = -1; my $bigcnt = 0; my $hasships = 0;
-	 foreach my $value (in $games) {
-		 my $gameid = $value->GameID;
-		 $stats{$gameid}{name} = $value->Name;
-		my $teams = $value->Teams;
-		 foreach my $team (in $teams) {
-				my $stations = $team->Stations;
-				my $count =  $stations->Count;
-				$stats{$gameid}{numteams}++ if ($count);
-				$stats{$gameid}{numstations} += $count;
-		 }	 
-		 my $cnt = 0;
-		 my $ships = $value->Ships;
-		 foreach my $ship (in $ships) {
-			$cnt++;
-		 }
-		 if ($cnt > $bigcnt) {
-			 $biggameid = $value->GameID;
-			 $bigcnt = $cnt;
-			 $hasships = 1;
-		 }
+	if ($games) {
+		 foreach my $value (in $games) {
+			 my $gameid = $value->GameID;
+			 $stats{$gameid}{name} = $value->Name;
+			 my $teams = $value->Teams;
+			 if ($teams) {
+				 foreach my $team (in $teams) {
+						my $stations = $team->Stations;
+						my $count =  $stations->Count;
+						$stats{$gameid}{numteams}++ if ($count);
+						$stats{$gameid}{numstations} += $count;
+				 }	 
+				 my $cnt = 0;
+				 my $ships = $value->Ships;
+				 if ($ships) {
+					 foreach my $ship (in $ships) {
+						$cnt++;
+					 }
+					 if ($cnt > $bigcnt) {
+						 $biggameid = $value->GameID;
+						 $bigcnt = $cnt;
+						 $hasships = 1;
+					 }
+				}
+			}
 
+		}
 	}
 
 	if ($hasships && $stats{$biggameid}) {
