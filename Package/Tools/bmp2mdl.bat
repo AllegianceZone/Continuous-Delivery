@@ -1,0 +1,1 @@
+FOR /F %%G IN (bitmap.txt) DO @mdlc.exe -convert %%G.bmp %%Gbmp.mdl
