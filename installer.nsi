@@ -39,7 +39,7 @@ XPStyle "on"
 Name "Allegiance"
 OutFile "C:\build\Package\AllegSetup_${BUILD}.exe"
 InstallDir "$PROGRAMFILES\Allegiance ${VERSION}"
-RequestExecutionLevel user
+RequestExecutionLevel admin
 BrandingText "Allegiance Zone - http://www.allegiancezone.com" 
 Insttype "Install client /w high-resolution graphics"
 Insttype "Install client /w regular graphics"
