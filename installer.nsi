@@ -104,7 +104,7 @@ SectionEnd
 Section /o "Client"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\2.gif"
-	AddSize 5000
+	AddSize 8000
 	SectionIn 1 2
 	DetailPrint "Client..."
 	Call GetDXVersion
@@ -164,7 +164,7 @@ SectionGroup "Graphics" SecArtwork
 Section /o "Minimal Graphics" g1o1
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\bombrun.gif"
-	AddSize 6000
+	AddSize 7000
 	SetOutPath "$INSTDIR"
 	DetailPrint "Minimal Artwork..."
 	CreateDirectory "$INSTDIR\Artwork_minimal"
@@ -201,7 +201,7 @@ SectionEnd
 Section /o "Regular Graphics" g1o2
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\bombrun.gif"
-	AddSize 600000
+	AddSize 700000
 	SetOutPath "$INSTDIR"
 	SectionIn 2
 	DetailPrint "Regular Artwork..."
@@ -239,7 +239,7 @@ SectionEnd
 Section  "Detailed Graphics" g1o3
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\bombrun.gif"
-	AddSize 800000
+	AddSize 1300000
 	SetOutPath "$INSTDIR"
 	SectionIn 1
 	DetailPrint "Hires Artwork..."
@@ -330,7 +330,7 @@ SectionGroupEnd
 Section /o "Music"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\2.gif"
-	AddSize 20000
+	AddSize 30000
 	ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
 	SetOutPath "$ARTPATH"
 	DetailPrint "Music..."
@@ -359,7 +359,7 @@ SectionEnd
 Section /o "Program Databases"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\screen.gif"
-	AddSize 60000
+	AddSize 70000
 	SetOutPath "$INSTDIR"
 	DetailPrint "Program Databases..."
 	StrCpy $1 "$INSTDIR\Pdb.7z"
@@ -385,7 +385,7 @@ Section /o "Program Databases"
 SectionEnd
 
 Section /o "Artwork Tools"
-	AddSize 2000
+	AddSize 5000
 	SetOutPath "$INSTDIR\Tools"
 	DetailPrint "Artwork Tools..."
 	CreateDirectory "$INSTDIR\Tools"
@@ -417,7 +417,7 @@ SectionEnd
 Section /o "Server"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\screen.gif"
-	AddSize 100000
+	AddSize 110000
 	SetOutPath "$INSTDIR\Server"
 	DetailPrint "Server..."
 	SectionIn 3
@@ -463,7 +463,7 @@ Section /o "Server"
 SectionEnd
 
 Section /o "Lobby"
-	AddSize 1000
+	AddSize 2000
 	SetOutPath "$INSTDIR\Lobby"
 	DetailPrint "Lobby..."
 	SimpleFC::IsFirewallEnabled 
