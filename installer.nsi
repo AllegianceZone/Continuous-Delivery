@@ -1,5 +1,7 @@
 ; ImagoTrigger@gmail.com for AZ
 
+SetCompressor /SOLID lzma
+
 !include "C:\build\build.nsh"
 
 !define CLIENT_FILE_URL "http://cdn.allegiancezone.com/install/Client_${BUILD}.7z"
@@ -12,12 +14,28 @@
 !define MUSIC_FILE_URL "http://cdn.allegiancezone.com/install/Music_${BUILD}.7z"
 !define PDB_FILE_URL "http://cdn.allegiancezone.com/install/Pdb_${BUILD}.7z"
 
+var BGHWND
+
+Function myonguiinit
+    	SetOutPath $TEMP
+	File "C:\build\mainbkgnd2.gif"
+	File "C:\build\bombrun.gif"
+	File "C:\build\screen.gif"
+	File "C:\build\2.gif"
+	BgImage::SetBg /NOUNLOAD /GRADIENT 0x00 0x00 0x00 0x00 0x00 0x00
+	BgImage::Redraw
+	Sleep 1
+	FindWindow $BGHWND 'NSISBGImage'
+	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\mainbkgnd2.gif"
+FunctionEnd
+
+!define MUI_CUSTOMFUNCTION_GUIINIT myonguiinit
+
 !include "MUI2.nsh"
 !include "InstallOptions.nsh"
 !include "Sections.nsh"
 
 XPStyle "on"
-SetCompressor /SOLID lzma
 Name "Allegiance"
 OutFile "C:\build\Package\AllegSetup_${BUILD}.exe"
 InstallDir "$PROGRAMFILES\Allegiance ${VERSION}"
@@ -84,6 +102,8 @@ SetOutPath "$INSTDIR"
 SectionEnd
 
 Section /o "Client"
+	AnimGif::stop
+	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\2.gif"
 	AddSize 5000
 	SectionIn 1 2
 	DetailPrint "Client..."
@@ -142,6 +162,8 @@ SectionEnd
 
 SectionGroup "Graphics" SecArtwork
 Section /o "Minimal Graphics" g1o1
+	AnimGif::stop
+	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\bombrun.gif"
 	AddSize 6000
 	SetOutPath "$INSTDIR"
 	DetailPrint "Minimal Artwork..."
@@ -177,6 +199,8 @@ Section /o "Minimal Graphics" g1o1
 SectionEnd
 
 Section /o "Regular Graphics" g1o2
+	AnimGif::stop
+	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\bombrun.gif"
 	AddSize 600000
 	SetOutPath "$INSTDIR"
 	SectionIn 2
@@ -213,6 +237,8 @@ Section /o "Regular Graphics" g1o2
 SectionEnd
 
 Section  "Detailed Graphics" g1o3
+	AnimGif::stop
+	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\bombrun.gif"
 	AddSize 800000
 	SetOutPath "$INSTDIR"
 	SectionIn 1
@@ -302,6 +328,8 @@ SectionEnd
 SectionGroupEnd
 
 Section /o "Music"
+	AnimGif::stop
+	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\2.gif"
 	AddSize 20000
 	ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
 	SetOutPath "$ARTPATH"
@@ -329,6 +357,8 @@ Section /o "Music"
 SectionEnd
 
 Section /o "Program Databases"
+	AnimGif::stop
+	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\screen.gif"
 	AddSize 60000
 	SetOutPath "$INSTDIR"
 	DetailPrint "Program Databases..."
@@ -385,6 +415,8 @@ Section /o "Artwork Tools"
 SectionEnd
 
 Section /o "Server"
+	AnimGif::stop
+	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\screen.gif"
 	AddSize 100000
 	SetOutPath "$INSTDIR\Server"
 	DetailPrint "Server..."
@@ -549,25 +581,6 @@ Function .onInstSuccess
 	${EndIf}	
 FunctionEnd
 
-Function .onGUIInit
-
-    !insertmacro MUI_GUIINIT_OUTERDIALOG ""
-
-    !ifdef MUI_PAGE_FUNCTION_GUIINIT
-      Call "${MUI_PAGE_FUNCTION_GUIINIT}"
-    !endif  
-
-    !ifdef MUI_CUSTOMFUNCTION_GUIINIT
-      Call "${MUI_CUSTOMFUNCTION_GUIINIT}"
-    !endif
-
-    	SetOutPath $TEMP
-	File "C:\build\mainbkgnd2.bmp"
-	BgImage::SetBg /FILLSCREEN "$TEMP\mainbkgnd2.bmp"
-	BgImage::Redraw
-	Delete "$TEMP\mainbkgnd2.bmp"
-FunctionEnd
-
 Function .onInit
     SetOutPath $TEMP
     File "C:\build\Stormy.skf"
@@ -609,6 +622,10 @@ FunctionEnd
 
 Function .onGUIEnd
 	NSIS_SkinCrafter_Plugin::destroy
+	Delete "$TEMP\mainbkgnd2.gif"
+	Delete "$TEMP\2.gif"	
+	Delete "$TEMP\screen.gif"	
+	Delete "$TEMP\bombrun.gif"	
 FunctionEnd
 
 
@@ -621,4 +638,3 @@ Function un.onInit
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove $(^Name) and all of its components?" IDYES +2
   Abort
 FunctionEnd
-
