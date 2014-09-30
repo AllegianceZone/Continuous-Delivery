@@ -23,8 +23,8 @@ OutFile "C:\build\Package\AllegSetup_${BUILD}.exe"
 InstallDir "$PROGRAMFILES\Allegiance ${VERSION}"
 RequestExecutionLevel user
 BrandingText "Allegiance Zone - http://www.allegiancezone.com" 
-Insttype "Install client /w high-resolution artwork"
-Insttype "Install client /w low-resolution artwork"
+Insttype "Install client /w high-resolution graphics"
+Insttype "Install client /w regular graphics"
 Insttype "Install server"
 
 Var PAGETOKEEP
@@ -140,8 +140,8 @@ Section /o "Client"
 	  WriteRegStr HKCR "Allegiance\shell\open\command" "" '"$INSTDIR\Allegiance.exe" -autojoin %1 %2 %3 %4 %5 %6'
 SectionEnd
 
-SectionGroup "Artwork" SecArtwork
-Section /o "Minimal Artwork" g1o1
+SectionGroup "Graphics" SecArtwork
+Section /o "Minimal Graphics" g1o1
 	AddSize 6000
 	SetOutPath "$INSTDIR"
 	DetailPrint "Minimal Artwork..."
@@ -176,7 +176,7 @@ Section /o "Minimal Artwork" g1o1
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZ.cfg"		
 SectionEnd
 
-Section /o "Regular Artwork" g1o2
+Section /o "Regular Graphics" g1o2
 	AddSize 600000
 	SetOutPath "$INSTDIR"
 	SectionIn 2
@@ -212,7 +212,7 @@ Section /o "Regular Artwork" g1o2
 	
 SectionEnd
 
-Section  "Detailed Artwork" g1o3
+Section  "Detailed Graphics" g1o3
 	AddSize 800000
 	SetOutPath "$INSTDIR"
 	SectionIn 1
@@ -247,7 +247,7 @@ Section  "Detailed Artwork" g1o3
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZNoart.cfg"		
 SectionEnd
 
-Section /o "No Artwork" g1o4
+Section /o "No Graphics" g1o4
 	SetOutPath "$INSTDIR"
 	SectionIn 3
 	DetailPrint "No Artwork..."
@@ -268,7 +268,7 @@ Section /o "No Artwork" g1o4
 		System::Call "*(i$HWNDPARENT, i, ir0, t'Select your existing Artwork folder or press Cancel to skip', i${BIF_RETURNONLYFSDIRS}, i, i, i) i.r1"
 		System::Call "shell32::SHBrowseForFolder(i r1) i.r2"
 		${If} $2 == 0
-			MessageBox MB_ICONEXCLAMATION|MB_OK "Unable to determine your Artwork location$\nYou must set an ArtPath string in the Allegiance\${VERSION} registry key!"
+			MessageBox MB_ICONEXCLAMATION|MB_OK "Unable to determine your Artwork folder location$\nYou must set an ArtPath string in the Allegiance\${VERSION} registry key!"
 		${Else}
 			System::Call "shell32::SHGetPathFromIDList(i r2, t.r3)"
 			FileOpen $4 "$3\introscreen.mdl" r
@@ -549,7 +549,30 @@ Function .onInstSuccess
 	${EndIf}	
 FunctionEnd
 
+Function .onGUIInit
+
+    !insertmacro MUI_GUIINIT_OUTERDIALOG ""
+
+    !ifdef MUI_PAGE_FUNCTION_GUIINIT
+      Call "${MUI_PAGE_FUNCTION_GUIINIT}"
+    !endif  
+
+    !ifdef MUI_CUSTOMFUNCTION_GUIINIT
+      Call "${MUI_CUSTOMFUNCTION_GUIINIT}"
+    !endif
+
+    	SetOutPath $TEMP
+	File "C:\build\mainbkgnd2.bmp"
+	BgImage::SetBg /FILLSCREEN "$TEMP\mainbkgnd2.bmp"
+	BgImage::Redraw
+	Delete "$TEMP\mainbkgnd2.bmp"
+FunctionEnd
+
 Function .onInit
+    SetOutPath $TEMP
+    File "C:\build\Stormy.skf"
+    NSIS_SkinCrafter_Plugin::skin /NOUNLOAD "$TEMP\Stormy.skf"
+    Delete "$TEMP\Stormy.skf"
   StrCpy $switch_overwrite 1
   BringToFront
   System::Call "kernel32::CreateMutexA(i 0, i 0, t '$(^Name)') i .r0 ?e"
@@ -584,6 +607,11 @@ Function .onSelChange
   !insertmacro EndRadioButtons	 
 FunctionEnd
 
+Function .onGUIEnd
+	NSIS_SkinCrafter_Plugin::destroy
+FunctionEnd
+
+
 Function un.onUninstSuccess
   HideWindow
   MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) was successfully removed from your computer."
@@ -593,3 +621,4 @@ Function un.onInit
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove $(^Name) and all of its components?" IDYES +2
   Abort
 FunctionEnd
+
