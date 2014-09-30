@@ -24,16 +24,16 @@ outline = Color(0.6,0.0,0.0);
 
 // BEGIN PROGRAM GENERATED SECTION
 
-logo = ImportImage("nebplnt02bmp", true);
+logo = ImportImageFromFile("fakemessage.png", true);
 
 txtBanner = "Welcome to the Allegiance Zone\\n";
 txtUpdated = "Current builds: $notoctal (b${build}_$revision)\\nMake sure you are using the latest: Press Esc and compare with the above\\n\\n";
 txtPrimaryHdg = "This message last updated $now\\nAZ R8 beta has been released";
 txtPrimaryTxt = "\\nWatch this space for AZ R8 beta updates\\nP-Core v6 IS OUT!\\n";
-txtSecondaryHdg = "\\nBeta Test Wed's are NOT BACK\\n\\n";
-txtSecondaryTxt = "\\nCome to irc.quakenet.org #FreeAllegiance!\\n";
-txtDetails = "AZ Team Members\\n--------------------------\\nAstn\\nImago\\n\\nMetz\\n---------------------\\nWith special thanks to all previous devs and server admins.\\nogg decoder by Xiph.org";
-txtPadding      = "\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n";
+txtSecondaryHdg = "\\nCome to irc.quakenet.org #FreeAllegiance!\\n";
+//txtSecondaryTxt = "\\nCome to irc.quakenet.org #FreeAllegiance!\\n";
+txtDetails = "\\nAZ Team Members\\n--------------------------\\nAstn\\nImago\\nMetz\\n---------------------\\nWith special thanks to all previous devs and server admins.\\nogg decoder by Xiph.org";
+txtPadding      = "\\n\\n\\n\\n\\n\\n\\n";
 
 // END PROGRAM GENERATED SECTION
 
@@ -83,24 +83,25 @@ imgSecondaryHdg = GroupImage
    TranslateImage(StringImage(JustifyCenter, 511, medBoldVerdana, black, txtSecondaryHdg), Point(6,Subtract(-1,PointY(ImageSize(imgPrimaryTxt)))))
 ]);
 
-imgSecondaryTxt = GroupImage
-
-([
-   TranslateImage(StringImage(JustifyCenter, 511, medBoldVerdana, white, txtSecondaryTxt), Point(5,Subtract(0,PointY(ImageSize(imgSecondaryHdg))))),
-   TranslateImage(StringImage(JustifyCenter, 511, medBoldVerdana, black, txtSecondaryTxt),   Point(6,Subtract(-1,PointY(ImageSize(imgSecondaryHdg)))))
-]);
+//imgSecondaryTxt = GroupImage
+//
+//([
+//   TranslateImage(StringImage(JustifyCenter, 511, medBoldVerdana, white, txtSecondaryTxt), Point(5,Subtract(0,PointY(ImageSize(imgSecondaryHdg))))),
+//   TranslateImage(StringImage(JustifyCenter, 511, medBoldVerdana, black, txtSecondaryTxt),   Point(6,Subtract(-1,PointY(ImageSize(imgSecondaryHdg)))))
+//]);
 
 imgDetails = GroupImage
 
 ([
-   TranslateImage(StringImage(JustifyLeft, 511, medBoldVerdana, white, txtDetails), Point(5,Subtract(0,PointY(ImageSize(imgSecondaryTxt))))),
-   TranslateImage(StringImage(JustifyLeft, 511, medBoldVerdana, black, txtDetails), Point(6,Subtract(-1,PointY(ImageSize(imgSecondaryTxt)))))
+   TranslateImage(StringImage(JustifyLeft, 511, medBoldVerdana, white, txtDetails), Point(5,Subtract(0,PointY(ImageSize(imgSecondaryHdg))))),
+   TranslateImage(StringImage(JustifyLeft, 511, medBoldVerdana, black, txtDetails), Point(6,Subtract(-1,PointY(ImageSize(imgSecondaryHdg)))))
 ]);
 
 imgPadding = TranslateImage(StringImage(JustifyCenter, 511, medBoldVerdana, white, txtPadding), Point(5,Subtract(0,PointY(ImageSize(imgDetails)))));
 
 
-textImage = GroupImage([imgBanner,imgUpdated,imgPrimaryHdg,imgPrimaryTxt,imgSecondaryHdg,imgSecondaryTxt,imgDetails,imgPadding,imgLogo]);
+//textImage = GroupImage([imgBanner,imgUpdated,imgPrimaryHdg,imgPrimaryTxt,imgSecondaryHdg,imgSecondaryTxt,imgDetails,imgPadding,imgLogo]);
+textImage = GroupImage([imgBanner,imgUpdated,imgPrimaryHdg,imgPrimaryTxt,imgSecondaryHdg,imgDetails,imgLogo]);
 
 textPosition = Point(5, Subtract(PointY(ImageSize(textImage)),200));
 
