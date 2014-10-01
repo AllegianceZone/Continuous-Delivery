@@ -6,10 +6,6 @@ use File::Slurp;
 my $host = "allegiancezone.cloudapp.net";
 my $build = $ARGV[0];
 
-open(LOG,"C:\\build\\self-update.log");
-my @lines = <LOG>;
-close LOG;
-
 if (-e "C:\\self-updated") {
 	print "Build & Deploy tool updates for this run:\n";
 	foreach (@lines) {print $_};
@@ -20,6 +16,11 @@ if (-e "C:\\self-updated") {
 
 my $cmd = "C:\\build\\self-update.bat > C:\\build\\self-update.log 2>&1";
 system($cmd);
+
+open(LOG,"C:\\build\\self-update.log");
+my @lines = <LOG>;
+close LOG;
+
 $cmd = "copy C:\\build\\Continuous-Delivery\\* C:\\build /Y";
 system($cmd);
 

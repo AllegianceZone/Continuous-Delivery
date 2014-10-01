@@ -82,7 +82,13 @@
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllClub.pdb C:\\AllClub.pdb /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllClub.exe C:\\AllClub.exe /Y" />	
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigsLib.dll C:\\PigsLib.dll /Y" />
-		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigsLib.pdb C:\\PigsLib.pdb /Y" />			
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigsLib.pdb C:\\PigsLib.pdb /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigSrv.exe C:\\PigSrv.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigSrv.pdb C:\\PigSrv.pdb /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigAccts.exe C:\\PigAccts.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigAccts.pdb C:\\PigAccts.pdb /Y" />	
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigConfig.exe C:\\PigConfig.exe /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigConfig.pdb C:\\PigConfig.pdb /Y" />		
 		<sh:exec file="echo" args="Copying objects completed"/>
 		<sh:exec file="echo" args="Making FileLists"/>
 		<sh:exec file="perl" args="C:\\build\\makelist.pl" />
