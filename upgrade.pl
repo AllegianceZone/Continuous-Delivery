@@ -19,27 +19,65 @@ close PS;
 
 sleep(5) if ($pid);
 
+open (PS,"C:\\build\\pslist.exe 2>crap AllClub |");
+$pid = 0;
+while (<PS>) {
+	if ($_ =~ /AllClub\s+(\d+)/) {
+		$pid = $1;
+		my $cmd = "C:\\build\\pskill 2>crap $pid";
+		print "Killing AllClub executable $pid\n";
+		`$cmd`;		
+	}
+}
+close PS;
+
+
+sleep(5) if ($pid);
+
 my $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
+`$cmd`;
+
+$cmd = "regsvr32 C:\\AllegBeta\\PigsLib.dll /u /s";
 `$cmd`;
 
 sleep(2);
 
-my $cmd = "copy C:\\AGC.dll C:\\AllegBeta\\AGC.dll /Y";
+$cmd = "copy C:\\AGC.dll C:\\AllegBeta\\AGC.dll /Y";
 `$cmd`;
-my $cmd = "copy C:\\AllSrv.exe C:\\AllegBeta\\AllSrv.exe /Y";
+$cmd = "copy C:\\AllSrv.exe C:\\AllegBeta\\AllSrv.exe /Y";
 `$cmd`;
-my $cmd = "copy C:\\AGC.pdb C:\\AllegBeta\\AGC.pdb /Y";
+$cmd = "copy C:\\AGC.pdb C:\\AllegBeta\\AGC.pdb /Y";
 `$cmd`;
-my $cmd = "copy C:\\AllSrv.pdb C:\\AllegBeta\\AllSrv.pdb /Y";
+$cmd = "copy C:\\AllSrv.pdb C:\\AllegBeta\\AllSrv.pdb /Y";
 `$cmd`;
-my $cmd = "copy C:\\AllLobby.pdb C:\\AllegBeta\\AllLobby.pdb /Y";
+$cmd = "copy C:\\AllLobby.pdb C:\\AllegBeta\\AllLobby.pdb /Y";
 `$cmd`;
-my $cmd = "copy C:\\AutoUpdate.exe C:\\AllegBeta\\AutoUpdate.exe /Y";
+$cmd = "copy C:\\AutoUpdate.exe C:\\AllegBeta\\AutoUpdate.exe /Y";
 `$cmd`;
-my $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /s";
+$cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /s";
+`$cmd`;
+$cmd = "regsvr32 C:\\AllegBeta\\PigsLib.dll /s";
+`$cmd`;
+$cmd = "copy C:\\PigsLib.pdb C:\\AllegBeta\\PigsLib.pdb /Y";
+`$cmd`;
+$cmd = "copy C:\\PigsLib.dll C:\\AllegBeta\\PigsLib.dll /Y";
+`$cmd`;
+$cmd = "copy C:\\AllClub.exe C:\\AllegBeta\\AllClub.exe /Y";
+`$cmd`;
+$cmd = "copy C:\\AllClub.pdb C:\\AllegBeta\\AllClub.pdb /Y";
 `$cmd`;
 
-my $cmd = "C:\\AllegBeta\\AllSrv.exe";
+$cmd = "C:\\AllegBeta\\AllClub.exe";
+print "Starting AllSrv executable\n";
+my $ProcessObj = "";
+Win32::Process::Create($ProcessObj,
+				$cmd,
+				"AllClub",
+				0,
+				NORMAL_PRIORITY_CLASS|CREATE_NEW_CONSOLE,
+				"C:\\AllegBeta")|| die "Failed to start AllClub";
+
+$cmd = "C:\\AllegBeta\\AllSrv.exe";
 print "Starting AllSrv executable\n";
 my $ProcessObj = "";
 Win32::Process::Create($ProcessObj,
