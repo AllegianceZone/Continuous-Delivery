@@ -34,6 +34,12 @@ close PS;
 
 sleep(5) if ($pid);
 
+$cmd = "C:\\AllegBeta\\AllSrv.exe -UnRegServer";
+`$cmd`;
+
+$cmd = "C:\\AllegBeta\\PigSrv.exe -UnRegServer";
+`$cmd`;
+
 my $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
 `$cmd`;
 
@@ -66,17 +72,23 @@ $cmd = "copy C:\\AllClub.exe C:\\AllegBeta\\AllClub.exe /Y";
 `$cmd`;
 $cmd = "copy C:\\AllClub.pdb C:\\AllegBeta\\AllClub.pdb /Y";
 `$cmd`;
-$cmd = "copy C:\\AllClub.exe C:\\AllegBeta\\PigSrv.exe /Y";
+$cmd = "copy C:\\PigSrv.exe C:\\AllegBeta\\PigSrv.exe /Y";
 `$cmd`;
-$cmd = "copy C:\\AllClub.pdb C:\\AllegBeta\\PigSrv.pdb /Y";
+$cmd = "copy C:\\PigSrv.pdb C:\\AllegBeta\\PigSrv.pdb /Y";
 `$cmd`;
-$cmd = "copy C:\\AllClub.exe C:\\AllegBeta\\PigConfig.exe /Y";
+$cmd = "copy C:\\PigConfig.exe C:\\AllegBeta\\PigConfig.exe /Y";
 `$cmd`;
-$cmd = "copy C:\\AllClub.pdb C:\\AllegBeta\\PigConfig.pdb /Y";
+$cmd = "copy C:\\PigConfig.pdb C:\\AllegBeta\\PigConfig.pdb /Y";
 `$cmd`;
-$cmd = "copy C:\\AllClub.exe C:\\AllegBeta\\PigAccts.exe /Y";
+$cmd = "copy C:\\PigAccts.exe C:\\AllegBeta\\PigAccts.exe /Y";
 `$cmd`;
-$cmd = "copy C:\\AllClub.pdb C:\\AllegBeta\\PigAccts.pdb /Y";
+$cmd = "copy C:\\PigAccts.pdb C:\\AllegBeta\\PigAccts.pdb /Y";
+`$cmd`;
+
+$cmd = "C:\\AllegBeta\\AllSrv.exe -RegServer";
+`$cmd`;
+
+$cmd = "C:\\AllegBeta\\PigSrv.exe -RegServer pigs PigPass!";
 `$cmd`;
 
 $cmd = "C:\\AllegBeta\\AllClub.exe";
