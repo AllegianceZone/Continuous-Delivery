@@ -8,6 +8,9 @@ my $build = $ARGV[0];
 
 if (-e "C:\\self-updated") {
 	print "Build & Deploy tool updates for this run:\n";
+	open(LOG,"C:\\build\\self-update.log");
+	my @lines = <LOG>;
+	close LOG;
 	foreach (@lines) {print $_};
 	exit 0;
 } else {
