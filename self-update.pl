@@ -15,7 +15,7 @@ if (-e "C:\\self-updated") {
 }
 
 my $cmd = "C:\\build\\self-update.bat > C:\\build\\self-update.log 2>&1";
-system($cmd);
+`$cmd`;
 
 open(LOG,"C:\\build\\self-update.log");
 my @lines = <LOG>;
