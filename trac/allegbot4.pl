@@ -149,7 +149,7 @@ sub doIdle {
     }
 }};
 						close LATEST;
-						system("sv reload nginx");
+						system("sv restart nginx");
 						DiscourseBuildPost("New update delivered! (build $build)","deployed-b${build}_$rev","The Allegiance Zone continuous delivery system has published a new version of the game!  Get it here: <a href=\"http://cdn.allegiancezone.com/install/AllegSetup_${build}.exe\">http://installer.allegiancezone.com/latest.exe?$snow</a><hr>$tracurl/build/Allegiance/$build","$tracurl/build/Allegiance/$build","http://cdn.allegiancezone.com/install/AllegSetup_${build}.exe");
 					}
 				} else {
