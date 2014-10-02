@@ -5,12 +5,16 @@
 use strict;
 use Win32::Process;
 
+my $cmd = "";
+
+print "Shutting down...\n";
+
 open (PS,"C:\\build\\pslist.exe 2>crap AllSrv |");
 my $pid = 0;
 while (<PS>) {
 	if ($_ =~ /AllSrv\s+(\d+)/) {
 		$pid = $1;
-		my $cmd = "C:\\build\\pskill 2>crap $pid";
+		$cmd = "C:\\build\\pskill 2>crap $pid";
 		print "Killing AllSrv executable $pid\n";
 		`$cmd`;		
 	}
@@ -24,7 +28,7 @@ $pid = 0;
 while (<PS>) {
 	if ($_ =~ /AllClub\s+(\d+)/) {
 		$pid = $1;
-		my $cmd = "C:\\build\\pskill 2>crap $pid";
+		$cmd = "C:\\build\\pskill 2>crap $pid";
 		print "Killing AllClub executable $pid\n";
 		`$cmd`;		
 	}
@@ -34,19 +38,26 @@ close PS;
 
 sleep(5) if ($pid);
 
-$cmd = "C:\\AllegBeta\\AllSrv.exe -UnRegServer";
+print "Unregistering...\n";
+
+$cmd = "C:\\AllegBeta\\PigAccts.exe -UnRegServer";
+`$cmd`;
+
+$cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
 `$cmd`;
 
 $cmd = "C:\\AllegBeta\\PigSrv.exe -UnRegServer";
 `$cmd`;
 
-my $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
+$cmd = "C:\\AllegBeta\\AllSrv.exe -UnRegServer";
 `$cmd`;
 
 $cmd = "regsvr32 C:\\AllegBeta\\PigsLib.dll /u /s";
 `$cmd`;
 
 sleep(2);
+
+print "Copying files again...\n";
 
 $cmd = "copy C:\\AGC.dll C:\\AllegBeta\\AGC.dll /Y";
 `$cmd`;
@@ -60,13 +71,9 @@ $cmd = "copy C:\\AllLobby.pdb C:\\AllegBeta\\AllLobby.pdb /Y";
 `$cmd`;
 $cmd = "copy C:\\AutoUpdate.exe C:\\AllegBeta\\AutoUpdate.exe /Y";
 `$cmd`;
-$cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /s";
-`$cmd`;
 $cmd = "copy C:\\PigsLib.pdb C:\\AllegBeta\\PigsLib.pdb /Y";
 `$cmd`;
 $cmd = "copy C:\\PigsLib.dll C:\\AllegBeta\\PigsLib.dll /Y";
-`$cmd`;
-$cmd = "regsvr32 C:\\AllegBeta\\PigsLib.dll /s";
 `$cmd`;
 $cmd = "copy C:\\AllClub.exe C:\\AllegBeta\\AllClub.exe /Y";
 `$cmd`;
@@ -85,14 +92,27 @@ $cmd = "copy C:\\PigAccts.exe C:\\AllegBeta\\PigAccts.exe /Y";
 $cmd = "copy C:\\PigAccts.pdb C:\\AllegBeta\\PigAccts.pdb /Y";
 `$cmd`;
 
+print "Re-registering...\n";
+
+$cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /s";
+`$cmd`;
+
+$cmd = "regsvr32 C:\\AllegBeta\\PigsLib.dll /s";
+`$cmd`;
+
 $cmd = "C:\\AllegBeta\\AllSrv.exe -RegServer";
+`$cmd`;
+
+$cmd = "C:\\AllegBeta\\PigAccts.exe -RegServer pigs PigPass!";
 `$cmd`;
 
 $cmd = "C:\\AllegBeta\\PigSrv.exe -RegServer pigs PigPass!";
 `$cmd`;
 
+print "Restarting...\n";
+
 $cmd = "C:\\AllegBeta\\AllClub.exe";
-print "Starting AllSrv executable\n";
+print "Starting AllClub executable\n";
 my $ProcessObj = "";
 Win32::Process::Create($ProcessObj,
 				$cmd,
