@@ -81,6 +81,8 @@
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\Reloader.exe C:\\Reloader.exe /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllClub.pdb C:\\AllClub.pdb /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\AllClub.exe C:\\AllClub.exe /Y" />	
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\TCObj.dll C:\\TCObj.dll /Y" />
+		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\TCObj.pdb C:\\TCObj.pdb /Y" />		
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigsLib.dll C:\\PigsLib.dll /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigsLib.pdb C:\\PigsLib.pdb /Y" />
 		<sh:exec file="copy" args="C:\\build\\Allegiance\\x86\\PigSrv.exe C:\\PigSrv.exe /Y" />

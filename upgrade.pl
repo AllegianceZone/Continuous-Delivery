@@ -43,13 +43,16 @@ print "Unregistering...\n";
 $cmd = "C:\\AllegBeta\\PigAccts.exe -UnRegServer";
 `$cmd`;
 
-$cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
-`$cmd`;
-
 $cmd = "C:\\AllegBeta\\PigSrv.exe -UnRegServer";
 `$cmd`;
 
 $cmd = "C:\\AllegBeta\\AllSrv.exe -UnRegServer";
+`$cmd`;
+
+$cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
+`$cmd`;
+
+$cmd = "regsvr32 C:\\AllegBeta\\TCObj.dll /u /s";
 `$cmd`;
 
 $cmd = "regsvr32 C:\\AllegBeta\\PigsLib.dll /u /s";
@@ -95,6 +98,9 @@ $cmd = "copy C:\\PigAccts.pdb C:\\AllegBeta\\PigAccts.pdb /Y";
 print "Re-registering...\n";
 
 $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /s";
+`$cmd`;
+
+$cmd = "regsvr32 C:\\AllegBeta\\TCObj.dll /s";
 `$cmd`;
 
 $cmd = "regsvr32 C:\\AllegBeta\\PigsLib.dll /s";
