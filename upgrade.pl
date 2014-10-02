@@ -94,6 +94,10 @@ $cmd = "copy C:\\PigAccts.exe C:\\AllegBeta\\PigAccts.exe /Y";
 `$cmd`;
 $cmd = "copy C:\\PigAccts.pdb C:\\AllegBeta\\PigAccts.pdb /Y";
 `$cmd`;
+$cmd = "copy C:\\TCObj.pdb C:\\AllegBeta\\TCObj.pdb /Y";
+`$cmd`;
+$cmd = "copy C:\\TCObj.dll C:\\AllegBeta\\TCObj.dll /Y";
+`$cmd`;
 
 print "Re-registering...\n";
 
