@@ -25,6 +25,13 @@ if ($gi && $gi->Status() == 4) {
 	sleep(3);
 }
 
+my $sc = Win32::OLE->GetObject("WinNT://$host/AllClub,service");
+if ($sl && $sl->Status() == 4) {
+	print "Stopping Allclub service\n";	
+	$sl->Stop();
+	sleep(3);
+}
+
 unlink "D:\\gameinfod.json";
 
 if ($sl && $sl->Status == 4) {
@@ -48,15 +55,20 @@ my $cmd = "copy $dir\\AllLobby.exe $lobbypath\\AllLobby.exe /Y";
 system($cmd);
 my $cmd = "copy $dir\\AllLobby.pdb $lobbypath\\AllLobby.pdb /Y";
 system($cmd);
+my $cmd = "copy $dir\\AllClub.exe $lobbypath\\AllClub.exe /Y";
+system($cmd);
+my $cmd = "copy $dir\\AllClub.pdb $lobbypath\\AllClub.pdb /Y";
+system($cmd);
 my $cmd = "regsvr32 $serverpath\\AGC.dll /u /s";
 system($cmd);
 my $cmd = "regsvr32 $serverpath\\AGC.dll /s";
 system($cmd);
 
 
-print "Starting Lobby service\n";
+print "Starting services\n";
 $gi->start();
 $sl->Start();
+$sc->Start();
 sleep(20);
 
 exit 0;

@@ -49,8 +49,8 @@ $cmd = "C:\\AllegBeta\\PigSrv.exe -UnRegServer";
 $cmd = "C:\\AllegBeta\\AllSrv.exe -UnRegServer";
 `$cmd`;
 
-$cmd = "C:\\AllegBeta\\AllClub.exe -UnRegServer";
-`$cmd`;
+#$cmd = "C:\\AllegBeta\\AllClub.exe -UnRegServer";
+#`$cmd`;
 
 $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
 `$cmd`;
@@ -116,8 +116,8 @@ $cmd = "regsvr32 C:\\AllegBeta\\PigsLib.dll /s";
 $cmd = "C:\\AllegBeta\\AllSrv.exe -RegServer";
 `$cmd`;
 
-$cmd = "C:\\AllegBeta\\AllClub.exe -RegServer";
-`$cmd`;
+#$cmd = "C:\\AllegBeta\\AllClub.exe -RegServer";
+#`$cmd`;
 
 $cmd = "C:\\AllegBeta\\PigAccts.exe -RegServer pigs PigPass!";
 `$cmd`;
@@ -127,16 +127,6 @@ $cmd = "C:\\AllegBeta\\PigSrv.exe -RegServer pigs PigPass!";
 
 
 print "Restarting...\n";
-
-$cmd = "C:\\AllegBeta\\AllClub.exe";
-print "Starting AllClub executable\n";
-my $ProcessObj = "";
-Win32::Process::Create($ProcessObj,
-				$cmd,
-				"AllClub",
-				0,
-				NORMAL_PRIORITY_CLASS|CREATE_NEW_CONSOLE,
-				"C:\\AllegBeta")|| die "Failed to start AllClub";
 
 $cmd = "C:\\AllegBeta\\AllSrv.exe";
 print "Starting AllSrv executable\n";

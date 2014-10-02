@@ -49,7 +49,10 @@ my $ftp = Net::FTP->new($host, Debug => 1, Port => 21122, Timeout => 9999) or di
       or die "put failed ", $ftp->message;       
        $ftp->put("C:\\build\\Allegiance\\objs10\\AZRetail\\Lobby\\AllLobby.pdb")
       or die "put failed ", $ftp->message;
-
+       $ftp->put("C:\\build\\Allegiance\\objs10\\AZRetail\\Club\\AllClub.exe")
+      or die "put failed ", $ftp->message;       
+       $ftp->put("C:\\build\\Allegiance\\objs10\\AZRetail\\Club\\AllClub.pdb")
+      or die "put failed ", $ftp->message;
 
        $ftp->put("C:\\AutoUpdate.exe","autoupdate\\Game\\Server\\standalone\\AutoUpdate.exe")
       or die "put failed ", $ftp->message;   
