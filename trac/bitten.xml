@@ -14,23 +14,23 @@
 		<sh:exec file="perl" args="C:\\build\\slmver.pl"/>
 	</step>
 	<step id="Debug Compile Beta">
-		<sh:exec file="echo" args="FZDebug build started"/>
-		<sh:exec file="msbuild.exe" args="/m C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=FZDebug /t:build"/>
+		<sh:exec file="echo" args="AZDebug build started"/>
+		<sh:exec file="msbuild.exe" args="/m C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=AZDebug /t:build"/>
 		<sh:exec file="C:\\perl\\bin\\perl.exe" args="C:\\build\\msbuild-result.pl ${path} ${build}"/>
-		<sh:exec file="echo" args="FZDebug build completed"/>
+		<sh:exec file="echo" args="AZDebug build completed"/>
 	</step>
 	<step id="Smoke Test">
 		<sh:exec file="echo" args="Re-register Debug AGC.dll started"/>
-		<sh:exec file="regsvr32" args="C:\\build\\Allegiance\\objs10\\FZDebug\\AGC\\AGC.dll /s"/>
+		<sh:exec file="regsvr32" args="C:\\build\\Allegiance\\objs10\\AZDebug\\AGC\\AGC.dll /s"/>
 		<sh:exec file="echo" args="Re-register Debug AGC.dll completed"/>
 		<sh:exec file="perl" args="C:\\build\\change_artpath.pl C:\\build\\Artwork"/>
 		<sh:exec file="mkdir" args="C:\\build\\Artwork\\PCore005b"/>
 		<sh:exec file="copy" args="C:\\build\\Test\\*.csv C:\\build\\Artwork\\PCore005b /Y"/>
 		<sh:exec file="echo" args="Running Allsrv.exe -Core2Text PCore005b"/>
-		<sh:exec file="perl" args="C:\\build\\test.pl C:\\build\\Allegiance\\objs10\\FZDebug\\FedSrv\\AllSrv.exe &quot;allsrv -Core2Text PCore005b&quot; C:\\build\\Test"/>
+		<sh:exec file="perl" args="C:\\build\\test.pl C:\\build\\Allegiance\\objs10\\AZDebug\\FedSrv\\AllSrv.exe &quot;allsrv -Core2Text PCore005b&quot; C:\\build\\Test"/>
 		<sh:exec file="perl" args="C:\\build\\change_artpath.pl C:\\AllegBeta\\Artwork"/>
 		<sh:exec file="echo" args="Running Allsrv.exe -Core2Text PCore005b completed"/>
-		<sh:exec file="regsvr32" args="C:\\build\\Allegiance\\objs10\\FZDebug\\AGC\\AGC.dll /u /s"/>
+		<sh:exec file="regsvr32" args="C:\\build\\Allegiance\\objs10\\AZDebug\\AGC\\AGC.dll /u /s"/>
 		<sh:exec file="perl" args="C:\\build\\remove_tree.pl"/>
 		<sh:exec file="move" args="/Y C:\\build\\Artwork\\PCore005b C:\\build\\Test"/>
 		<sh:exec file="echo" args="Checking core"/>
@@ -43,14 +43,14 @@
 		<!-- UNCOMMENT BELOW TO BUILD AGAINST VC9 !! -->
 		<!-- <sh:exec file="perl" args="C:\\build\\vcxproj.pl 0 1"/> -->
 		<!-- UNCOMMENT ABOVE TO BUILD AGAINST VC9 ^^ -->
-		<sh:exec file="echo" args="FZRetail Beta rebuild started"/>
-		<sh:exec file="msbuild.exe" args="/m C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=FZRetail /t:build"/>
+		<sh:exec file="echo" args="AZRetail Beta rebuild started"/>
+		<sh:exec file="msbuild.exe" args="/m C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=AZRetail /t:build"/>
 		<sh:exec file="C:\\perl\\bin\\perl.exe" args="C:\\build\\msbuild-result.pl ${path} ${build}"/>
-		<sh:exec file="echo" args="FZRetail Beta rebuild completed"/>
+		<sh:exec file="echo" args="AZRetail Beta rebuild completed"/>
 	</step>
 	<step id="Package Beta">
 		<sh:exec file="echo" args="Signing objects"/>
-		<sh:exec file="C:\\build\\sign.bat" args="FZRetail"/>
+		<sh:exec file="C:\\build\\sign.bat" args="AZRetail"/>
 		<sh:exec file="echo" args="Signing objects completed"/>
 
 		<sh:exec file="echo" args="Copying objects"/>
@@ -116,14 +116,14 @@
 																								<step id="Release Compile Prod">
 																									<sh:exec file="C:\\build\\checkout.bat" args="${revision}"/>
 																									<sh:exec file="perl" args="C:\\build\\vcxproj.pl 1 1"/>
-																									<sh:exec file="echo" args="FZRetail Prod rebuild started"/>
-																									<sh:exec file="msbuild.exe" args="C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=FZRetail /t:build /m"/>
+																									<sh:exec file="echo" args="AZRetail Prod rebuild started"/>
+																									<sh:exec file="msbuild.exe" args="C:\\build\\Allegiance\\VS2010\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,C:\\build\\logger.dll;C:\\build\\msbuild.xml /noconlog /nologo /p:Configuration=AZRetail /t:build /m"/>
 																									<sh:exec file="C:\\perl\\bin\\perl.exe" args="C:\\build\\msbuild-result.pl ${path} ${build}"/>
-																									<sh:exec file="echo" args="FZRetail Prod rebuild completed"/>
+																									<sh:exec file="echo" args="AZRetail Prod rebuild completed"/>
 																								</step>
 																								<step id="Package Prod">
 																									<sh:exec file="echo" args="Signing objects"/>
-																									<sh:exec file="C:\\build\\sign.bat" args="FZRetail"/>
+																									<sh:exec file="C:\\build\\sign.bat" args="AZRetail"/>
 																									<sh:exec file="echo" args="Signing objects completed"/>
 
 																									<sh:exec file="echo" args="Copying objects"/>
