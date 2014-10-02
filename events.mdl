@@ -1,4 +1,0 @@
-events = [
- ("10/25/2014", "23:00", "A Super Event", "This is the best event description ever made! (testing)", "http://azforum.cloudapp.net/events.cgi?signup=1", ["testevent.mml","test2.mml"]),
- ("10/26/2014", "18:00", "Squad Game", "MS vs AZ - Snowflake - PC6", "http://azforum.cloudapp.net/events.cgi?signup=2", ["sg.mml"])
-];

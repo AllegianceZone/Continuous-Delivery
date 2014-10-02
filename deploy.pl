@@ -29,11 +29,7 @@ my $ftp = Net::FTP->new($host, Debug => 1, Port => 21122, Timeout => 9999) or di
        $ftp->put("C:\\build\\AZNoart.cfg")
       or die "put failed ", $ftp->message;      
        $ftp->put("C:\\build\\motd.mdl")
-      or die "put failed ", $ftp->message; 
-       $ftp->put("C:\\build\\events.mdl")
-      or die "put failed ", $ftp->message;    
-       $ftp->put("C:\\build\\details.mdl")
-      or die "put failed ", $ftp->message;        
+      or die "put failed ", $ftp->message;      
        $ftp->put("C:\\build\\serverlist.txt")
       or die "put failed ", $ftp->message;  
        $ftp->put("C:\\build\\Allegiance\\src\\Lobby\\zgameinfo.h")
