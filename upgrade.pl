@@ -49,6 +49,9 @@ $cmd = "C:\\AllegBeta\\PigSrv.exe -UnRegServer";
 $cmd = "C:\\AllegBeta\\AllSrv.exe -UnRegServer";
 `$cmd`;
 
+$cmd = "C:\\AllegBeta\\AllClub.exe -UnRegServer";
+`$cmd`;
+
 $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /u /s";
 `$cmd`;
 
@@ -113,11 +116,15 @@ $cmd = "regsvr32 C:\\AllegBeta\\PigsLib.dll /s";
 $cmd = "C:\\AllegBeta\\AllSrv.exe -RegServer";
 `$cmd`;
 
+$cmd = "C:\\AllegBeta\\AllClub.exe -RegServer";
+`$cmd`;
+
 $cmd = "C:\\AllegBeta\\PigAccts.exe -RegServer pigs PigPass!";
 `$cmd`;
 
 $cmd = "C:\\AllegBeta\\PigSrv.exe -RegServer pigs PigPass!";
 `$cmd`;
+
 
 print "Restarting...\n";
 
