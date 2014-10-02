@@ -5,7 +5,7 @@ my $build = $ARGV[0];
 
 my $lastbuild = $build;
 while(! -e "C:\\build\\Package\\Regular_${lastbuild}.7z") {
-	$lastbuild = $build - 1;
+	$lastbuild = $lastbuild - 1;
 	if ($lastbuild <= 1) {
 		print "couldn't find a last build!\n";
 		last;
@@ -40,7 +40,7 @@ if ($la ne "$ts $files[0]") {
 	system($cmd);
 } else {
 	print "skipping minimal artwork 7z process, not changed!\n";
-	copy("C:\\build\\Package\\Minimal_${lastbuild}.7z","C:\\build\\Package\\Minimal_${build}.7z");
+	copy("C:\\build\\Package\\Minimal_${lastbuild}.7z","C:\\build\\Package\\Minimal_${build}.7z") if ($lastbuild != $build);
 };
 
 open(LA,">C:\\lastart-minimal");
@@ -77,7 +77,7 @@ if ($la ne "$ts $files[0]") {
 	system($cmd);
 } else {
 	print "skipping detailed artwork 7z process, not changed!\n";
-	copy("C:\\build\\Package\\Hires_${lastbuild}.7z","C:\\build\\Package\\Hires_${build}.7z");
+	copy("C:\\build\\Package\\Hires_${lastbuild}.7z","C:\\build\\Package\\Hires_${build}.7z") if ($lastbuild != $build);
 };
 
 open(LA,">C:\\lastart-detailed");
@@ -114,7 +114,7 @@ if ($la ne "$ts $files[0]") {
 	system($cmd);
 } else {
 	print "skipping regular artwork 7z process, not changed!\n";
-	copy("C:\\build\\Package\\Regular_${lastbuild}.7z","C:\\build\\Package\\Regular_${build}.7z");
+	copy("C:\\build\\Package\\Regular_${lastbuild}.7z","C:\\build\\Package\\Regular_${build}.7z") if ($lastbuild != $build);
 };
 
 open(LA,">C:\\lastart-regular");
