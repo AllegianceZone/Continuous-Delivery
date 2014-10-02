@@ -23,20 +23,11 @@ close PS;
 
 sleep(5) if ($pid);
 
-open (PS,"C:\\build\\pslist.exe 2>crap AllClub |");
-$pid = 0;
-while (<PS>) {
-	if ($_ =~ /AllClub\s+(\d+)/) {
-		$pid = $1;
-		$cmd = "C:\\build\\pskill 2>crap $pid";
-		print "Killing AllClub executable $pid\n";
-		`$cmd`;		
-	}
-}
-close PS;
+$cmd = "C:\\build\\pskill 2>crap AllSrv";
+print "Killing AllSrv executable by name...\n";
+`$cmd`;	
 
-
-sleep(5) if ($pid);
+sleep(2);
 
 print "Unregistering...\n";
 
