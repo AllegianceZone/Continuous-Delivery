@@ -20,7 +20,7 @@ foreach my $proj (@projs) {
 	foreach my $line (@lines) {
 		my $name = $proj;
 		$name =~ s/C:\\build\\Allegiance\\VS2010\\//i;		
-		if ($line =~ /\<ItemDefinitionGroup Condition="'\$\(Configuration\)\|\$\(Platform\)'=='FZRetail\|Win32'"\>/i) {
+		if ($line =~ /\<ItemDefinitionGroup Condition="'\$\(Configuration\)\|\$\(Platform\)'=='AZRetail\|Win32'"\>/i) {
 			$bfound = 1;
 		}
 		if ($bfound) {
@@ -43,7 +43,7 @@ foreach my $proj (@projs) {
 			}			
 		}
 		if ($do9) {
-			if ($line =~ /\<PropertyGroup Condition="'\$\(Configuration\)\|\$\(Platform\)'=='FZRetail\|Win32'" Label="Configuration"\>/) {
+			if ($line =~ /\<PropertyGroup Condition="'\$\(Configuration\)\|\$\(Platform\)'=='AZRetail\|Win32'" Label="Configuration"\>/) {
 				$bfound2 = 1;
 			}
 			
