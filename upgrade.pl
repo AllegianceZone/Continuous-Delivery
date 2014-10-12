@@ -27,6 +27,16 @@ $cmd = "C:\\build\\pskill 2>crap AllSrv";
 print "Killing AllSrv executable by name...\n";
 `$cmd`;	
 
+$cmd = "TASKKILL /IM AllSrv.exe /T /F";
+system($cmd);
+
+$cmd = "TASKKILL /IM PigAccts.exe /T /F";
+system($cmd);
+
+$cmd = "TASKKILL /IM PigSrv.exe /T /F";
+system($cmd);
+
+
 sleep(2);
 
 print "Unregistering...\n";
@@ -128,6 +138,9 @@ Win32::Process::Create($ProcessObj,
 				0,
 				NORMAL_PRIORITY_CLASS|CREATE_NEW_CONSOLE,
 				"C:\\AllegBeta")|| die "Failed to start AllSrv";
+				
+$cmd = "C:\\build\\makedm.bat";
+`$cmd`;				
 
 exit 0;
 
