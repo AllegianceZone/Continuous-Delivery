@@ -26,9 +26,9 @@ if ($gi && $gi->Status() == 4) {
 }
 
 my $sc = Win32::OLE->GetObject("WinNT://$host/AllClub,service");
-if ($sl && $sl->Status() == 4) {
+if ($sc && $sc->Status() == 4) {
 	print "Stopping Allclub service\n";	
-	$sl->Stop();
+	$sc->Stop();
 	sleep(3);
 }
 

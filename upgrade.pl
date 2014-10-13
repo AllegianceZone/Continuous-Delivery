@@ -9,12 +9,6 @@ my $cmd = "";
 
 print "Shutting down...\n";
 
-$cmd = "TASKKILL /IM PigAccts.exe /T /F";
-system($cmd);
-
-$cmd = "TASKKILL /IM PigSrv.exe /T /F";
-system($cmd);
-
 open (PS,"C:\\build\\pslist.exe 2>crap AllSrv |");
 my $pid = 0;
 while (<PS>) {
@@ -62,6 +56,11 @@ $cmd = "regsvr32 C:\\AllegBeta\\TCObj.dll /u /s";
 
 $cmd = "regsvr32 C:\\AllegBeta\\PigsLib.dll /u /s";
 `$cmd`;
+
+sleep(2);
+
+$cmd = "TASKKILL /IM AllSrv.exe /T /F";
+system($cmd);
 
 sleep(2);
 
@@ -131,6 +130,11 @@ $cmd = "net stop server";
 `$cmd`;
 
 print "Restarting...\n";
+
+$cmd = "TASKKILL /IM AllSrv.exe /T /F";
+system($cmd);
+
+sleep(2);
 
 $cmd = "C:\\AllegBeta\\AllSrv.exe";
 print "Starting AllSrv executable\n";

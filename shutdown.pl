@@ -8,6 +8,12 @@ use Win32::OLE;
 my $host = "azbuildslave";
 our $utl;
 
+$cmd = "TASKKILL /IM PigAccts.exe /T /F";
+system($cmd);
+
+$cmd = "TASKKILL /IM PigSrv.exe /T /F";
+system($cmd);
+
 open (PS,"C:\\build\\pslist.exe 2>crap AllSrv |");
 my $pid = 0;
 while (<PS>) {
