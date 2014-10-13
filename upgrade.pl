@@ -142,6 +142,8 @@ Win32::Process::Create($ProcessObj,
 				NORMAL_PRIORITY_CLASS|CREATE_NEW_CONSOLE,
 				"C:\\AllegBeta")|| die "Failed to start AllSrv";
 				
+sleep(10);
+				
 $cmd = "C:\\build\\makedm.bat";
 `$cmd`;				
 
