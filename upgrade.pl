@@ -120,12 +120,17 @@ $cmd = "C:\\AllegBeta\\AllSrv.exe -RegServer";
 #$cmd = "C:\\AllegBeta\\AllClub.exe -RegServer";
 #`$cmd`;
 
+$cmd = "net start server";
+`$cmd`;
+
 $cmd = "C:\\AllegBeta\\PigAccts.exe -RegServer pigs PigPass!";
 `$cmd`;
 
 $cmd = "C:\\AllegBeta\\PigSrv.exe -RegServer pigs PigPass!";
 `$cmd`;
 
+$cmd = "net stop server";
+`$cmd`;
 
 print "Restarting...\n";
 
