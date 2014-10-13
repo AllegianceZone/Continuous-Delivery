@@ -8,7 +8,7 @@ use Win32::OLE;
 my $host = "azbuildslave";
 our $utl;
 
-$cmd = "TASKKILL /IM PigAccts.exe /T /F";
+my $cmd = "TASKKILL /IM PigAccts.exe /T /F";
 system($cmd);
 
 $cmd = "TASKKILL /IM PigSrv.exe /T /F";
@@ -26,7 +26,7 @@ close PS;
 if ($pid != 0) {
 
 	print "Registering local AGC...\n";	
-	my $cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /s";
+	$cmd = "regsvr32 C:\\AllegBeta\\AGC.dll /s";
 	`$cmd`;
 	sleep(3);
 
