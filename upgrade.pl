@@ -9,6 +9,12 @@ my $cmd = "";
 
 print "Shutting down...\n";
 
+$cmd = "TASKKILL /IM PigAccts.exe /T /F";
+system($cmd);
+
+$cmd = "TASKKILL /IM PigSrv.exe /T /F";
+system($cmd);
+
 open (PS,"C:\\build\\pslist.exe 2>crap AllSrv |");
 my $pid = 0;
 while (<PS>) {
@@ -29,13 +35,6 @@ print "Killing AllSrv executable by name...\n";
 
 $cmd = "TASKKILL /IM AllSrv.exe /T /F";
 system($cmd);
-
-$cmd = "TASKKILL /IM PigAccts.exe /T /F";
-system($cmd);
-
-$cmd = "TASKKILL /IM PigSrv.exe /T /F";
-system($cmd);
-
 
 sleep(2);
 $cmd = "net start server";
