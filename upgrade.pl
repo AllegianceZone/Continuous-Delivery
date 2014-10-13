@@ -38,6 +38,8 @@ system($cmd);
 
 
 sleep(2);
+$cmd = "net start server";
+`$cmd`;
 
 print "Unregistering...\n";
 
@@ -119,9 +121,6 @@ $cmd = "C:\\AllegBeta\\AllSrv.exe -RegServer";
 
 #$cmd = "C:\\AllegBeta\\AllClub.exe -RegServer";
 #`$cmd`;
-
-$cmd = "net start server";
-`$cmd`;
 
 $cmd = "C:\\AllegBeta\\PigAccts.exe -RegServer pigs PigPass!";
 `$cmd`;

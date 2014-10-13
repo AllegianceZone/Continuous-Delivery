@@ -193,13 +193,16 @@ sub doMsg { # TODO: timer! (no flood)
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$tracurl/build/Allegiance/$2")->light_blue);
 		
 	}	
+	#games via JSON
+	GetGames() if ($str =~ /^\!games$/);
+	
 	#latest via PgSQL
 	if ($str =~ /^\!latest$/) {
 		my $ret = GetLatest();
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, $ret->{msg});
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$tracurl/build/Allegiance/".$ret->{id})->light_blue);
 	}
-	#search via PgSQL #TODO GITHUB!
+	#search via PgSQL
 	if ($str =~ /^\!search (.*)/) {
 		my $q = uri_escape($1);
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, "Pshhh, find it yourself you lazy SOB...");
@@ -289,6 +292,22 @@ sub GetTitle {
 	my $url = shift;
 	$mech->get($url);
 	return ($mech->success()) ? $mech->title() : undef;
+}
+
+sub GetGames {
+	$mech->get("http://allegiancezone.com/lobbyinfo.ashx");
+	if ($mech->success()) {
+		my $res = $mech->res();
+		my $info = decode_json($res->decoded_content);
+		my $intro = String::IRC->new('Total Players:')->bold->underline;
+		my $totalplayers = 0;
+		foreach my $info (@$info) {
+			$totalplayers += $info->{nNumPlayers};
+			my $link = String::IRC->new("http://azforum.cloudapp.net/launch.cgi?game=".$info->{dwCookie})->light_blue;
+			$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan,$info->{GameName} . " (".$info->{nNumPlayers}. ") $link");
+		}		
+		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan,"$intro $totalplayers");
+	}
 }
 
 #Callback when a RPC using JSON via TCP is recieved for method `echo` - Sends chat reply
