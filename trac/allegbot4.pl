@@ -205,7 +205,7 @@ sub doMsg { # TODO: timer! (no flood)
 	#search via PgSQL
 	if ($str =~ /^\!search (.*)/) {
 		my $q = uri_escape($1);
-		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, "Pshhh, find it yourself you lazy SOB...");
+		#$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, "Pshhh, find it yourself you lazy SOB...");
 		$con->send_long_message ("iso-8859-1", 0, "PRIVMSG", $chan, String::IRC->new("$githuburl/search?q=$q")->light_blue);
 	}	
 }
