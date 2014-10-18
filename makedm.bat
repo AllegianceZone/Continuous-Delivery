@@ -3,4 +3,4 @@ C:
 copy C:\build\Allegiance\src\Pigs\PigAccts\PigAccts.ini C:\AllegBeta\PigAccts.ini /Y
 cd C:\build\Allegiance\src\Pigs\Scripts
 rem perl CreatePigs.pl dm
-perl CreatePigs.pl 1
+perl CreatePig.pl 1
