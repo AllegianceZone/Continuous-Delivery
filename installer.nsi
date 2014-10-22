@@ -197,7 +197,7 @@ Section /o "Minimal Graphics" g1o1
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Minimal.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
 
-  	!insertmacro MoveFolder "$INSTDIR\Artwork_minimal\" "$INSTDIR\Artwork\" "*.*"
+  	Rename "$INSTDIR\Artwork_minimal\" "$INSTDIR\Artwork\"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"
@@ -276,7 +276,8 @@ Section  "Detailed Graphics" g1o3
 	Success:
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Hires.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
-  	!insertmacro MoveFolder "$INSTDIR\Artwork_detailed\" "$INSTDIR\Artwork\" "*.*"
+	  
+  	Rename "$INSTDIR\Artwork_detailed\" "$INSTDIR\Artwork\"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"  	
@@ -473,7 +474,7 @@ Section /o "Server"
 
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}\Server" "ArtPath" "$INSTDIR\Server\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}\Server" "ArtPAth" "$INSTDIR\Server\Artwork"  		
-	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Server.lnk" "$INSTDIR\AllSrvUI.exe"
+	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Server.lnk" "$INSTDIR\Server\AllSrvUI.exe"
   	CreateShortCut "$DESKTOP\Allegiance Server.lnk" "$INSTDIR\AllSrvUI.exe"
   	nsExec::Exec "regsvr32 /s $INSTDIR\AGC.dll"
 	nsExec::Exec "$INSTDIR\AllSrv.exe -RegServer"
@@ -514,8 +515,8 @@ Section /o "Lobby"
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Lobby.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
 	
-	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Lobby.lnk" "$INSTDIR\AllLobby.exe"
-  	CreateShortCut "$DESKTOP\AllLobby.lnk" "$INSTDIR\AllLobby.exe"	
+	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Lobby.lnk" "$INSTDIR\Lobby\AllLobby.exe"
+  	CreateShortCut "$DESKTOP\AllLobby.lnk" "$INSTDIR\Lobby\AllLobby.exe"	
   	nsExec::Exec "$INSTDIR\AllLobby.exe -RegServer"
 SectionEnd
 
