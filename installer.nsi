@@ -173,7 +173,7 @@ Section /o "Minimal Graphics" g1o1
 	AddSize 7000
 	${Endif}
 	SetOutPath "$INSTDIR"
-	DetailPrint "Minimal Artwork..."
+	DetailPrint "Minimal Graphics..."
 	CreateDirectory "$INSTDIR\Artwork_minimal"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork_minimal" "(BU)" "GenericRead + GenericWrite"
   	StrCpy $1 "$INSTDIR\Minimal.7z"
@@ -197,6 +197,7 @@ Section /o "Minimal Graphics" g1o1
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Minimal.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
 
+	!insertmacro RemoveFilesAndSubDirs "$INSTDIR\Artwork\"
   	Rename "$INSTDIR\Artwork_minimal\" "$INSTDIR\Artwork\"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
@@ -213,7 +214,7 @@ Section /o "Regular Graphics" g1o2
 	AddSize 700000
 	SetOutPath "$INSTDIR"
 	SectionIn 2
-	DetailPrint "Regular Artwork..."
+	DetailPrint "Regular Graphics..."
 	CreateDirectory "$INSTDIR\Artwork"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
   	
@@ -253,7 +254,7 @@ Section  "High-resolution Graphics" g1o3
 	AddSize 1300000
 	SetOutPath "$INSTDIR"
 	SectionIn 1
-	DetailPrint "Hires Artwork..."
+	DetailPrint "High-resolution Graphics..."
 	CreateDirectory "$INSTDIR\Artwork_detailed"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork_detailed" "(BU)" "GenericRead + GenericWrite"
   	StrCpy $1 "$INSTDIR\Hires.7z"
@@ -274,9 +275,9 @@ Section  "High-resolution Graphics" g1o3
 	    MessageBox MB_OK "Download failed: $R0"
 	  Quit
 	Success:
-	  Nsis7z::ExtractWithCallback "$INSTDIR\Hires.7z" $R9
-	  GetFunctionAddress $R9 Callback7z
-	  
+	Nsis7z::ExtractWithCallback "$INSTDIR\Hires.7z" $R9
+	GetFunctionAddress $R9 Callback7z
+	!insertmacro RemoveFilesAndSubDirs "$INSTDIR\Artwork\"
   	Rename "$INSTDIR\Artwork_detailed\" "$INSTDIR\Artwork\"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
@@ -288,7 +289,7 @@ SectionEnd
 Section /o "No Graphics" g1o4
 	SetOutPath "$INSTDIR"
 	SectionIn 3
-	DetailPrint "No Artwork..."
+	DetailPrint "No Graphics..."
 	SectionGetFlags 10 $9
 	${If} ${SectionIsSelected} 1
 		ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
@@ -475,7 +476,7 @@ Section /o "Server"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}\Server" "ArtPath" "$INSTDIR\Server\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}\Server" "ArtPAth" "$INSTDIR\Server\Artwork"  		
 	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Server.lnk" "$INSTDIR\Server\AllSrvUI.exe"
-  	CreateShortCut "$DESKTOP\Allegiance Server.lnk" "$INSTDIR\AllSrvUI.exe"
+  	CreateShortCut "$DESKTOP\Allegiance Server.lnk" "$INSTDIR\Server\AllSrvUI.exe"
   	nsExec::Exec "regsvr32 /s $INSTDIR\AGC.dll"
 	nsExec::Exec "$INSTDIR\AllSrv.exe -RegServer"
 SectionEnd
@@ -605,9 +606,11 @@ Function .onInit
 	StrCpy $IsWINE $R0
 	
     SetOutPath $TEMP
+    ${If} $IsWINE != "1"
     File "C:\build\Stormy.skf"
     NSIS_SkinCrafter_Plugin::skin /NOUNLOAD "$TEMP\Stormy.skf"
     Delete "$TEMP\Stormy.skf"
+    ${Endif}
   StrCpy $switch_overwrite 1
   BringToFront
   System::Call "kernel32::CreateMutexA(i 0, i 0, t '$(^Name)') i .r0 ?e"
@@ -643,8 +646,8 @@ Function .onSelChange
 FunctionEnd
 
 Function .onGUIEnd
+	${If} $IsWINE != "1"
 	NSIS_SkinCrafter_Plugin::destroy
-	${If} $IsWINE == 0
 	Delete "$TEMP\mainbkgnd2.gif"
 	Delete "$TEMP\2.gif"	
 	Delete "$TEMP\screen.gif"	
