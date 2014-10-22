@@ -50,7 +50,7 @@ Function myonguiinit
 	Sleep 1
 	FindWindow $BGHWND 'NSISBGImage'
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\mainbkgnd2.gif"
-	${EndIf}
+	${EndIf}	
 FunctionEnd
 
 !define MUI_CUSTOMFUNCTION_GUIINIT myonguiinit
@@ -83,6 +83,19 @@ Page custom PageCreate PageLeave
 
 !insertmacro MUI_PAGE_INSTFILES
 
+!define MUI_WELCOMEFINISHPAGE_BITMAP "C:\build\fakemessage.bmp"
+!define MUI_FINISHPAGE_RUN "$INSTDIR\Allegiance.exe"
+!define MUI_PAGE_CUSTOMFUNCTION_PRE PreFinish
+!define MUI_PAGE_CUSTOMFUNCTION_SHOW ModifyCheckboxes
+!define MUI_FINISHPAGE_TITLE 'Finished installing the Allegiance Zone files to your computer.'
+!define MUI_TEXT_FINISH_INFO_TEXT 'The selected components have been setup.$\r$\n$\r$\nClick finish to close this installer.'
+!define MUI_FINISHPAGE_TITLE_3LINES
+!define MUI_FINISHPAGE_SHOWREADME_TEXT "View the Rules of Conduct"
+!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\readme.rtf" ;
+!define MUI_FINISHPAGE_LINK "Signup for an account"
+!define MUI_FINISHPAGE_LINK_LOCATION "http://forum.allegiancezone.com/signup"
+!insertmacro MUI_PAGE_FINISH
+  
 !include "C:\\build\\lang.nsh"
 
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Allegiance Zone Installer"
@@ -104,7 +117,7 @@ Delete $TEMP\AZCA.cer
 SetOutPath "$INSTDIR"
 SectionEnd
 
-Section /o "Client"
+Section /o "Client" 
 	${If} $IsWINE != "1"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\2.gif"
@@ -595,9 +608,6 @@ Function .onInstSuccess
   	  Delete "$INSTDIR\Tools.7z"
   	  Delete "$INSTDIR\Music.7z" 	
   	  Delete "$INSTDIR\Pdb.7z"  	  
-	${If} $SHOWFINISH == "1"
-		ExecShell open "$INSTDIR\Readme.rtf"
-	${EndIf}	
 FunctionEnd
 
 Function .onInit
@@ -655,6 +665,36 @@ Function .onGUIEnd
 	${Endif}
 FunctionEnd
 
+Function PreFinish
+   	GetDlgItem $R0 $HWNDPARENT 1028
+   	CreateFont $R1 "Tahoma" 1 700
+   	SendMessage $R0 ${WM_SETFONT} $R1 0
+	SendMessage $R0 ${WM_SETTEXT} 0 "STR: lol"
+	GetDlgItem $0 $HWNDPARENT 1028
+	GetDlgItem $1 $HWNDPARENT 1256	
+	ShowWindow $0 0
+	ShowWindow $1 0
+FunctionEnd
+
+Function ModifyCheckboxes
+   	GetDlgItem $R0 $HWNDPARENT 1028
+   	CreateFont $R1 "Tahoma" 1 700
+   	SendMessage $R0 ${WM_SETFONT} $R1 0
+	SendMessage $R0 ${WM_SETTEXT} 0 "STR: lol"
+	GetDlgItem $0 $HWNDPARENT 1028
+	GetDlgItem $1 $HWNDPARENT 1256	
+	ShowWindow $0 0
+	ShowWindow $1 0
+	
+	${IfNot} ${SectionIsSelected} 1
+	    SendMessage $mui.FinishPage.Run ${BM_SETCHECK} ${BST_UNCHECKED} 0
+	    EnableWindow $mui.FinishPage.Run 0 
+	    SendMessage $mui.FinishPage.ShowReadme ${BM_SETCHECK} ${BST_UNCHECKED} 0
+	    EnableWindow $mui.FinishPage.ShowReadme 0     
+	    ShowWindow $mui.FinishPage.Run 0
+	    ShowWindow $mui.FinishPage.ShowReadme 0
+	${EndIf}
+FunctionEnd
 
 Function un.onUninstSuccess
   HideWindow
