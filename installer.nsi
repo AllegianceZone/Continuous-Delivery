@@ -245,7 +245,7 @@ Section /o "Regular Graphics" g1o2
 	
 SectionEnd
 
-Section  "Detailed Graphics" g1o3
+Section  "High-resolution Graphics" g1o3
 	${If} $IsWINE != "1"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\bombrun.gif"
