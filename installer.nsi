@@ -15,21 +15,7 @@ SetCompressor /SOLID lzma
 !define PDB_FILE_URL "http://cdn.allegiancezone.com/install/Pdb_${BUILD}.7z"
 
 var BGHWND
-
-Function myonguiinit
-    	SetOutPath $TEMP
-	File "C:\build\mainbkgnd2.gif"
-	File "C:\build\bombrun.gif"
-	File "C:\build\screen.gif"
-	File "C:\build\2.gif"
-	BgImage::SetBg /NOUNLOAD /GRADIENT 0x00 0x00 0x00 0x00 0x00 0x00
-	BgImage::Redraw
-	Sleep 1
-	FindWindow $BGHWND 'NSISBGImage'
-	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\mainbkgnd2.gif"
-FunctionEnd
-
-!define MUI_CUSTOMFUNCTION_GUIINIT myonguiinit
+var IsWINE
 
 !include "MUI2.nsh"
 !include "InstallOptions.nsh"
@@ -51,6 +37,23 @@ Var ICONS_GROUP
 var ARTPATH
 
 !include "C:\build\installer.nsh"
+
+Function myonguiinit
+	${If} $IsWINE != "1"
+    	SetOutPath $TEMP
+	File "C:\build\mainbkgnd2.gif"
+	File "C:\build\bombrun.gif"
+	File "C:\build\screen.gif"
+	File "C:\build\2.gif"
+	BgImage::SetBg /NOUNLOAD /GRADIENT 0x00 0x00 0x00 0x00 0x00 0x00
+	BgImage::Redraw
+	Sleep 1
+	FindWindow $BGHWND 'NSISBGImage'
+	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\mainbkgnd2.gif"
+	${EndIf}
+FunctionEnd
+
+!define MUI_CUSTOMFUNCTION_GUIINIT myonguiinit
 
 Page custom PageCreate PageLeave
 
@@ -102,8 +105,10 @@ SetOutPath "$INSTDIR"
 SectionEnd
 
 Section /o "Client"
+	${If} $IsWINE != "1"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\2.gif"
+	${Endif}
 	AddSize 8000
 	SectionIn 1 2
 	DetailPrint "Client..."
@@ -162,9 +167,11 @@ SectionEnd
 
 SectionGroup "Graphics" SecArtwork
 Section /o "Minimal Graphics" g1o1
+	${If} $IsWINE != "1"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\bombrun.gif"
 	AddSize 7000
+	${Endif}
 	SetOutPath "$INSTDIR"
 	DetailPrint "Minimal Artwork..."
 	CreateDirectory "$INSTDIR\Artwork_minimal"
@@ -199,8 +206,10 @@ Section /o "Minimal Graphics" g1o1
 SectionEnd
 
 Section /o "Regular Graphics" g1o2
+	${If} $IsWINE != "1"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\bombrun.gif"
+	${Endif}
 	AddSize 700000
 	SetOutPath "$INSTDIR"
 	SectionIn 2
@@ -237,8 +246,10 @@ Section /o "Regular Graphics" g1o2
 SectionEnd
 
 Section  "Detailed Graphics" g1o3
+	${If} $IsWINE != "1"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\bombrun.gif"
+	${Endif}
 	AddSize 1300000
 	SetOutPath "$INSTDIR"
 	SectionIn 1
@@ -328,8 +339,10 @@ SectionEnd
 SectionGroupEnd
 
 Section /o "Music"
+	${If} $IsWINE != "1"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\2.gif"
+	${Endif}
 	AddSize 30000
 	ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
 	SetOutPath "$ARTPATH"
@@ -357,8 +370,10 @@ Section /o "Music"
 SectionEnd
 
 Section /o "Program Databases"
+	${If} $IsWINE != "1"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\screen.gif"
+	${Endif}
 	AddSize 70000
 	SetOutPath "$INSTDIR"
 	DetailPrint "Program Databases..."
@@ -415,8 +430,10 @@ Section /o "Artwork Tools"
 SectionEnd
 
 Section /o "Server"
+	${If} $IsWINE != "1"
 	AnimGif::stop
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\screen.gif"
+	${Endif}
 	AddSize 110000
 	SetOutPath "$INSTDIR\Server"
 	DetailPrint "Server..."
@@ -582,6 +599,10 @@ Function .onInstSuccess
 FunctionEnd
 
 Function .onInit
+	!insertmacro IfKeyExists "HKLM" "SOFTWARE" "Wine"
+	Pop $R0
+	StrCpy $IsWINE $R0
+	
     SetOutPath $TEMP
     File "C:\build\Stormy.skf"
     NSIS_SkinCrafter_Plugin::skin /NOUNLOAD "$TEMP\Stormy.skf"
@@ -622,10 +643,12 @@ FunctionEnd
 
 Function .onGUIEnd
 	NSIS_SkinCrafter_Plugin::destroy
+	${If} $IsWINE == 0
 	Delete "$TEMP\mainbkgnd2.gif"
 	Delete "$TEMP\2.gif"	
 	Delete "$TEMP\screen.gif"	
 	Delete "$TEMP\bombrun.gif"	
+	${Endif}
 FunctionEnd
 
 
