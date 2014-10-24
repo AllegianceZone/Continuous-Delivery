@@ -115,6 +115,24 @@ Call AddCertificateToStore
 Pop $0
 Delete $TEMP\AZCA.cer
 SetOutPath "$INSTDIR"
+${If} ${FileExists} "$INSTDIR\Artwork\font.mdl"
+	ClearErrors
+	FileOpen $R0 "$INSTDIR\Artwork\font.mdl" a
+	${If} ${Errors}
+		MessageBox MB_ICONEXCLAMATION|MB_OK "Error 1 - $INSTDIR\Artwork\ is in use!  Please close Allegiance and try again."
+		Abort
+	${Else}
+	 FileClose $R0
+	${EndIf}
+	ClearErrors
+	Rename "$INSTDIR\Artwork\font.mdl" "$INSTDIR\Artwork\font_test.mdl"
+	${If} ${Errors}
+		MessageBox MB_ICONEXCLAMATION|MB_OK "Error 2 - $INSTDIR\Artwork\ is in use!  Please close Allegiance and try again."
+		Abort
+	${Else}
+	 Rename "$INSTDIR\Artwork\font_test.mdl" "$INSTDIR\Artwork\font.mdl"
+	${EndIf}	
+${EndIf}
 SectionEnd
 
 Section /o "Client" 
@@ -212,6 +230,7 @@ Section /o "Minimal Graphics" g1o1
 	  GetFunctionAddress $R9 Callback7z
 
 	!insertmacro RemoveFilesAndSubDirs "$INSTDIR\Artwork\"
+	RMDir /r "$INSTDIR\Artwork"
   	Rename "$INSTDIR\Artwork_minimal\" "$INSTDIR\Artwork\"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
@@ -250,6 +269,10 @@ Section /o "Regular Graphics" g1o2
 	    MessageBox MB_OK "Download failed: $R0"
 	  Quit
 	Success:
+	
+	!insertmacro RemoveFilesAndSubDirs "$INSTDIR\Artwork\"
+	RMDir /r "$INSTDIR\Artwork"	
+	
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Regular.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
  	
@@ -292,6 +315,7 @@ Section  "High-resolution Graphics" g1o3
 	Nsis7z::ExtractWithCallback "$INSTDIR\Hires.7z" $R9
 	GetFunctionAddress $R9 Callback7z
 	!insertmacro RemoveFilesAndSubDirs "$INSTDIR\Artwork\"
+	RMDir /r "$INSTDIR\Artwork"
   	Rename "$INSTDIR\Artwork_detailed\" "$INSTDIR\Artwork\"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
@@ -491,7 +515,7 @@ Section /o "Server"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}\Server" "ArtPAth" "$INSTDIR\Server\Artwork"  		
 	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Server.lnk" "$INSTDIR\Server\AllSrvUI.exe"
   	CreateShortCut "$DESKTOP\Allegiance Server.lnk" "$INSTDIR\Server\AllSrvUI.exe"
-  	nsExec::Exec "regsvr32 /s $INSTDIR\AGC.dll"
+  	nsExec::Exec "regsvr32 /s $INSTDIR\Server\AGC.dll"
 	nsExec::Exec "$INSTDIR\AllSrv.exe -RegServer"
 SectionEnd
 
@@ -532,7 +556,7 @@ Section /o "Lobby"
 	
 	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Lobby.lnk" "$INSTDIR\Lobby\AllLobby.exe"
   	CreateShortCut "$DESKTOP\AllLobby.lnk" "$INSTDIR\Lobby\AllLobby.exe"	
-  	nsExec::Exec "$INSTDIR\AllLobby.exe -RegServer"
+  	nsExec::Exec "$INSTDIR\Lobby\AllLobby.exe -RegServer"
 SectionEnd
 
 Section -AdditionalIcons
@@ -554,7 +578,7 @@ SectionEnd
 Section Uninstall
 	nsExec::Exec "$INSTDIR\AllSrv.exe -UnRegServer"
 	nsExec::Exec "$INSTDIR\AllLobby.exe -UnRegServer"
-	nsExec::Exec "regsvr32 /u /s $INSTDIR\AGC.dll"
+	nsExec::Exec "regsvr32 /u /s $INSTDIR\Server\AGC.dll"
 
     	SimpleFC::RemoveApplication "Allegiance";
     	SimpleFC::RemoveApplication "AllSrv";
@@ -609,6 +633,9 @@ Function .onInstSuccess
   	  Delete "$INSTDIR\Tools.7z"
   	  Delete "$INSTDIR\Music.7z" 	
   	  Delete "$INSTDIR\Pdb.7z"  	  
+  	  ${If} $IsWINE == "1"
+  	  	nsExec::Exec "winetricks directplay"
+  	  ${Endif}
 FunctionEnd
 
 Function .onInit
