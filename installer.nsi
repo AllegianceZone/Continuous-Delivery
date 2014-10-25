@@ -634,7 +634,7 @@ Function .onInstSuccess
   	  Delete "$INSTDIR\Music.7z" 	
   	  Delete "$INSTDIR\Pdb.7z"  	  
   	  ${If} $IsWINE == "1"
-  	  	nsExec::Exec "winetricks directplay"
+  	  	Exec "winetricks directplay"
   	  ${Endif}
 FunctionEnd
 
