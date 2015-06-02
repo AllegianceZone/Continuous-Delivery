@@ -93,7 +93,7 @@ Page custom PageCreate PageLeave
 !define MUI_FINISHPAGE_SHOWREADME_TEXT "View the Rules of Conduct"
 !define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\readme.rtf" ;
 !define MUI_FINISHPAGE_LINK "Signup for an account"
-!define MUI_FINISHPAGE_LINK_LOCATION "http://forum.allegiancezone.com/signup"
+!define MUI_FINISHPAGE_LINK_LOCATION "http://allegiancezone.com/signup"
 !insertmacro MUI_PAGE_FINISH
   
 !include "C:\\build\\lang.nsh"
@@ -102,8 +102,8 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Allegiance Zone Installer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Created by azbuildslave.cloudapp.net at ${RUNTIME}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Allegiance Zone"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" "Allegiance is a trademark of Microsoft Corporation"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "© 1995-2000 Microsoft Corporation.  All rights reserved."
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "The Microsoft© Allegiance Installer"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Â© 1995-2000 Microsoft Corporation.  All rights reserved."
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "The MicrosoftÂ© Allegiance Installer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${VERSION}.0.0"
 VIProductVersion "${VERSION}.0.0"
 
