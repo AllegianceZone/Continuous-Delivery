@@ -6,5 +6,5 @@ if not defined DevEnvDir (
 	call "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86
 )
 cd C:\build
-call C:\Python27\Scripts\bitten-slave --log=bitten.log http://trac.allegiancezone.com/builds
+call C:\Python27\Scripts\bitten-slave --log=bitten.log http://trac.spacetechnology.net/builds
 goto wut
