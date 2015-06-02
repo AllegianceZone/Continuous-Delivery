@@ -13,7 +13,7 @@ my $thetime = (stat("C:\\finish"))[9];
 my $duration = $thetime - $modtime;
 $duration = sprintf("%u",$duration / 60);
 
-my $msg = "b$b took $duration min. to deploy a new build. http://trac.allegiancezone.com/build/Allegiance/$b is now running on the beta lobby & server!";
+my $msg = "b$b took $duration min. to deploy a new build. http://trac.spacetechnology.net/build/Allegiance/$b is now running on the beta lobby & server!";
 
 my $client = AnyEvent::JSONRPC::Lite::Client->new( host => 'azforum.cloudapp.net',port => 49153);
 my $res = $client->call( echo => $msg )->recv;
