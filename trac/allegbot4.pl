@@ -17,7 +17,7 @@ use JSON;
 #use Data::Dumper;
 
 #setup!
-my $tracurl = "http://trac.allegiancezone.com";
+my $tracurl = "http://trac.spacetechnology.net";
 my $githuburl = "https://github.com/AllegianceZone/Allegiance";
 my $chan = '#FreeAllegiance';
 my $server = 'irc.quakenet.org';
@@ -48,8 +48,8 @@ $srv->reg_cb(echo => sub {my ($res_cv, @params) = @_; $res_cv->result(@params); 
 #$srv->reg_cb(ping => sub {my ($res_cv, @params) = @_; $res_cv->result(@params); print Dumper(@params); });
 
 #RPC & DB init
-our $rpc = RPC::XML::Client->new('http://trac.allegiancezone.com/rpc');
-our $cli = RPC::XML::Client->new('http://trac.allegiancezone.com/ircannouncer_service');
+our $rpc = RPC::XML::Client->new("$tracurl/rpc");
+our $cli = RPC::XML::Client->new("$tracurl/ircannouncer_service");
 our $dbh = DBI->connect('dbi:Pg:dbname=trac', 'tracuser', $pass) or die "$!";
 our $selb = $dbh->prepare(q{SELECT * FROM bitten_build WHERE id = ?}) or die $!;
 our $selr = $dbh->prepare(q{SELECT * FROM revision WHERE rev = ?}) or die $!;
