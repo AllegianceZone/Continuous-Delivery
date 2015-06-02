@@ -4,6 +4,8 @@ use WWW::Mechanize;
 use File::Slurp;
 
 my $host = "allegiancezone.cloudapp.net";
+my $tracurl = "http://trac.spacetechnology.net";
+
 my $build = $ARGV[0];
 
 if (-e "C:\\self-updated") {
@@ -63,17 +65,17 @@ if (grep $_ =~ /bitten\.xml/, @lines) {
 	close PWD;
 	my $xml = read_file("C:\\build\\Continuous-Delivery\\trac\\bitten.xml") ;
 	my $mech = WWW::Mechanize->new();
-	$mech->get("http://trac.allegiancezone.com/login");
+	$mech->get("$tracurl/login");
 	$mech->form_id("acctmgr_loginform");
 	$mech->field("user", "admin");
 	$mech->field("password", $admin);
-	$mech->field("referer", "http://trac.allegiancezone.com/build/Allegiance/$build"); 
+	$mech->field("referer", "$tracurl/build/Allegiance/$build"); 
 	$mech->submit();
 	print "Invalidating build...\n";
 	$mech->form_number(2);
 	$mech->submit();
 	print "Loading recipe page...\n";
-	$mech->get("http://trac.allegiancezone.com/admin/bitten/configs/Allegiance");
+	$mech->get("$tracurl/admin/bitten/configs/Allegiance");
 	print "Saving new recipe...\n";
 	$mech->form_id("modconfig");
 	$mech->field("recipe",$xml);
