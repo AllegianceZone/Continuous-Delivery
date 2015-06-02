@@ -38,7 +38,7 @@ close TOUCH;
 if ($step)  {
 	$msg = "b$b Om nom nom took $duration - $step";
 } else {
-	$msg = "b$b Sending a slave to work on revision $c at http://trac.allegiancezone.com/build/Allegiance/$b";	
+	$msg = "b$b Sending a slave to work on revision $c at http://trac.spacetechnology.net/build/Allegiance/$b";	
 }
 
 my $client = AnyEvent::JSONRPC::Lite::Client->new( host => 'azforum.cloudapp.net',port => 49153);
