@@ -11,6 +11,11 @@ open(PWD,"C:\\pass.txt");
 my $pass = <PWD>;
 close PWD;
 
+	my $build = $ARGV[0];
+	my $rev = $ARGV[1];
+	my $azbp = $ARGV[2];
+	my $objs = $ARGV[3];
+
 print "Uploading files to AZ\n";
 
 my $host = "allegiancezone.cloudapp.net";
@@ -24,41 +29,38 @@ my $ftp = Net::FTP->new($host, Debug => 0, Port => 21122, Timeout => 9999) or di
 
     $ftp->login("deploy",$pass)
       or die "Cannot login ", $ftp->message;
-       $ftp->put("C:\\build\\AZDev.cfg")
+       $ftp->put("$azbp\\AZDev.cfg")
       or die "put failed ", $ftp->message;
-       $ftp->put("C:\\build\\AZNoart.cfg")
+       $ftp->put("$azbp\\AZNoart.cfg")
       or die "put failed ", $ftp->message;      
-       $ftp->put("C:\\build\\motd.mdl")
+       $ftp->put("$azbp\\motd.mdl")
       or die "put failed ", $ftp->message;      
-       $ftp->put("C:\\build\\serverlist.txt")
+       $ftp->put("$azbp\\serverlist.txt")
       or die "put failed ", $ftp->message;  
-       $ftp->put("C:\\build\\Allegiance\\src\\Lobby\\zgameinfo.h")
+       $ftp->put("$azbp\\Allegiance\\src\\Lobby\\zgameinfo.h")
       or die "put failed ", $ftp->message;  
        $ftp->binary;     
-       $ftp->put("C:\\build\\AutoUpdate\\FileList.txt")
+       $ftp->put("$azbp\\AutoUpdate\\FileList.txt")
       or die "put failed ", $ftp->message;
-       $ftp->put("C:\\build\\FileList.txt","autoupdate\\Noart\\FileList.txt")
+       $ftp->put("$azbp\\FileList.txt","autoupdate\\Noart\\FileList.txt")
       or die "put failed ", $ftp->message;
-       $ftp->put("C:\\build\\AutoUpdate\\Game.7z")
+       $ftp->put("$azbp\\AutoUpdate\\Game.7z")
       or die "put failed ", $ftp->message;   
-       $ftp->put("C:\\build\\AutoUpdate\\Noart.7z")
+       $ftp->put("$azbp\\AutoUpdate\\Noart.7z")
       or die "put failed ", $ftp->message;         
-       $ftp->put("C:\\build\\AutoUpdate\\Server.7z")
+       $ftp->put("$azbp\\AutoUpdate\\Server.7z")
       or die "put failed ", $ftp->message; 
-       $ftp->put("C:\\build\\Allegiance\\objs10\\AZRetail\\Lobby\\AllLobby.exe")
+       $ftp->put("$azbp\\Allegiance\\$objs\\AZRetail\\Lobby\\AllLobby.exe")
       or die "put failed ", $ftp->message;       
-       $ftp->put("C:\\build\\Allegiance\\objs10\\AZRetail\\Lobby\\AllLobby.pdb")
+       $ftp->put("$azbp\\Allegiance\\$objs\\AZRetail\\Lobby\\AllLobby.pdb")
       or die "put failed ", $ftp->message;
-       $ftp->put("C:\\build\\Allegiance\\objs10\\AZRetail\\Club\\AllClub.exe")
+       $ftp->put("$azbp\\Allegiance\\$objs\\AZRetail\\Club\\AllClub.exe")
       or die "put failed ", $ftp->message;       
-       $ftp->put("C:\\build\\Allegiance\\objs10\\AZRetail\\Club\\AllClub.pdb")
+       $ftp->put("$azbp\\Allegiance\\$objs\\AZRetail\\Club\\AllClub.pdb")
       or die "put failed ", $ftp->message;
 
        $ftp->put("C:\\AutoUpdate.exe","autoupdate\\Game\\Server\\standalone\\AutoUpdate.exe")
       or die "put failed ", $ftp->message;   
-
-	my $build = $ARGV[0];
-	my $rev = $ARGV[1];
 
 	# PRODUCTION 
       #$ftp->put("C:\\build\\Package\\Alleg_b".$build."_".$rev.".exe","install\\Alleg_b".$build."_".$rev.".exe") or die "put failed ", $ftp->message;    
@@ -66,16 +68,16 @@ my $ftp = Net::FTP->new($host, Debug => 0, Port => 21122, Timeout => 9999) or di
       #$ftp->put("C:\\build\\Package\\AllegPDB_b".$build."_".$rev.".exe","install\\AllegPDB_b".$build."_".$rev.".exe") or die "put failed ", $ftp->message;    
       
       	# BETA
-      $ftp->put("C:\\build\\Package\\AllegSetup_".$build.".exe","install\\AllegSetup_".$build.".exe") or die "put failed ", $ftp->message;        
-      $ftp->put("C:\\build\\Package\\Minimal_".$build.".7z","install\\Minimal_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Regular_".$build.".7z","install\\Regular_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Hires_".$build.".7z","install\\Hires_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Client_".$build.".7z","install\\Client_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Server_".$build.".7z","install\\Server_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Lobby_".$build.".7z","install\\Lobby_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Tools_".$build.".7z","install\\Tools_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Music_".$build.".7z","install\\Music_".$build.".7z") or die "put failed ", $ftp->message;    
-      $ftp->put("C:\\build\\Package\\Pdb_".$build.".7z","install\\Pdb_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("$azbp\\Package\\AllegSetup_".$build.".exe","install\\AllegSetup_".$build.".exe") or die "put failed ", $ftp->message;        
+      $ftp->put("$azbp\\Package\\Minimal_".$build.".7z","install\\Minimal_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("$azbp\\Package\\Regular_".$build.".7z","install\\Regular_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("$azbp\\Package\\Hires_".$build.".7z","install\\Hires_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("$azbp\\Package\\Client_".$build.".7z","install\\Client_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("$azbp\\Package\\Server_".$build.".7z","install\\Server_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("$azbp\\Package\\Lobby_".$build.".7z","install\\Lobby_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("$azbp\\Package\\Tools_".$build.".7z","install\\Tools_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("$azbp\\Package\\Music_".$build.".7z","install\\Music_".$build.".7z") or die "put failed ", $ftp->message;    
+      $ftp->put("$azbp\\Package\\Pdb_".$build.".7z","install\\Pdb_".$build.".7z") or die "put failed ", $ftp->message;    
   
  print "Files uploaded OK\n";
 $ftp->rename("notify/ready","notify/process") or die "notify failed ", $ftp->message;
@@ -97,7 +99,7 @@ while (1) {
 
  $ftp->ascii;     
  
-        $ftp->get("process.log","C:\\build\\process.log")
+        $ftp->get("process.log","$azbp\\process.log")
       or die "get log failed ", $ftp->message;      
 
 if ($bfail) {
@@ -105,7 +107,7 @@ if ($bfail) {
 	exit 1;
 } else {
 	print "Finished! Here is the log:\n";
-	open(LOG,"C:\\build\\process.log");
+	open(LOG,"$azbp\\process.log");
 	while (<LOG>) {
 		print "$host>\t".$_;
 	}
