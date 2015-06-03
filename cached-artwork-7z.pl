@@ -3,7 +3,7 @@ use File::Copy;
 
 my $build = $ARGV[0];
 my $azbp = $ARGV[1];
-my $7zp = $ARGV[2];
+my $szp = $ARGV[2];
 
 my $lastbuild = $build;
 while(! -e "$azbp\\Package\\Regular_${lastbuild}.7z") {
@@ -38,7 +38,7 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"$7zp\" a -t7z $azbp\\Package\\Minimal_${build}.7z $azbp\\Package\\Artwork_minimal\\ -xr!*.git -mx9 -mmt=off";
+	my $cmd = "\"$szp\" a -t7z $azbp\\Package\\Minimal_${build}.7z $azbp\\Package\\Artwork_minimal\\ -xr!*.git -mx9 -mmt=off";
 	system($cmd);
 } else {
 	print "skipping minimal artwork 7z process, not changed!\n";
@@ -75,7 +75,7 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"$7zp\" a -t7z $azbp\\Package\\Hires_${build}.7z $azbp\\Package\\Artwork_detailed\\ -xr!*.git -mx9 -mmt=off";
+	my $cmd = "\"$szp\" a -t7z $azbp\\Package\\Hires_${build}.7z $azbp\\Package\\Artwork_detailed\\ -xr!*.git -mx9 -mmt=off";
 	system($cmd);
 } else {
 	print "skipping detailed artwork 7z process, not changed!\n";
@@ -112,7 +112,7 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"$7zp\" a -t7z $azbp\\Package\\Regular_${build}.7z $azbp\\Package\\Artwork\\ -xr!*.git -mx9 -mmt=off";
+	my $cmd = "\"$szp\" a -t7z $azbp\\Package\\Regular_${build}.7z $azbp\\Package\\Artwork\\ -xr!*.git -mx9 -mmt=off";
 	system($cmd);
 } else {
 	print "skipping regular artwork 7z process, not changed!\n";
