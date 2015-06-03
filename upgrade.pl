@@ -9,12 +9,12 @@ my $cmd = "";
 
 print "Shutting down...\n";
 
-open (PS,"C:\\build\\pslist.exe 2>crap AllSrv |");
+open (PS,"$azbp\\pslist.exe 2>crap AllSrv |");
 my $pid = 0;
 while (<PS>) {
 	if ($_ =~ /AllSrv\s+(\d+)/) {
 		$pid = $1;
-		$cmd = "C:\\build\\pskill 2>crap $pid";
+		$cmd = "$azbp\\pskill 2>crap $pid";
 		print "Killing AllSrv executable $pid\n";
 		`$cmd`;		
 	}
@@ -23,7 +23,7 @@ close PS;
 
 sleep(5) if ($pid);
 
-$cmd = "C:\\build\\pskill 2>crap AllSrv";
+$cmd = "$azbp\\pskill 2>crap AllSrv";
 print "Killing AllSrv executable by name...\n";
 `$cmd`;	
 
@@ -148,7 +148,7 @@ Win32::Process::Create($ProcessObj,
 				
 sleep(10);
 				
-$cmd = "C:\\build\\makedm.bat";
+$cmd = "$azbp\\makedm.bat $azbp";
 `$cmd`;				
 
 exit 0;
