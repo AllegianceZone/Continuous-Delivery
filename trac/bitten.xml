@@ -2,16 +2,16 @@
 <build xmlns:sh="http://bitten.edgewall.org/tools/sh" description="Building master branch">
 	<step id="Build/Deploy Update">
 		<sh:exec file="perl" args="${azbuild.path}\\touch.pl 1"/>
-		<sh:exec file="perl" args="${azbuild.path}\\self-update.pl ${build}"/>
+		<sh:exec file="perl" args="${azbuild.path}\\self-update.pl ${build} ${azbuild.path}"/>
 		<sh:exec file="del" args="C:\\self-updated"/>
 	</step>
 	<step id="Checkout">
 		<sh:exec file="perl" args="${azbuild.path}\\announce-step.pl ${build} ${revision}"/>
 		<sh:exec file="perl" args="${azbuild.path}\\step.pl"/>
 		<sh:exec file="echo" args="Checkout started"/>
-		<sh:exec file="${azbuild.path}\\checkout.bat" args="${revision}"/>
+		<sh:exec file="${azbuild.path}\\checkout.bat" args="${revision} ${azbuild.path}"/>
 		<sh:exec file="echo" args="Checkout completed"/>
-		<sh:exec file="perl" args="${azbuild.path}\\slmver.pl"/>
+		<sh:exec file="perl" args="${azbuild.path}\\slmver.pl ${azbuild.path}"/>
 	</step>
 	<step id="Debug Compile Beta">
 		<sh:exec file="echo" args="AZDebug build started"/>
@@ -31,7 +31,7 @@
 		<sh:exec file="perl" args="${azbuild.path}\\change_artpath.pl C:\\AllegBeta\\Artwork"/>
 		<sh:exec file="echo" args="Running Allsrv.exe -Core2Text PCore005b completed"/>
 		<sh:exec file="regsvr32" args="${azbuild.path}\\Allegiance\\${azbuild.objs}\\AZDebug\\AGC\\AGC.dll /u /s"/>
-		<sh:exec file="perl" args="${azbuild.path}\\remove_tree.pl"/>
+		<sh:exec file="perl" args="${azbuild.path}\\remove_tree.pl ${azbuild.path}"/>
 		<sh:exec file="move" args="/Y ${azbuild.path}\\Artwork\\PCore005b ${azbuild.path}\\Test"/>
 		<sh:exec file="echo" args="Checking core"/>
 		<sh:exec file="perl" args="${azbuild.path}\\corechecker.pl ${azbuild.path}\\Artwork\\ ${azbuild.path}\\Artwork\\PCore005b\\"/>
