@@ -7,10 +7,11 @@ my $host = "allegiancezone.cloudapp.net";
 my $tracurl = "http://trac.spacetechnology.net";
 
 my $build = $ARGV[0];
+my $azbp = $ARGV[1];
 
 if (-e "C:\\self-updated") {
 	print "Build & Deploy tool updates for this run:\n";
-	open(LOG,"C:\\build\\self-update.log");
+	open(LOG,"$azbp\\self-update.log");
 	my @lines = <LOG>;
 	close LOG;
 	foreach (@lines) {print $_};
@@ -19,25 +20,25 @@ if (-e "C:\\self-updated") {
 	print "Build & Deploy tools getting updated first...\n";
 }
 
-my $cmd = "C:\\build\\self-update.bat > C:\\build\\self-update.log 2>&1";
+my $cmd = "$azbp\\self-update.bat $azbp > $azbp\\self-update.log 2>&1";
 `$cmd`;
 
-open(LOG,"C:\\build\\self-update.log");
+open(LOG,"$azbp\\self-update.log");
 my @lines = <LOG>;
 close LOG;
 
-$cmd = "copy C:\\build\\Continuous-Delivery\\* C:\\build /Y";
+$cmd = "copy $azbp\\Continuous-Delivery\\* $azbp /Y";
 system($cmd);
 
-$cmd = "copy C:\\build\\Continuous-Delivery\\Package\\Tools\\* C:\\build\\Package\\Tools /Y";
+$cmd = "copy $azbp\\Continuous-Delivery\\Package\\Tools\\* $azbp\\Package\\Tools /Y";
 system($cmd);
-$cmd = "copy C:\\build\\Continuous-Delivery\\Package\\Music\\* C:\\build\\Package\\Music /Y";
+$cmd = "copy $azbp\\Continuous-Delivery\\Package\\Music\\* $azbp\\Package\\Music /Y";
 system($cmd);
-$cmd = "copy C:\\build\\Continuous-Delivery\\Package\\Client\\* C:\\build\\Package\\Client /Y";
+$cmd = "copy $azbp\\Continuous-Delivery\\Package\\Client\\* $azbp\\Package\\Client /Y";
 system($cmd);
-$cmd = "copy C:\\build\\Continuous-Delivery\\Package\\Server\\* C:\\build\\Package\\Server /Y";
+$cmd = "copy $azbp\\Continuous-Delivery\\Package\\Server\\* $azbp\\Package\\Server /Y";
 system($cmd);
-$cmd = "copy C:\\build\\Continuous-Delivery\\Package\\Lobby\\* C:\\build\\Package\\Lobby /Y";
+$cmd = "copy $azbp\\Continuous-Delivery\\Package\\Lobby\\* $azbp\\Package\\Lobby /Y";
 system($cmd);
 
 print "Uploading deploy scripts to allegiancezone...\n";
@@ -46,14 +47,14 @@ my $pass = <PWD>;
 close PWD;
 my $ftp = Net::FTP->new($host, Debug => 0, Port => 21122) or die "Cannot connect to $host $@";
 $ftp->login("deploy",$pass) or die "Cannot login ", $ftp->message;
-opendir(DIR, "C:\\build\\Continuous-Delivery\\az\\");
+opendir(DIR, "$azbp\\Continuous-Delivery\\az\\");
 my @files = readdir(DIR); 
 closedir DIR;
 foreach (@files) {
 	next if ($_ =~ /^\./);
 	next if ($_ =~ /\.exe/);
-	next if (-d "C:\\build\\Continuous-Delivery\\az\\$_");
-	$ftp->put("C:\\build\\Continuous-Delivery\\az\\$_") or die "put failed ", $ftp->message;
+	next if (-d "$azbp\\Continuous-Delivery\\az\\$_");
+	$ftp->put("$azbp\\Continuous-Delivery\\az\\$_") or die "put failed ", $ftp->message;
 }
 $ftp->quit();
 
@@ -63,7 +64,7 @@ if (grep $_ =~ /bitten\.xml/, @lines) {
 	open(PWD,"C:\\admin.txt");
 	my $admin = <PWD>;
 	close PWD;
-	my $xml = read_file("C:\\build\\Continuous-Delivery\\trac\\bitten.xml") ;
+	my $xml = read_file("$azbp\\Continuous-Delivery\\trac\\bitten.xml") ;
 	my $mech = WWW::Mechanize->new();
 	$mech->get("$tracurl/login");
 	$mech->form_id("acctmgr_loginform");
@@ -89,7 +90,7 @@ close TOUCH;
 
 if ($restart) {
 	print "Restarting the bitten-slave...\n";
-	open (PS,"C:\\build\\pslist.exe 2>crap python |");
+	open (PS,"$azbp\\pslist.exe 2>crap python |");
 	my $pid = 0;
 	while (<PS>) {
 		if ($_ =~ /python\s+(\d+)/) {
@@ -98,7 +99,7 @@ if ($restart) {
 	}
 	close PS;
 	if ($pid != 0) {
-		my $cmd = "C:\\build\\pskill 2>crap $pid";
+		my $cmd = "$azbp\\pskill 2>crap $pid";
 		print "Killing Python executable $pid\n";
 		`$cmd`;
 		sleep(3);
