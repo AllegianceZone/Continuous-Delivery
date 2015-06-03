@@ -59,7 +59,7 @@ our $sell = $dbh->prepare(q{SELECT * FROM bitten_build WHERE config = 'Allegianc
 our $selrl = $dbh->prepare(q{SELECT * FROM revision ORDER BY time DESC LIMIT 1}) or die $!;
 our $seltl = $dbh->prepare(q{SELECT * FROM ticket ORDER BY changetime DESC LIMIT 1}) or die $!;
 our $sels = $dbh->prepare(q{SELECT bitten_step.build, bitten_step.status, bitten_step.name, bitten_step.started, bitten_step.stopped, bitten_build.rev FROM bitten_step, bitten_build WHERE 
-	bitten_build.id = bitten_step.build AND slave = 'azbuildslave' ORDER BY bitten_step.stopped DESC LIMIT 1;}) or die $!;
+	bitten_build.id = bitten_step.build AND slave = 'win-2cmgqr70q91' ORDER BY bitten_step.stopped DESC LIMIT 1;}) or die $!;
 	
 #DB events (yay postgres!)
 our $sent = 0; #build start/end
