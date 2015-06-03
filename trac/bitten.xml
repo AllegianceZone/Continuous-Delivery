@@ -93,10 +93,10 @@
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\PigConfig.pdb C:\\PigConfig.pdb /Y" />		
 		<sh:exec file="echo" args="Copying objects completed"/>
 		<sh:exec file="echo" args="Making FileLists"/>
-		<sh:exec file="perl" args="${azbuild.path}\\makelist.pl ${azbuild.path}" />
+		<sh:exec file="perl" args="${azbuild.path}\\makelist.pl ${azbuild.path} ${7zip.path}" />
 		<sh:exec file="echo" args="Making FileLists completed"/>
 		<sh:exec file="echo" args="Copying artwork"/>
-		<sh:exec file="perl" args="${azbuild.path}\\cached-artwork-7z.pl ${build} ${azbuild.path}"/>
+		<sh:exec file="perl" args="${azbuild.path}\\cached-artwork-7z.pl ${build} ${azbuild.path} ${7zip.path}"/>
 		<sh:exec file="echo" args="Copying artwork completed"/>
 	</step>
 	<step id="Publish Beta">
