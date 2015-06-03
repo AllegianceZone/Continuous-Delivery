@@ -13,5 +13,5 @@ if not defined DevEnvDir (
 	)
 )
 
-call bitten-slave --log=bitten.log http://trac.spacetechnology.net/builds
+call bitten-slave -f slaveconf.ini --log=bitten.log http://trac.spacetechnology.net/builds
 goto wut
