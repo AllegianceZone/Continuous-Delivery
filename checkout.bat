@@ -1,12 +1,12 @@
 @echo off
-cd C:\build\Allegiance
+cd %2\Allegiance
 git clean -fd
 git checkout -f
 git pull origin master
 git checkout %1
-cd C:\build\Artwork
+cd %2\Artwork
 git pull
-cd C:\build\Artwork_minimal
+cd %2\Artwork_minimal
 git pull
-cd C:\build\Artwork_detailed
+cd %2\Artwork_detailed
 git pull
