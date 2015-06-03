@@ -48,7 +48,7 @@ $cmd3 = "$azbp\\crc32.exe C:\\AutoUpdate.exe";
 my $crc4 = `$cmd3`;
 chomp $crc4; 
 
-open(CFG,'>$azbp\\AZNoart.cfg');
+open(CFG,">$azbp\\AZNoart.cfg");
 
 print CFG qq{[Allegiance]
 PublicLobby=allegiancezone.cloudapp.net
@@ -108,7 +108,7 @@ FilelistSize = $size2
 };
 close CFG;
 
-open(CFG,'>$azbp\\AZDev.cfg');
+open(CFG,">$azbp\\AZDev.cfg");
 
 print CFG qq{[Allegiance]
 PublicLobby=allegiancezone.cloudapp.net

@@ -7,8 +7,8 @@ use POSIX qw(strftime);
 print "Updating MOTD\n";
 
 my $now = strftime("%Y/%m/%d %H:%M:%S",localtime(time));
-my ($build, $revision) = @ARGV;
-my $modtime= (stat("C:\\build\\Package\\Client_$build.7z"))[9];
+my ($build, $revision, $azbp) = @ARGV;
+my $modtime= (stat("$azbp\\Package\\Client_$build.7z"))[9];
 my $notoctal = strftime( '%y.%m.%d', localtime($modtime));
 
 my $mdl = qq{use "effect";
@@ -113,7 +113,7 @@ image = TranslateImage(textImage,textPosition);
 
 };
 
-open(MOTD,">C:\\build\\motd.mdl");
+open(MOTD,">$azbp\\motd.mdl");
 print MOTD $mdl;
 close MOTD;
 
