@@ -302,7 +302,7 @@ Var GameExplorer_ContextId
     !ifdef GAME_EXPLORER_HELPER_PATH
       File "/oname=GameuxInstallHelper.dll" "${GAME_EXPLORER_HELPER_PATH}"
     !else
-     File "C:\build\GameuxInstallHelper.dll"
+     File "GameuxInstallHelper.dll"
     !endif
     !define GAME_EXPLORER_DLL_EXISTS
   !endif
@@ -411,7 +411,7 @@ Var GameExplorer_ContextId
     !ifdef GAME_EXPLORER_HELPER_PATH
       File "/oname=GameuxInstallHelper.dll" "${GAME_EXPLORER_HELPER_PATH}"
     !else
-      File "C:\build\GameuxInstallHelper.dll"
+      File "GameuxInstallHelper.dll"
     !endif
     !define UNGAME_EXPLORER_DLL_EXISTS
   !endif
