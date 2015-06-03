@@ -1,2 +1,2 @@
-cd C:\build\Test\PCore005b
+cd %1\Test\PCore005b
 perl corechecker.pl
