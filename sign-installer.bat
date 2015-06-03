@@ -12,4 +12,4 @@ if not defined DevEnvDir (
 	)
 )
 
-signtool sign /v /s Mine /n "Allegiance Zone Development" /d "Allegiance 1.%2 Installer" /du "http://www.allegiancezone.com" /t "http://timestamp.verisign.com/scripts/timstamp.dll" %3\Package\%1
+signtool sign /v /a /s Mine /n "Allegiance Zone Development" /d "Allegiance 1.%2 Installer" /du "http://www.allegiancezone.com" /t "http://timestamp.verisign.com/scripts/timstamp.dll" %3\Package\%1
