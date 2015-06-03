@@ -1,19 +1,19 @@
 use strict;
 
-my ($ver, $build, $revision) = @ARGV;
+my ($ver, $build, $revision, $azbp) = @ARGV;
 
 my $now_string = localtime;
-my $client_size = (stat("C:\\build\\Package\\Client_${build}.7z"))[7];
-my $min_size = (stat("C:\\build\\Package\\Minimal_${build}.7z"))[7];
-my $reg_size = (stat("C:\\build\\Package\\Regular_${build}.7z"))[7];
-my $hires_size = (stat("C:\\build\\Package\\Hires_${build}.7z"))[7];
-my $tool_size = (stat("C:\\build\\Package\\Tools_${build}.7z"))[7];
-my $server_size = (stat("C:\\build\\Package\\Server_${build}.7z"))[7];
-my $lobby_size = (stat("C:\\build\\Package\\Lobby_${build}.7z"))[7];
-my $music_size = (stat("C:\\build\\Package\\Music_${build}.7z"))[7];
-my $pdb_size = (stat("C:\\build\\Package\\Pdb_${build}.7z"))[7];
+my $client_size = (stat("$azbp\\Package\\Client_${build}.7z"))[7];
+my $min_size = (stat("$azbp\\Package\\Minimal_${build}.7z"))[7];
+my $reg_size = (stat("$azbp\\Package\\Regular_${build}.7z"))[7];
+my $hires_size = (stat("$azbp\\Package\\Hires_${build}.7z"))[7];
+my $tool_size = (stat("$azbp\\Package\\Tools_${build}.7z"))[7];
+my $server_size = (stat("$azbp\\Package\\Server_${build}.7z"))[7];
+my $lobby_size = (stat("$azbp\\Package\\Lobby_${build}.7z"))[7];
+my $music_size = (stat("$azbp\\Package\\Music_${build}.7z"))[7];
+my $pdb_size = (stat("$azbp\\Package\\Pdb_${build}.7z"))[7];
 
-open(BUILD,">C:\\build\\build.nsh");
+open(BUILD,">$azbp\\build.nsh");
 print BUILD qq{
 !define VERSION "$ver"
 !define BUILD "$build"
