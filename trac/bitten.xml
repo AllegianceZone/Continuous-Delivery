@@ -54,7 +54,7 @@
 		<sh:exec file="echo" args="Signing objects completed"/>
 
 		<sh:exec file="echo" args="Copying objects"/>
-		<sh:exec file="${azbuild.path}\\Allegiance\\Sh_GetRetail.bat" args="${azbuild.path}\\Allegiance\\x86 ${azbuild.path}\\Allegiance\\"/>
+		<sh:exec file="${azbuild.path}\\Allegiance\\${azbuild.script}" args="${azbuild.path}\\Allegiance\\x86 ${azbuild.path}\\Allegiance\\"/>
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\Allegiance.exe ${azbuild.path}\\Package\\Client\\Allegiance.exe /Y" />
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\Reloader.exe ${azbuild.path}\\Package\\Client\\Reloader.exe /Y" />
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\AllSrv.exe ${azbuild.path}\\Package\\Server\\AllSrv.exe /Y" />
@@ -127,7 +127,7 @@
 																									<sh:exec file="echo" args="Signing objects completed"/>
 
 																									<sh:exec file="echo" args="Copying objects"/>
-																									<sh:exec file="${azbuild.path}\\Allegiance\\Sh_GetRetail.bat" args="${azbuild.path}\\Allegiance\\x86 ${azbuild.path}\\Allegiance\\"/>
+																									<sh:exec file="${azbuild.path}\\Allegiance\\${azbuild.script}" args="${azbuild.path}\\Allegiance\\x86 ${azbuild.path}\\Allegiance\\"/>
 																									<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\AllegPDB_b${build}_${revision}.exe ${azbuild.path}\\Allegiance\\x86\\*.pdb -mx9" />
 																									<sh:exec file="del" args=" ${azbuild.path}\\Package\\Release.7z"/>
 																									<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Release.7z ${azbuild.path}\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9" />
