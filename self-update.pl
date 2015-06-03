@@ -68,7 +68,7 @@ if (grep $_ =~ /bitten\.xml/, @lines) {
 	my $mech = WWW::Mechanize->new();
 	$mech->get("$tracurl/login");
 	$mech->form_id("acctmgr_loginform");
-	$mech->field("user", "admin");
+	$mech->field("user", "builder");
 	$mech->field("password", $admin);
 	$mech->field("referer", "$tracurl/build/Allegiance/$build"); 
 	$mech->submit();
