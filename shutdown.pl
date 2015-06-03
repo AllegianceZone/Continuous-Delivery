@@ -5,7 +5,7 @@
 use strict;
 use Win32::OLE;
 
-my $host = "azbuildslave";
+my ($host,$azbp) = @ARGV;
 our $utl;
 
 my $cmd = "TASKKILL /IM PigAccts.exe /T /F";
@@ -14,7 +14,7 @@ system($cmd);
 $cmd = "TASKKILL /IM PigSrv.exe /T /F";
 system($cmd);
 
-open (PS,"C:\\build\\pslist.exe 2>crap AllSrv |");
+open (PS,"$azbp\\pslist.exe 2>crap AllSrv |");
 my $pid = 0;
 while (<PS>) {
 	if ($_ =~ /AllSrv\s+(\d+)/) {
