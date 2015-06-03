@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\1.3\Server]
+"ArtPath"="C:\\AllegBeta\\Artwork"
+"CfgFile"="http://autoupdate.allegiancezone.com/config/AZDev.cfg"
+"Core1"="Pcore006"
+"Game1"="Zone Beta"
