@@ -6,6 +6,8 @@ use POSIX qw(strftime);
 use File::Copy;
 use Data::Dumper;
 
+my $azbp = $ARGV[0];
+
 my $date = "";
 foreach my $word ( split('\s',strftime( '%y %m %d', localtime ))) {
 	my $oct = sprintf("%o",$word);
@@ -13,11 +15,11 @@ foreach my $word ( split('\s',strftime( '%y %m %d', localtime ))) {
 	$date = $date.$oct
 }
 print "Setting build time to $date\n";
-open(H,"C:\\build\\Allegiance\\src\\Inc\\slmver.h");
+open(H,"$azbp\\Allegiance\\src\\Inc\\slmver.h");
 my @lines = <H>;
 close H;
-move("C:\\build\\Allegiance\\src\\Inc\\slmver.h","C:\\build\\Allegiance\\src\\Inc\\slmver-prev.h");
-open(H,">C:\\build\\Allegiance\\src\\Inc\\slmver.h");
+move("$azbp\\Allegiance\\src\\Inc\\slmver.h","$azbp\\Allegiance\\src\\Inc\\slmver-prev.h");
+open(H,">$azbp\\Allegiance\\src\\Inc\\slmver.h");
 foreach my $line (@lines) {
 	if ($line =~ /#define rup/) {
 		print H "#define rup	$date //set by slmver.pl\n";
