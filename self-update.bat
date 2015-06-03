@@ -1,3 +1,3 @@
 @echo off
-cd %1\Continuous-Delivery
+cd /D %1\Continuous-Delivery
 git pull 
