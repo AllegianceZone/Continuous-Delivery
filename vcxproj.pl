@@ -5,9 +5,9 @@ use strict;
 use File::Copy;
 use Data::Dumper;
 
-my ($doprod,$do9) = @ARGV;
+my ($doprod,$do9,$azbp,$vsver) = @ARGV;
 
-my @projs = glob "C:\\build\\Allegiance\\VS2010\\*.vcxproj";
+my @projs = glob "$azbp\\Allegiance\\$vsver\\*.vcxproj";
 foreach my $proj (@projs) {
 	open(VCX,$proj);
 	my @lines = <VCX>;
@@ -19,7 +19,7 @@ foreach my $proj (@projs) {
 	my $bfound2 = 0;
 	foreach my $line (@lines) {
 		my $name = $proj;
-		$name =~ s/C:\\build\\Allegiance\\VS2010\\//i;		
+		$name =~ s/$azbp\\Allegiance\\$vsver\\//i;		
 		if ($line =~ /\<ItemDefinitionGroup Condition="'\$\(Configuration\)\|\$\(Platform\)'=='AZRetail\|Win32'"\>/i) {
 			$bfound = 1;
 		}
