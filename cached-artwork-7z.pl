@@ -2,9 +2,11 @@ use strict;
 use File::Copy;
 
 my $build = $ARGV[0];
+my $azbp = $ARGV[1];
+my $7zp = $ARGV[2];
 
 my $lastbuild = $build;
-while(! -e "C:\\build\\Package\\Regular_${lastbuild}.7z") {
+while(! -e "$azbp\\Package\\Regular_${lastbuild}.7z") {
 	$lastbuild = $lastbuild - 1;
 	if ($lastbuild <= 1) {
 		print "couldn't find a last build!\n";
@@ -12,7 +14,7 @@ while(! -e "C:\\build\\Package\\Regular_${lastbuild}.7z") {
 	}
 }
 
-my $dir = "C:\\build\\Package\\Artwork_minimal";
+my $dir = "$azbp\\Package\\Artwork_minimal";
 
 opendir(DIR, $dir) or die "Can't open $dir $!";
 my @files = readdir(DIR);
@@ -36,11 +38,11 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Minimal_${build}.7z C:\\build\\Package\\Artwork_minimal\\ -xr!*.git -mx9 -mmt=off";
+	my $cmd = "\"$7zp\" a -t7z $azbp\\Package\\Minimal_${build}.7z $azbp\\Package\\Artwork_minimal\\ -xr!*.git -mx9 -mmt=off";
 	system($cmd);
 } else {
 	print "skipping minimal artwork 7z process, not changed!\n";
-	copy("C:\\build\\Package\\Minimal_${lastbuild}.7z","C:\\build\\Package\\Minimal_${build}.7z") if ($lastbuild != $build);
+	copy("$azbp\\Package\\Minimal_${lastbuild}.7z","$azbp\\Package\\Minimal_${build}.7z") if ($lastbuild != $build);
 };
 
 open(LA,">C:\\lastart-minimal");
@@ -49,7 +51,7 @@ close LA;
 
 
 
-$dir = "C:\\build\\Package\\Artwork_detailed";
+$dir = "$azbp\\Package\\Artwork_detailed";
 
 opendir(DIR, $dir) or die "Can't open $dir $!";
 my @files = readdir(DIR);
@@ -73,11 +75,11 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Hires_${build}.7z C:\\build\\Package\\Artwork_detailed\\ -xr!*.git -mx9 -mmt=off";
+	my $cmd = "\"$7zp\" a -t7z $azbp\\Package\\Hires_${build}.7z $azbp\\Package\\Artwork_detailed\\ -xr!*.git -mx9 -mmt=off";
 	system($cmd);
 } else {
 	print "skipping detailed artwork 7z process, not changed!\n";
-	copy("C:\\build\\Package\\Hires_${lastbuild}.7z","C:\\build\\Package\\Hires_${build}.7z") if ($lastbuild != $build);
+	copy("$azbp\\Package\\Hires_${lastbuild}.7z","$azbp\\Package\\Hires_${build}.7z") if ($lastbuild != $build);
 };
 
 open(LA,">C:\\lastart-detailed");
@@ -86,7 +88,7 @@ close LA;
 
 
 
-$dir = "C:\\build\\Package\\Artwork";
+$dir = "$azbp\\Package\\Artwork";
 
 opendir(DIR, $dir) or die "Can't open $dir $!";
 my @files = readdir(DIR);
@@ -110,11 +112,11 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"C:\\Program Files\\7-Zip\\7z.exe\" a -t7z C:\\build\\Package\\Regular_${build}.7z C:\\build\\Package\\Artwork\\ -xr!*.git -mx9 -mmt=off";
+	my $cmd = "\"$7zp\" a -t7z $azbp\\Package\\Regular_${build}.7z $azbp\\Package\\Artwork\\ -xr!*.git -mx9 -mmt=off";
 	system($cmd);
 } else {
 	print "skipping regular artwork 7z process, not changed!\n";
-	copy("C:\\build\\Package\\Regular_${lastbuild}.7z","C:\\build\\Package\\Regular_${build}.7z") if ($lastbuild != $build);
+	copy("$azbp\\Package\\Regular_${lastbuild}.7z","$azbp\\Package\\Regular_${build}.7z") if ($lastbuild != $build);
 };
 
 open(LA,">C:\\lastart-regular");
