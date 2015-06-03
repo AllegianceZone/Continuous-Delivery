@@ -6,6 +6,7 @@ use strict;
 use Win32::Process;
 
 my $cmd = "";
+my $azbp = $ARGV[0];
 
 print "Shutting down...\n";
 

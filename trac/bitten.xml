@@ -152,11 +152,11 @@
 	<step id="Deploy Beta">
 		<sh:exec file="perl" args="${azbuild.path}\\makemotd.pl ${build} ${revision} ${azbuild.path}" />
 		<sh:exec file="perl" args="${azbuild.path}\\makecfg.pl ${azbuild.path}" />
-		<sh:exec file="perl" args="${azbuild.path}\\deploy.pl ${build} ${revision} ${azbuild.path}" />
+		<sh:exec file="perl" args="${azbuild.path}\\deploy.pl ${build} ${revision} ${azbuild.path} ${azbuild.objs}" />
 	</step>
 	<step id="Upgrade">
-		<sh:exec file="perl" args="${azbuild.path}\\shutdown.p ${azbuild.path}l" />
-		<sh:exec file="perl" args="${azbuild.path}\\upgrade.p ${azbuild.path}" />
+		<sh:exec file="perl" args="${azbuild.path}\\shutdown.pl ${azbuild.path}l" />
+		<sh:exec file="perl" args="${azbuild.path}\\upgrade.pl ${azbuild.path}" />
 	</step>
 	<step id="Finished">
 		<sh:exec file="perl" args="${azbuild.path}\\touch.pl"/>

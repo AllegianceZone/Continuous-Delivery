@@ -5,7 +5,7 @@
 use strict;
 use Win32::OLE;
 
-my ($host,$azbp) = @ARGV;
+my $azbp = $ARGV[0];
 our $utl;
 
 my $cmd = "TASKKILL /IM PigAccts.exe /T /F";
