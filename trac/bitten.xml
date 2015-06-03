@@ -50,7 +50,7 @@
 	</step>
 	<step id="Package Beta">
 		<sh:exec file="echo" args="Signing objects"/>
-		<sh:exec file="${azbuild.path}\\sign.bat" args="AZRetail ${azbuild.path}"/>
+		<sh:exec file="${azbuild.path}\\sign.bat" args="AZRetail ${azbuild.path} ${azbuild.objs}"/>
 		<sh:exec file="echo" args="Signing objects completed"/>
 
 		<sh:exec file="echo" args="Copying objects"/>
