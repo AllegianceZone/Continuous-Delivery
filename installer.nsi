@@ -23,7 +23,7 @@ var IsWINE
 
 XPStyle "on"
 Name "Allegiance"
-OutFile "C:\build\Package\AllegSetup_${BUILD}.exe"
+OutFile "${AZBP}\Package\AllegSetup_${BUILD}.exe"
 InstallDir "$PROGRAMFILES\Allegiance ${VERSION}"
 RequestExecutionLevel admin
 BrandingText "Allegiance Zone - http://www.allegiancezone.com" 
@@ -36,15 +36,15 @@ Var SHOWFINISH
 Var ICONS_GROUP
 var ARTPATH
 
-!include "C:\build\installer.nsh"
+!include "${AZBP}\installer.nsh"
 
 Function myonguiinit
 	${If} $IsWINE != "1"
     	SetOutPath $TEMP
-	File "C:\build\mainbkgnd2.gif"
-	File "C:\build\bombrun.gif"
-	File "C:\build\screen.gif"
-	File "C:\build\2.gif"
+	File "${AZBP}\mainbkgnd2.gif"
+	File "${AZBP}\bombrun.gif"
+	File "${AZBP}\screen.gif"
+	File "${AZBP}\2.gif"
 	BgImage::SetBg /NOUNLOAD /GRADIENT 0x00 0x00 0x00 0x00 0x00 0x00
 	BgImage::Redraw
 	Sleep 1
@@ -57,14 +57,14 @@ FunctionEnd
 
 Page custom PageCreate PageLeave
 
-!define MUI_ICON "C:\build\allegg.ico"
-!define MUI_UNICON "C:\build\allegr.ico"
+!define MUI_ICON "${AZBP}\allegg.ico"
+!define MUI_UNICON "${AZBP}\allegr.ico"
 
 !define MUI_COMPONENTSPAGE_NODESC
 !define MUI_PAGE_CUSTOMFUNCTION_PRE LicensePage_Pre
 !define MUI_PAGE_CUSTOMFUNCTION_SHOW CommonPage_Show
 !define MUI_PAGE_CUSTOMFUNCTION_LEAVE CommonPage_Leave
-!insertmacro MUI_PAGE_LICENSE "C:\build\EULA.rtf"
+!insertmacro MUI_PAGE_LICENSE "${AZBP}\EULA.rtf"
 
 !define MUI_PAGE_CUSTOMFUNCTION_PRE DirectoryPage_Pre
 !define MUI_PAGE_CUSTOMFUNCTION_SHOW CommonPage_Show
@@ -83,7 +83,7 @@ Page custom PageCreate PageLeave
 
 !insertmacro MUI_PAGE_INSTFILES
 
-!define MUI_WELCOMEFINISHPAGE_BITMAP "C:\build\fakemessage.bmp"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "${AZBP}\fakemessage.bmp"
 !define MUI_FINISHPAGE_RUN "$INSTDIR\Allegiance.exe"
 !define MUI_PAGE_CUSTOMFUNCTION_PRE PreFinish
 !define MUI_PAGE_CUSTOMFUNCTION_SHOW ModifyCheckboxes
@@ -109,7 +109,7 @@ VIProductVersion "${VERSION}.0.0"
 
 Section "-"
 SetOutPath "$TEMP"
-File C:\build\AZCA.cer
+File ${AZBP}\AZCA.cer
 Push $TEMP\AZCA.cer
 Call AddCertificateToStore
 Pop $0
@@ -645,7 +645,7 @@ Function .onInit
 	
     SetOutPath $TEMP
     ${If} $IsWINE != "1"
-    File "C:\build\Stormy.skf"
+    File "${AZBP}\Stormy.skf"
     NSIS_SkinCrafter_Plugin::skin /NOUNLOAD "$TEMP\Stormy.skf"
     Delete "$TEMP\Stormy.skf"
     ${Endif}

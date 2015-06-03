@@ -28,6 +28,7 @@ print BUILD qq{
 !define LOBBY_FILE_SIZE $lobby_size
 !define MUSIC_FILE_SIZE $music_size
 !define PDB_FILE_SIZE $pdb_size
+!define AZBP $azbp
 };
 close BUILD;
 exit 0;
