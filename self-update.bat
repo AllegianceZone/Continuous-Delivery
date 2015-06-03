@@ -1,3 +1,3 @@
 @echo off
-cd C:\build\Continuous-Delivery
+cd %1\Continuous-Delivery
 git pull 
