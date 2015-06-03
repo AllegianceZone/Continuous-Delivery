@@ -25,7 +25,7 @@ binmode(FILE);
 my $hash = Digest::MD5->new->addfile(*FILE)->hexdigest;
 close FILE;
 my $size= (stat("C:\\Allegiance.exe"))[7];
-my $ftp = Net::FTP->new($host, Debug => 0, Port => 21122, Timeout => 9999) or die "Cannot connect to $host $@";
+my $ftp = Net::FTP->new($host, Debug => 1, Port => 21122, Timeout => 9999) or die "Cannot connect to $host $@";
 
     $ftp->login("deploy",$pass)
       or die "Cannot login ", $ftp->message;
