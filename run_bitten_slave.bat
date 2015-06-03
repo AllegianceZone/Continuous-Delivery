@@ -3,8 +3,15 @@ rem #Imago <imagotrigger@gmail.com> - Runs the bitten slave "dameon"
 
 :wut
 if not defined DevEnvDir (
-	call "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86
+	if defined VS100COMNTOOLS (
+		call "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" x86
+	)
 )
-cd C:\build
-call C:\Python27\Scripts\bitten-slave --log=bitten.log http://trac.spacetechnology.net/builds
+if not defined DevEnvDir (
+	if defined VS120COMNTOOLS (
+		call "%VS120COMNTOOLS%..\..\VC\vcvarsall.bat" x86
+	)
+)
+
+call bitten-slave --log=bitten.log http://trac.spacetechnology.net/builds
 goto wut
