@@ -96,7 +96,7 @@ Page custom PageCreate PageLeave
 !define MUI_FINISHPAGE_LINK_LOCATION "http://allegiancezone.com/signup"
 !insertmacro MUI_PAGE_FINISH
   
-!include "C:\\build\\lang.nsh"
+!include "${AZBP}\lang.nsh"
 
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Allegiance Zone Installer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Created by azbuildslave.cloudapp.net at ${RUNTIME}"
