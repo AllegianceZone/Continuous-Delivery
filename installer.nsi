@@ -2,7 +2,7 @@
 
 SetCompressor /SOLID lzma
 
-!include "C:\build\build.nsh"
+!include "build.nsh"
 
 !define CLIENT_FILE_URL "http://cdn.allegiancezone.com/install/Client_${BUILD}.7z"
 !define MINIMAL_FILE_URL "http://cdn.allegiancezone.com/install/Minimal_${BUILD}.7z"
@@ -188,9 +188,9 @@ Section /o "Client"
 	  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 	  	CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
 	  	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Training.lnk" "$INSTDIR\Allegiance Training.url"
-	  	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance.lnk" "$INSTDIR\Allegiance.exe -autojoin //1"
+	  	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance.lnk" '"$INSTDIR\Allegiance.exe" -autojoin //1'
 	  	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance (Safe mode).lnk" "$INSTDIR\Allegiance.exe -software -checkfiles"
-	  	CreateShortCut "$DESKTOP\Allegiance.lnk" "$INSTDIR\Allegiance.exe -autojoin //1"
+	  	CreateShortCut "$DESKTOP\Allegiance.lnk" '"$INSTDIR\Allegiance.exe" -autojoin //1'
 	  !insertmacro MUI_STARTMENU_WRITE_END
 	  WriteRegStr HKCR "Allegiance" "URL Protocol" ""
 	  WriteRegStr HKCR "Allegiance" "" "URL:Allegiance Protocol"
