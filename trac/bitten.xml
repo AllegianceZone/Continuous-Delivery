@@ -16,7 +16,7 @@
 	<step id="Debug Compile Beta">
 		<sh:exec file="echo" args="AZDebug build started"/>
 		<sh:exec file="msbuild.exe" args="/m ${azbuild.path}\\Allegiance\\${azbuild.vs}\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,${azbuild.path}\\logger.dll;${azbuild.path}\\msbuild.xml /noconlog /nologo /p:Configuration=AZDebug /t:build"/>
-		<sh:exec file="perl" args="${azbuild.path}\\msbuild-result.pl ${path} ${build}"/>
+		<sh:exec file="perl" args="${azbuild.path}\\msbuild-result.pl ${path} ${build} ${azbuild.path}"/>
 		<sh:exec file="echo" args="AZDebug build completed"/>
 	</step>
 	<step id="Smoke Test">
@@ -45,12 +45,12 @@
 		<!-- UNCOMMENT ABOVE TO BUILD AGAINST VC9 ^^ -->
 		<sh:exec file="echo" args="AZRetail Beta rebuild started"/>
 		<sh:exec file="msbuild.exe" args="/m ${azbuild.path}\\Allegiance\\${azbuild.vs}\\Allegiance.sln /logger:Rodemeyer.MsBuildToCCNet.MsBuildToCCNetLogger,${azbuild.path}\\logger.dll;${azbuild.path}\\msbuild.xml /noconlog /nologo /p:Configuration=AZRetail /t:build"/>
-		<sh:exec file="perl" args="${azbuild.path}\\msbuild-result.pl ${path} ${build}"/>
+		<sh:exec file="perl" args="${azbuild.path}\\msbuild-result.pl ${path} ${build} ${azbuild.path}"/>
 		<sh:exec file="echo" args="AZRetail Beta rebuild completed"/>
 	</step>
 	<step id="Package Beta">
 		<sh:exec file="echo" args="Signing objects"/>
-		<sh:exec file="${azbuild.path}\\sign.bat" args="AZRetail"/>
+		<sh:exec file="${azbuild.path}\\sign.bat" args="AZRetail ${azbuild.path}"/>
 		<sh:exec file="echo" args="Signing objects completed"/>
 
 		<sh:exec file="echo" args="Copying objects"/>
@@ -93,17 +93,17 @@
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\PigConfig.pdb C:\\PigConfig.pdb /Y" />		
 		<sh:exec file="echo" args="Copying objects completed"/>
 		<sh:exec file="echo" args="Making FileLists"/>
-		<sh:exec file="perl" args="${azbuild.path}\\makelist.pl" />
+		<sh:exec file="perl" args="${azbuild.path}\\makelist.pl ${azbuild.path}" />
 		<sh:exec file="echo" args="Making FileLists completed"/>
 		<sh:exec file="echo" args="Copying artwork"/>
-		<sh:exec file="perl" args="${azbuild.path}\\cached-artwork-7z.pl ${build}"/>
+		<sh:exec file="perl" args="${azbuild.path}\\cached-artwork-7z.pl ${build} ${azbuild.path}"/>
 		<sh:exec file="echo" args="Copying artwork completed"/>
 	</step>
 	<step id="Publish Beta">
 		<sh:exec file="echo" args="Creating installer"/>
-		<sh:exec file="perl" args="${azbuild.path}\\nsis-build.pl 1.3 ${build} ${revision}"/>
+		<sh:exec file="perl" args="${azbuild.path}\\nsis-build.pl 1.3 ${build} ${revision} ${azbuild.path}"/>
 		<sh:exec file="${nsis.path}" args="/V2 ${azbuild.path}\\installer.nsi"/>
-		<sh:exec file="${azbuild.path}\\sign-installer.bat" args="AllegSetup_${build}.exe 3"/>
+		<sh:exec file="${azbuild.path}\\sign-installer.bat" args="AllegSetup_${build}.exe 3 ${azbuild.path}"/>
 		<sh:exec file="echo" args="Completed creating installer"/>
 
 		<sh:exec file="echo" args="Attaching Lite"/>
@@ -150,13 +150,13 @@
 																								-->
 	<!-- REMOVED PRODUCTION BUILDING UNTIL NEEDED ^^ -->																								
 	<step id="Deploy Beta">
-		<sh:exec file="perl" args="${azbuild.path}\\makemotd.pl ${build} ${revision}" />
-		<sh:exec file="perl" args="${azbuild.path}\\makecfg.pl" />
-		<sh:exec file="perl" args="${azbuild.path}\\deploy.pl ${build} ${revision}" />
+		<sh:exec file="perl" args="${azbuild.path}\\makemotd.pl ${build} ${revision} ${azbuild.path}" />
+		<sh:exec file="perl" args="${azbuild.path}\\makecfg.pl ${azbuild.path}" />
+		<sh:exec file="perl" args="${azbuild.path}\\deploy.pl ${build} ${revision} ${azbuild.path}" />
 	</step>
 	<step id="Upgrade">
-		<sh:exec file="perl" args="${azbuild.path}\\shutdown.pl" />
-		<sh:exec file="perl" args="${azbuild.path}\\upgrade.pl" />
+		<sh:exec file="perl" args="${azbuild.path}\\shutdown.p ${azbuild.path}l" />
+		<sh:exec file="perl" args="${azbuild.path}\\upgrade.p ${azbuild.path}" />
 	</step>
 	<step id="Finished">
 		<sh:exec file="perl" args="${azbuild.path}\\touch.pl"/>
