@@ -18,7 +18,7 @@ if ($offset =~ /Daylight/i) {
 	$offset = 6;
 }
 
-my ($azbp,$7zp) = @ARGV;
+my ($azbp,$szp) = @ARGV;
 
 my $dontcompress_re = ".avi|.ogg|.png|.ffe|faohbstac.mdl|ta_drac_tp.mdl";
 
@@ -181,9 +181,9 @@ close LIST;
 
 
 print "Compressing Game Files for AU...\n";
-my $cmd3 = "\"$7zp\" a -t7z $azbp\\AutoUpdate\\Game.7z $azbp\\AutoUpdate\\Game\\* -xr!*Server -mx0 -mmt=off";
+my $cmd3 = "\"$szp\" a -t7z $azbp\\AutoUpdate\\Game.7z $azbp\\AutoUpdate\\Game\\* -xr!*Server -mx0 -mmt=off";
 system($cmd3);
-$cmd3 = "\"$7zp\" a -t7z $azbp\\AutoUpdate\\Noart.7z $azbp\\AutoUpdate\\Noart\\* -xr!*Server -mx0 -mmt=off";
+$cmd3 = "\"$szp\" a -t7z $azbp\\AutoUpdate\\Noart.7z $azbp\\AutoUpdate\\Noart\\* -xr!*Server -mx0 -mmt=off";
 system($cmd3);
 
 #TODO only changed like client...
@@ -238,6 +238,6 @@ foreach my $file (@objs) {
 close LIST;
 
 print "Compressing Server Files for AU...\n";
-my $cmd3 = "\"$7zp\" a -t7z $azbp\\AutoUpdate\\Server.7z $azbp\\AutoUpdate\\Game\\Server\\* -mx0 -mmt=off";
+my $cmd3 = "\"$szp\" a -t7z $azbp\\AutoUpdate\\Server.7z $azbp\\AutoUpdate\\Game\\Server\\* -mx0 -mmt=off";
 system($cmd3);
 exit 0;
