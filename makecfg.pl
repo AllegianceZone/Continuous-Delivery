@@ -4,49 +4,51 @@
 use strict;
 use File::Copy;
 
+my $azbp = $ARGV[0];
+
 print "Updating AZDev.cfg\n";
 
-unlink "C:\\build\\FileList.txt";
-my $cmd5 = "C:\\build\\crc32.exe C:\\build\\list.txt";
+unlink "$azbp\\FileList.txt";
+my $cmd5 = "$azbp\\crc32.exe $azbp\\list.txt";
 
 #unlink "C:\\list.txt_";
-#my $cmd6 = "C:\\build\\mscompress.exe C:\\build\\list.txt";
+#my $cmd6 = "$azbp\\mscompress.exe $azbp\\list.txt";
 #`$cmd6`;
-#move("C:\\build\\list.txt_","C:\\build\\FileList.txt");
-copy("C:\\build\\list.txt","C:\\build\\FileList.txt");
+#move("$azbp\\list.txt_","$azbp\\FileList.txt");
+copy("$azbp\\list.txt","$azbp\\FileList.txt");
 
 my $crc0 = `$cmd5`;
 chomp $crc0;
-my $size0 = (stat("C:\\build\\list.txt"))[7];
+my $size0 = (stat("$azbp\\list.txt"))[7];
 
-unlink "C:\\build\\AutoUpdate\\FileList.txt";
-my $cmd3 = "C:\\build\\crc32.exe C:\\build\\betalist.txt";
+unlink "$azbp\\AutoUpdate\\FileList.txt";
+my $cmd3 = "$azbp\\crc32.exe $azbp\\betalist.txt";
 unlink "C:\\betalist.txt_";
-my $cmd4 = "C:\\build\\mscompress.exe C:\\build\\betalist.txt";
+my $cmd4 = "$azbp\\mscompress.exe $azbp\\betalist.txt";
 `$cmd4`;
-move("C:\\build\\betalist.txt_","C:\\build\\AutoUpdate\\FileList.txt");
+move("$azbp\\betalist.txt_","$azbp\\AutoUpdate\\FileList.txt");
 my $crc = `$cmd3`;
 chomp $crc;
-#my $size = (stat("C:\\build\\AutoUpdate\\Filelist.txt"))[7] + 1;
-my $size = (stat("C:\\build\\betalist.txt"))[7];
+#my $size = (stat("$azbp\\AutoUpdate\\Filelist.txt"))[7] + 1;
+my $size = (stat("$azbp\\betalist.txt"))[7];
 
-$cmd3 = "C:\\build\\crc32.exe C:\\build\\motd.mdl";
+$cmd3 = "$azbp\\crc32.exe $azbp\\motd.mdl";
 my $crc2 = `$cmd3`;
 chomp $crc2;
 
-$cmd3 = "C:\\build\\crc32.exe C:\\build\\serverlist.txt";
+$cmd3 = "$azbp\\crc32.exe $azbp\\serverlist.txt";
 my $crc3 = `$cmd3`;
 chomp $crc3;
-my $size2 = (stat("C:\\build\\serverlist.txt"))[7];
+my $size2 = (stat("$azbp\\serverlist.txt"))[7];
 
-my $cmd0 = "C:\\build\\upx.exe -q -9 -f -o C:\\AutoUpdate.exe C:\\build\\Allegiance\\x86\\AutoUpdate.exe";
+my $cmd0 = "$azbp\\upx.exe -q -9 -f -o C:\\AutoUpdate.exe $azbp\\Allegiance\\x86\\AutoUpdate.exe";
 `$cmd0`;
 
-$cmd3 = "C:\\build\\crc32.exe C:\\AutoUpdate.exe";
+$cmd3 = "$azbp\\crc32.exe C:\\AutoUpdate.exe";
 my $crc4 = `$cmd3`;
 chomp $crc4; 
 
-open(CFG,'>C:\\build\\AZNoart.cfg');
+open(CFG,'>$azbp\\AZNoart.cfg');
 
 print CFG qq{[Allegiance]
 PublicLobby=allegiancezone.cloudapp.net
@@ -106,7 +108,7 @@ FilelistSize = $size2
 };
 close CFG;
 
-open(CFG,'>C:\\build\\AZDev.cfg');
+open(CFG,'>$azbp\\AZDev.cfg');
 
 print CFG qq{[Allegiance]
 PublicLobby=allegiancezone.cloudapp.net
