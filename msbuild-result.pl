@@ -9,12 +9,15 @@ use XML::Simple;
 use Win32::AbsPath qw(Relative2Absolute);
 use Data::Dumper;
 
-my $xml = new XML::Simple;
-my $data = $xml->XMLin("C:\\build\\msbuild.xml");
-my $ignore = "MSB8012|LNK4221";
-#print Dumper(\$data);
 my $basepath = $ARGV[0];
 my $build = $ARGV[1];
+my $azbp  = $ARGV[2];
+
+my $xml = new XML::Simple;
+my $data = $xml->XMLin("$azbp\\msbuild.xml");
+my $ignore = "MSB8012|LNK4221";
+#print Dumper(\$data);
+
 my $projcount = 0;
 my $lasterr;
 foreach my $project (keys %{$data->{project}}) {
@@ -74,7 +77,7 @@ foreach my $project (keys %{$data->{project}}) {
 
 print "Compiled $projcount projects with $data->{error_count} error(s)\n";
 if ($lasterr) {
-	my $cmd = "perl C:\\build\\announce-fail.pl $build $lasterr";
+	my $cmd = "perl $azbp\\announce-fail.pl $build $lasterr";
 	`$cmd`;
 }
 exit;
