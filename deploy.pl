@@ -19,12 +19,12 @@ close PWD;
 print "Uploading files to AZ\n";
 
 
-my $cmd = "perl $azbp\\ftpput.pl --server=allegiancezone.cloudapp.net:21122 --verbose --user=deploy --pass=allegftp --passive --binary $azbp\\Autoupdate\\Game.7z";
-`$cmd`;
-$cmd = "perl $azbp\\ftpput.pl --server=allegiancezone.cloudapp.net:21122 --verbose --user=deploy --pass=allegftp --passive --binary --dir=install $azbp\\Package\\Regular_".$build.".7z";
-`$cmd`;
-$cmd = "perl $azbp\\ftpput.pl --server=allegiancezone.cloudapp.net:21122 --verbose --user=deploy --pass=allegftp --passive --binary --dir=install $azbp\\Package\\Hires_".$build.".7z";
-`$cmd`;
+my $cmd = "perl $azbp\\ftpput.pl --server=allegiancezone.cloudapp.net:21122 --verbose --user=deploy --pass=$pass --passive --binary $azbp\\Autoupdate\\Game.7z";
+system($cmd);
+$cmd = "perl $azbp\\ftpput.pl --server=allegiancezone.cloudapp.net:21122 --verbose --user=deploy --pass=$pass --passive --binary --dir=install $azbp\\Package\\Regular_".$build.".7z";
+system($cmd);
+$cmd = "perl $azbp\\ftpput.pl --server=allegiancezone.cloudapp.net:21122 --verbose --user=deploy --pass=$pass --passive --binary --dir=install $azbp\\Package\\Hires_".$build.".7z";
+system($cmd);
 
 
 my $host = "allegiancezone.cloudapp.net";
