@@ -160,6 +160,7 @@ my $ftp;
 
 my %FTPARGS = ();
 
+$FTPARGS{Timeout} = 5;
 $FTPARGS{Debug}   = $debug		if $debug;
 $FTPARGS{Passive} = $passive		if $passive;
 $FTPARGS{Hash}    = $hash		if $hash;
