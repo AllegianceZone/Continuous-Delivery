@@ -160,7 +160,7 @@ my $ftp;
 
 my %FTPARGS = ();
 
-$FTPARGS{Timeout} = 5;
+$FTPARGS{Tiemout} = 5;
 $FTPARGS{Debug}   = $debug		if $debug;
 $FTPARGS{Passive} = $passive		if $passive;
 $FTPARGS{Hash}    = $hash		if $hash;
@@ -192,12 +192,7 @@ foreach my $file ( @FILES )
 {
 	print "--> put $file\n"		if $verbose;
 
-	#if ( not $ftp->put($file) )
-	#{
-	#	die "ERROR: cannot send $file\n";
-	#}
-
-	print "    (sent OK)\n"		if $verbose;
+	$ftp->put($file);
 }
 
 $ftp->quit;# or die "ERROR: cannot quit FTP transfer\n";
