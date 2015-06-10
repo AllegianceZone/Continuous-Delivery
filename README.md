@@ -34,7 +34,8 @@ STEP 1 - install the following:
 			dialogex
 			inetload
 			accesscontrol
-			stack	
+			stack
+			nsisdl (use latest DLL with /FILESIZE patch)
 	5. python
 		5a. win32svn (for setuptools)
 		5b. windows bitten script - execute: easy_install http://svn.edgewall.org/repos/bitten/trunk/
