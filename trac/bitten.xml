@@ -62,12 +62,12 @@
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\AutoUpdate.exe ${azbuild.path}\\Package\\Server\\AutoUpdate.exe /Y" />
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\AGC.dll ${azbuild.path}\\Package\\Server\\AGC.dll /Y" />
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\AllLobby.exe ${azbuild.path}\\Package\\Lobby\\AllLobby.exe /Y" />
-		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Pdb_${build}.7z ${azbuild.path}\\Allegiance\\x86\\*.pdb -mx9 -mmt=off" />
-		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Client_${build}.7z ${azbuild.path}\\Package\\Client\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
-		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Server_${build}.7z ${azbuild.path}\\Package\\Server\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
-		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Lobby_${build}.7z ${azbuild.path}\\Package\\Lobby\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
-		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Music_${build}.7z ${azbuild.path}\\Package\\Music\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
-		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Tools_${build}.7z ${azbuild.path}\\Package\\Tools\\* -x!*.pdb -xr!*.git -mx9 -mmt=off" />
+		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Pdb_${build}.7z ${azbuild.path}\\Allegiance\\x86\\*.pdb -mx9 -m0=LZMA" />
+		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Client_${build}.7z ${azbuild.path}\\Package\\Client\\* -x!*.pdb -xr!*.git -mx9 -m0=LZMA" />
+		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Server_${build}.7z ${azbuild.path}\\Package\\Server\\* -x!*.pdb -xr!*.git -mx9 -m0=LZMA" />
+		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Lobby_${build}.7z ${azbuild.path}\\Package\\Lobby\\* -x!*.pdb -xr!*.git -mx9 -m0=LZMA" />
+		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Music_${build}.7z ${azbuild.path}\\Package\\Music\\* -x!*.pdb -xr!*.git -mx9 -m0=LZMA" />
+		<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Tools_${build}.7z ${azbuild.path}\\Package\\Tools\\* -x!*.pdb -xr!*.git -mx9 -m0=LZMA" />
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\Allegiance.exe C:\\Allegiance.exe /Y" />
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\Allegiance.pdb C:\\Allegiance.pdb /Y" />
 		<sh:exec file="copy" args="${azbuild.path}\\Allegiance\\x86\\Allsrv.exe C:\\Allsrv.exe /Y" />
@@ -128,14 +128,14 @@
 
 																									<sh:exec file="echo" args="Copying objects"/>
 																									<sh:exec file="${azbuild.path}\\Allegiance\\${azbuild.script}" args="${azbuild.path}\\Allegiance\\x86 ${azbuild.path}\\Allegiance\\"/>
-																									<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\AllegPDB_b${build}_${revision}.exe ${azbuild.path}\\Allegiance\\x86\\*.pdb -mx9" />
+																									<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\AllegPDB_b${build}_${revision}.exe ${azbuild.path}\\Allegiance\\x86\\*.pdb -mx9 -m0=LZMA" />
 																									<sh:exec file="del" args=" ${azbuild.path}\\Package\\Release.7z"/>
-																									<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Release.7z ${azbuild.path}\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9" />
+																									<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\Release.7z ${azbuild.path}\\Allegiance\\x86\\* -x!*.pdb -xr!*.git -mx9 -m0=LZMA" />
 																									<sh:exec file="echo" args="Copying objects completed"/>
 
 																									<sh:exec file="echo" args="Copying externals"/>
 																									<sh:exec file="del" args=" ${azbuild.path}\\Package\\External.7z"/>
-																									<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\External.7z ${azbuild.path}\\External\\* -mx9"/>
+																									<sh:exec file="${7zip.path}" args="a -t7z ${azbuild.path}\\Package\\External.7z ${azbuild.path}\\External\\* -mx9 -m0=LZMA"/>
 																									<sh:exec file="echo" args="Copying externals completed"/>
 																								</step>
 																								<step id="Publish Prod">

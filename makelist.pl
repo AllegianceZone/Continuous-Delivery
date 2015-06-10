@@ -181,9 +181,9 @@ close LIST;
 
 
 print "Compressing Game Files for AU...\n";
-my $cmd3 = "\"$szp\" a -t7z $azbp\\AutoUpdate\\Game.7z $azbp\\AutoUpdate\\Game\\* -xr!*Server -mx0";
+my $cmd3 = "\"$szp\" a -t7z $azbp\\AutoUpdate\\Game.7z $azbp\\AutoUpdate\\Game\\* -xr!*Server -mx0 -m0=LZMA";
 system($cmd3);
-$cmd3 = "\"$szp\" a -t7z $azbp\\AutoUpdate\\Noart.7z $azbp\\AutoUpdate\\Noart\\* -xr!*Server -mx0";
+$cmd3 = "\"$szp\" a -t7z $azbp\\AutoUpdate\\Noart.7z $azbp\\AutoUpdate\\Noart\\* -xr!*Server -mx0 -m0=LZMA";
 system($cmd3);
 
 #TODO only changed like client...
@@ -238,6 +238,6 @@ foreach my $file (@objs) {
 close LIST;
 
 print "Compressing Server Files for AU...\n";
-my $cmd3 = "\"$szp\" a -t7z $azbp\\AutoUpdate\\Server.7z $azbp\\AutoUpdate\\Game\\Server\\* -mx0";
+my $cmd3 = "\"$szp\" a -t7z $azbp\\AutoUpdate\\Server.7z $azbp\\AutoUpdate\\Game\\Server\\* -mx0 -m0=LZMA";
 system($cmd3);
 exit 0;
