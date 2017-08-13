@@ -57,7 +57,7 @@ while (1) {
         		print "make an installer...\n";
         		my %counter = %{retrieve('E:\\scanner\\build\\alleg_counter.txt')};
         		system("E:\\scanner\\sync_alleg.bat"); #hard coded stupid ;-)
-        		sleep 120;
+        		#sleep 120;
         		open(VER,"E:\\scanner\\installers\\alleg_version.txt");
         		my $ver = <VER>;
         		close VER;
@@ -138,7 +138,7 @@ while (1) {
 			system($cmd);
         		
         		print "publishing github release\n";
-			my $gh = Net::GitHub::V3->new( login => "imagotrigger", pass => "$gitpass");
+			my $gh = Net::GitHub::V3->new( login => "imagotrigger", pass => $gitpass);
 			$gh->repos->set_default_user_repo('AllegianceZone', 'Allegiance');
 			my $doupload = 1;
 			our $release;
@@ -170,7 +170,7 @@ while (1) {
 				print $ret . "\n";
 						
 				print "completed build # $count for $build $ver\n";
-				my $git = WebService::Gitter->new(api_key => '$gitterpass');
+				my $git = WebService::Gitter->new(api_key => $gitterpass);
 				$git->send_message('597fb2fed73408ce4f6f89af', "Completed build # $count for $build $ver - https://github.com/AllegianceZone/Allegiance/releases");
 			}
          		$WatchDir->reset();
