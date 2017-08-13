@@ -41,12 +41,14 @@ my $crc3 = `$cmd3`;
 chomp $crc3;
 my $size2 = (stat("$azbp\\serverlist.txt"))[7];
 
-my $cmd0 = "$azbp\\upx.exe -q -9 -f -o C:\\AutoUpdate.exe $azbp\\Allegiance\\x86\\AutoUpdate.exe";
+my $cmd0 = "$azbp\\upx.exe -q -9 -f -o C:\\AutoUpdate.exe $azbp\\Package\\Server\\AutoUpdate.exe";
 `$cmd0`;
 
 $cmd3 = "$azbp\\crc32.exe C:\\AutoUpdate.exe";
 my $crc4 = `$cmd3`;
 chomp $crc4; 
+
+copy("C:\\AutoUpdate.exe","$azbp\\cdn\\autoupdate\\Game\\Server\\standalone\\AutoUpdate.exe");
 
 open(CFG,">$azbp\\AZNoart.cfg");
 

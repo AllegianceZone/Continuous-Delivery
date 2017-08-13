@@ -109,6 +109,7 @@ while (1) {
 			copy($dir."\\motd.mdl",$dir."\\cdn\\config\\motd.mdl");
 			
 			copy($dir."\\FileList.txt",$dir."\\cdn\\autoupdate\\Game\\FileList.txt");
+			copy($dir."\\FileList.txt",$dir."\\cdn\\autoupdate\\Noart\\FileList.txt");
 			copy($dir."\\serverlist.txt",$dir."\\cdn\\autoupdate\\Game\\Server\\standalone\\FileList.txt");
 			
 			copy($dir."\\events.mdl",$dir."\\cdn\\config\\event\\events.mdl");
