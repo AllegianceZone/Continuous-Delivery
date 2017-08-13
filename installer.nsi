@@ -235,8 +235,8 @@ Section /o "Minimal Graphics" g1o1
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"
-	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZ.cfg"
-	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZ.cfg"		
+	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZ.cfg"
+	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZ.cfg"		
 SectionEnd
 
 Section /o "Regular Graphics" g1o2
@@ -278,8 +278,8 @@ Section /o "Regular Graphics" g1o2
  	
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"  	
-	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZNoart.cfg"
-	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZNoart.cfg"	
+	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"
+	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"	
 	
 SectionEnd
 
@@ -320,8 +320,8 @@ Section  "High-resolution Graphics" g1o3
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
 	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
 	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"  	
-	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZNoart.cfg"
-	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://autoupdate.allegiancezone.com/config/AZNoart.cfg"		
+	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"
+	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"		
 SectionEnd
 
 Section /o "No Graphics" g1o4
