@@ -136,7 +136,7 @@ close LIST;
 print "Appending client binaries to Filelist...\n";
 
 open(LIST,">>$azbp\\betalist.txt");
-my @objs = ("C:\\Allegiance.exe");
+my @objs = ("$azbp\\Package\\Client\\Allegiance.exe");
 foreach my $file (@objs) {
 	my $cmd = "$azbp\\crc32.exe $file";
 	my $cmd2 = "$azbp\\mscompress.exe $file";
@@ -158,7 +158,7 @@ foreach my $file (@objs) {
 close LIST;
 
 open(LIST,">$azbp\\list.txt");
-my @objs = ("C:\\Allegiance.exe");
+my @objs = ("$azbp\\Package\\Client\\Allegiance.exe");
 foreach my $file (@objs) {
 	my $cmd = "$azbp\\crc32.exe $file";
 	my $cmd2 = "$azbp\\mscompress.exe $file";
@@ -214,7 +214,7 @@ close LIST;
 
 print "Appending server binaries' to serverlist...\n";
 open(LIST,">>$azbp\\serverlist.txt");
-my @objs = ("C:\\AllSrv.exe","C:\\AGC.dll","C:\\AllSrvUI.exe");
+my @objs = ("$azbp\\Package\\Server\\AllSrv.exe","$azbp\\Package\\Server\\AGC.dll","$azbp\\Package\\Server\\AllSrvUI.exe");
 foreach my $file (@objs) {
 	my $cmd = "$azbp\\crc32.exe $file";
 	my $cmd2 = "$azbp\\mscompress.exe $file";

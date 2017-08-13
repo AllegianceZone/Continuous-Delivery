@@ -51,11 +51,11 @@ chomp $crc4;
 open(CFG,">$azbp\\AZNoart.cfg");
 
 print CFG qq{[Allegiance]
-PublicLobby=allegiancezone.cloudapp.net
-PublicMessageURL=http://autoupdate.allegiancezone.com/config/beta/motd.mdl
+PublicLobby=imago.buildvideogames.com
+PublicMessageURL=http://azcdn.blob.core.windows.net/config/beta/motd.mdl
 LobbyClientPort=2302
 LobbyServerPort=2303
-FilelistSite=http://autoupdate.allegiancezone.com
+FilelistSite=http://azcdn.blob.core.windows.net
 FilelistDirectory=/autoupdate/Noart
 FileListCRC = $crc0
 FilelistSize = $size0
@@ -65,11 +65,11 @@ ZoneAuthGUID={00000000-0000-0000-C000-000000000046}
 ZAuth=allegiancezone.cloudapp.net
 UsePassport=0
 PassportUpdateURL=http://allegiancezone.com
-ZoneEventsURL=http://autoupdate.allegiancezone.com/config/event/events.mdl
-ZoneEventDetailsURL=http://autoupdate.allegiancezone.com/config/event/
+ZoneEventsURL=http://azcdn.blob.core.windows.net/config/event/events.mdl
+ZoneEventDetailsURL=http://azcdn.blob.core.windows.net/config/event/
 ClubLobby=allegiancezone.cloudapp.net
 Club=allegiancezone.cloudapp.net
-ClubMessageURL=http://autoupdate.allegiancezone.com/config/club/motd.mdl
+ClubMessageURL=http://azcdn.blob.core.windows.net/config/club/motd.mdl
 ClubMessageCRC=$crc2
 
 
@@ -95,8 +95,8 @@ allegiancezone=191.236.96.140
 azbuildslave=191.239.1.217
 
 [AllSrvUI]
-Site=http://autoupdate.allegiancezone.com
-AutoUpdateURL=http://autoupdate.allegiancezone.com/autoupdate/Game/Server/standalone/AutoUpdate.exe
+Site=http://azcdn.blob.core.windows.net
+AutoUpdateURL=http://azcdn.blob.core.windows.net/autoupdate/Game/Server/standalone/AutoUpdate.exe
 AutoUpdateCRC=$crc4
 Directory=/autoupdate/Game/Server
 FileListCRC = $crc3
@@ -111,11 +111,11 @@ close CFG;
 open(CFG,">$azbp\\AZDev.cfg");
 
 print CFG qq{[Allegiance]
-PublicLobby=allegiancezone.cloudapp.net
-PublicMessageURL=http://autoupdate.allegiancezone.com/config/beta/motd.mdl
+PublicLobby=imago.buildvideogames.com
+PublicMessageURL=http://azcdn.blob.core.windows.net/config/beta/motd.mdl
 LobbyClientPort=2302
 LobbyServerPort=2303
-FilelistSite=http://autoupdate.allegiancezone.com
+FilelistSite=http://azcdn.blob.core.windows.net
 FilelistDirectory=/autoupdate/Game
 FileListCRC = $crc
 FilelistSize = $size
@@ -125,11 +125,11 @@ ZoneAuthGUID={00000000-0000-0000-C000-000000000046}
 ZAuth=allegiancezone.cloudapp.net
 UsePassport=0
 PassportUpdateURL=http://allegiancezone.com
-ZoneEventsURL=http://autoupdate.allegiancezone.com/config/event/events.mdl
-ZoneEventDetailsURL=http://autoupdate.allegiancezone.com/config/event/
+ZoneEventsURL=http://azcdn.blob.core.windows.net/config/event/events.mdl
+ZoneEventDetailsURL=http://azcdn.blob.core.windows.net/config/event/
 ClubLobby=allegiancezone.cloudapp.net
 Club=allegiancezone.cloudapp.net
-ClubMessageURL=http://autoupdate.allegiancezone.com/config/club/motd.mdl
+ClubMessageURL=http://azcdn.blob.core.windows.net/config/club/motd.mdl
 ClubMessageCRC=$crc2
 
 
@@ -155,8 +155,8 @@ allegiancezone=191.236.96.140
 azbuildslave=191.239.1.217
 
 [AllSrvUI]
-Site=http://autoupdate.allegiancezone.com
-AutoUpdateURL=http://autoupdate.allegiancezone.com/autoupdate/Game/Server/standalone/AutoUpdate.exe
+Site=http://azcdn.blob.core.windows.net
+AutoUpdateURL=http://azcdn.blob.core.windows.net/autoupdate/Game/Server/standalone/AutoUpdate.exe
 AutoUpdateCRC=$crc4
 Directory=/autoupdate/Game/Server
 FileListCRC = $crc3

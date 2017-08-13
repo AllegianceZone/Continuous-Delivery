@@ -38,7 +38,7 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"$szp\" a -t7z $azbp\\Package\\Minimal_${build}.7z $azbp\\Package\\Artwork_minimal\\ -xr!*.git -mx9 -m0=LZMA";
+	my $cmd = "\"$szp\" a -t7z $azbp\\Package\\Minimal_${build}.7z $azbp\\Package\\Artwork_minimal\\ -xr!*.git -mx8 -m0=LZMA";
 	system($cmd);
 } else {
 	print "skipping minimal artwork 7z process, not changed!\n";
@@ -75,7 +75,7 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"$szp\" a -t7z $azbp\\Package\\Hires_${build}.7z $azbp\\Package\\Artwork_detailed\\ -xr!*.git -mx9 -m0=LZMA";
+	my $cmd = "\"$szp\" a -t7z $azbp\\Package\\Hires_${build}.7z $azbp\\Package\\Artwork_detailed\\ -xr!*.git -mx8 -m0=LZMA";
 	system($cmd);
 } else {
 	print "skipping detailed artwork 7z process, not changed!\n";
@@ -112,7 +112,7 @@ close LA;
 print "$la vs $ts $files[0]\n";
 
 if ($la ne "$ts $files[0]") {
-	my $cmd = "\"$szp\" a -t7z $azbp\\Package\\Regular_${build}.7z $azbp\\Package\\Artwork\\ -xr!*.git -mx9 -m0=LZMA";
+	my $cmd = "\"$szp\" a -t7z $azbp\\Package\\Regular_${build}.7z $azbp\\Package\\Artwork\\ -xr!*.git -mx8 -m0=LZMA";
 	system($cmd);
 } else {
 	print "skipping regular artwork 7z process, not changed!\n";
