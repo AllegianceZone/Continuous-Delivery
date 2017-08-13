@@ -516,7 +516,7 @@ Section /o "Server"
 	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Server.lnk" "$INSTDIR\Server\AllSrvUI.exe"
   	CreateShortCut "$DESKTOP\Allegiance Server.lnk" "$INSTDIR\Server\AllSrvUI.exe"
   	nsExec::Exec "regsvr32 /s $INSTDIR\Server\AGC.dll"
-	nsExec::Exec "$INSTDIR\AllSrv.exe -RegServer"
+	nsExec::Exec "$INSTDIR\Server\AllSrv.exe -RegServer"
 SectionEnd
 
 Section /o "Lobby"
@@ -576,8 +576,8 @@ Section -Post
 SectionEnd
 
 Section Uninstall
-	nsExec::Exec "$INSTDIR\AllSrv.exe -UnRegServer"
-	nsExec::Exec "$INSTDIR\AllLobby.exe -UnRegServer"
+	nsExec::Exec "$INSTDIR\Server\AllSrv.exe -UnRegServer"
+	nsExec::Exec "$INSTDIR\Lobby\AllLobby.exe -UnRegServer"
 	nsExec::Exec "regsvr32 /u /s $INSTDIR\Server\AGC.dll"
 
     	SimpleFC::RemoveApplication "Allegiance";
