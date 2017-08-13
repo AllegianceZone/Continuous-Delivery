@@ -57,7 +57,7 @@ while (1) {
         		print "make an installer...\n";
         		my %counter = %{retrieve('E:\\scanner\\build\\alleg_counter.txt')};
         		system("E:\\scanner\\sync_alleg.bat"); #hard coded stupid ;-)
-        		#sleep 120;
+        		sleep 120;
         		open(VER,"E:\\scanner\\installers\\alleg_version.txt");
         		my $ver = <VER>;
         		close VER;

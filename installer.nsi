@@ -99,13 +99,13 @@ Page custom PageCreate PageLeave
 !include "${AZBP}\lang.nsh"
 
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Allegiance Zone Installer"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Created by azbuildslave.cloudapp.net at ${RUNTIME}"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Created by imago.buildvideogames.com at ${RUNTIME}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Allegiance Zone"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" "Allegiance is a trademark of Microsoft Corporation"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Â© 1995-2000 Microsoft Corporation.  All rights reserved."
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "The MicrosoftÂ© Allegiance Installer"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "© 1995-2000 Microsoft Corporation.  All rights reserved."
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "The Microsoft© Allegiance Installer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${VERSION}.0.0"
-VIProductVersion "${VERSION}.0.0"
+VIProductVersion "1.3.0.${BUILD}"
 
 Section "-"
 SetOutPath "$TEMP"
@@ -188,9 +188,9 @@ Section /o "Client"
 	  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 	  	CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
 	  	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Training.lnk" "$INSTDIR\Allegiance Training.url"
-	  	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance.lnk" '"$INSTDIR\Allegiance.exe" -autojoin //1'
-	  	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance (Safe mode).lnk" "$INSTDIR\Allegiance.exe -software -checkfiles"
-	  	CreateShortCut "$DESKTOP\Allegiance.lnk" '"$INSTDIR\Allegiance.exe" -autojoin //1'
+	  	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance.lnk" "$INSTDIR\Allegiance.exe" "-autojoin //1"
+	  	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance (Safe mode).lnk" "$INSTDIR\Allegiance.exe" "-software -checkfiles"
+	  	CreateShortCut "$DESKTOP\Allegiance.lnk" "$INSTDIR\Allegiance.exe" "-autojoin //1"
 	  !insertmacro MUI_STARTMENU_WRITE_END
 	  WriteRegStr HKCR "Allegiance" "URL Protocol" ""
 	  WriteRegStr HKCR "Allegiance" "" "URL:Allegiance Protocol"
