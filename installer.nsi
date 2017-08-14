@@ -14,6 +14,8 @@ SetCompressor /SOLID lzma
 !define MUSIC_FILE_URL "http://cdn.allegiancezone.com/install/Music_${BUILD}.7z"
 !define PDB_FILE_URL "http://cdn.allegiancezone.com/install/Pdb_${BUILD}.7z"
 
+!define VERSION2 "1.3"
+
 var BGHWND
 var IsWINE
 
@@ -24,7 +26,7 @@ var IsWINE
 XPStyle "on"
 Name "Allegiance"
 OutFile "${AZBP}\Package\AllegSetup_${BUILD}.exe"
-InstallDir "$PROGRAMFILES\Allegiance ${VERSION}"
+InstallDir "$PROGRAMFILES\Allegiance ${VERSION2}"
 RequestExecutionLevel admin
 BrandingText "Allegiance Zone - http://www.allegiancezone.com" 
 Insttype "Install client /w high-resolution graphics"
@@ -148,8 +150,8 @@ Section /o "Client"
 	IntCmp $R3 900 +2 0 +2
 	 	Call SetupDX
   	StrCpy $SHOWFINISH 1
-  	DeleteRegValue HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "MoveInProgress"
-	DeleteRegValue HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "MoveInProgress"
+  	DeleteRegValue HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "MoveInProgress"
+	DeleteRegValue HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "MoveInProgress"
 	${GameExplorer_AddGame} all "$INSTDIR\Allegiance.exe" "$INSTDIR" "$INSTDIR\Allegiance.exe" "" ""
 	${GameExplorer_AddPlayTask} "Safe Mode" "$INSTDIR\Allegiance.exe" "-software -nomovies"
 	${GameExplorer_AddSupportTask} "Home Page" "http://www.allegiancezone.com/"
@@ -233,10 +235,10 @@ Section /o "Minimal Graphics" g1o1
 	RMDir /r "$INSTDIR\Artwork"
   	Rename "$INSTDIR\Artwork_minimal\" "$INSTDIR\Artwork\"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
-	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
-	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"
-	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZ.cfg"
-	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZ.cfg"		
+	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "ArtPath" "$INSTDIR\Artwork"
+	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "ArtPAth" "$INSTDIR\Artwork"
+	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZ.cfg"
+	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZ.cfg"		
 SectionEnd
 
 Section /o "Regular Graphics" g1o2
@@ -276,10 +278,10 @@ Section /o "Regular Graphics" g1o2
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Regular.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
  	
-	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
-	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"  	
-	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"
-	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"	
+	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "ArtPath" "$INSTDIR\Artwork"
+	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "ArtPAth" "$INSTDIR\Artwork"  	
+	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"
+	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"	
 	
 SectionEnd
 
@@ -318,10 +320,10 @@ Section  "High-resolution Graphics" g1o3
 	RMDir /r "$INSTDIR\Artwork"
   	Rename "$INSTDIR\Artwork_detailed\" "$INSTDIR\Artwork\"
   	AccessControl::GrantOnFile "$INSTDIR\Artwork" "(BU)" "GenericRead + GenericWrite"
-	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$INSTDIR\Artwork"
-	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$INSTDIR\Artwork"  	
-	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"
-	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"		
+	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "ArtPath" "$INSTDIR\Artwork"
+	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "ArtPAth" "$INSTDIR\Artwork"  	
+	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"
+	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "CfgFile" "http://azcdn.blob.core.windows.net/config/AZNoart.cfg"		
 SectionEnd
 
 Section /o "No Graphics" g1o4
@@ -330,12 +332,12 @@ Section /o "No Graphics" g1o4
 	DetailPrint "No Graphics..."
 	SectionGetFlags 10 $9
 	${If} ${SectionIsSelected} 1
-		ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
+		ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" ArtPath
 		StrLen $6 $ARTPATH
 		${If} $6 != 0
 			goto hasArt0
 		${EndIf}
-		ReadRegStr $ARTPATH HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
+		ReadRegStr $ARTPATH HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" ArtPath
 		StrLen $6 $ARTPATH
 		${If} $6 != 0
 			goto hasArt0
@@ -345,7 +347,7 @@ Section /o "No Graphics" g1o4
 		System::Call "*(i$HWNDPARENT, i, ir0, t'Select your existing Artwork folder or press Cancel to skip', i${BIF_RETURNONLYFSDIRS}, i, i, i) i.r1"
 		System::Call "shell32::SHBrowseForFolder(i r1) i.r2"
 		${If} $2 == 0
-			MessageBox MB_ICONEXCLAMATION|MB_OK "Unable to determine your Artwork folder location$\nYou must set an ArtPath string in the Allegiance\${VERSION} registry key!"
+			MessageBox MB_ICONEXCLAMATION|MB_OK "Unable to determine your Artwork folder location$\nYou must set an ArtPath string in the Allegiance\${VERSION2} registry key!"
 		${Else}
 			System::Call "shell32::SHGetPathFromIDList(i r2, t.r3)"
 			FileOpen $4 "$3\introscreen.mdl" r
@@ -353,21 +355,21 @@ Section /o "No Graphics" g1o4
 			FileClose $4
 			StrCmp $5 "//USEAZ1$\n" hasArt1
 			MessageBox MB_ICONQUESTION|MB_RETRYCANCEL "$3 does not contain Allegiance Zone artwork files$\nDo you want to try again?" IDRETRY tryagain
-			ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
+			ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" ArtPath
 			StrLen $6 $ARTPATH
 			${If} $6 != 0
 				goto hasArt2
 			${EndIf}
-			ReadRegStr $ARTPATH HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
+			ReadRegStr $ARTPATH HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" ArtPath
 			StrLen $6 $ARTPATH
 			${If} $6 != 0
 				goto hasArt2
 			${EndIf}			
-			MessageBox MB_ICONEXCLAMATION|MB_OK "Unable to determine your Artwork location!$\nYou must set an ArtPath string in the Allegiance\${VERSION} registry key"
+			MessageBox MB_ICONEXCLAMATION|MB_OK "Unable to determine your Artwork location!$\nYou must set an ArtPath string in the Allegiance\${VERSION2} registry key"
 			goto bailArt
 			hasArt1:
-			WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPath" "$3"
-			WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "ArtPAth" "$3"  	
+			WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "ArtPath" "$3"
+			WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "ArtPAth" "$3"  	
 			hasArt2:			
 		${EndIf}
 		bailArt:
@@ -384,7 +386,7 @@ Section /o "Music"
 	AnimGif::play /NOUNLOAD /HALIGN=Center /VALIGN=Center /FIT=BOTH /HWND=$BGHWND "$TEMP\2.gif"
 	${Endif}
 	AddSize 30000
-	ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
+	ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" ArtPath
 	SetOutPath "$ARTPATH"
 	DetailPrint "Music..."
 	StrCpy $1 "$INSTDIR\Music.7z"
@@ -511,8 +513,8 @@ Section /o "Server"
 	  Nsis7z::ExtractWithCallback "$INSTDIR\Server.7z" $R9
 	  GetFunctionAddress $R9 Callback7z
 
-	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}\Server" "ArtPath" "$INSTDIR\Server\Artwork"
-	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}\Server" "ArtPAth" "$INSTDIR\Server\Artwork"  		
+	WriteRegStr HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}\Server" "ArtPath" "$INSTDIR\Server\Artwork"
+	WriteRegStr HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}\Server" "ArtPAth" "$INSTDIR\Server\Artwork"  		
 	CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Allegiance Server.lnk" "$INSTDIR\Server\AllSrvUI.exe"
   	CreateShortCut "$DESKTOP\Allegiance Server.lnk" "$INSTDIR\Server\AllSrvUI.exe"
   	nsExec::Exec "regsvr32 /s $INSTDIR\Server\AGC.dll"
@@ -566,7 +568,7 @@ SectionEnd
 Section -Post
   SetOutPath "$INSTDIR"
   WriteUninstaller "$INSTDIR\uninst.exe"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\Allegiance\${VERSION}" "" "$INSTDIR\Allegiance.exe"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\Allegiance\${VERSION2}" "" "$INSTDIR\Allegiance.exe"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Allegiance Zone" "DisplayName" "$(^Name)"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Allegiance Zone" "UninstallString" "$INSTDIR\uninst.exe"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Allegiance Zone" "DisplayIcon" "$INSTDIR\Allegiance.exe"
@@ -588,16 +590,16 @@ Section Uninstall
 	IfFileExists "$INSTDIR\Artwork\*.*" DeleteReg
 	goto skipreg
 	DeleteReg:
-	ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
+	ReadRegStr $ARTPATH HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" ArtPath
 	StrCmp $ARTPATH "$INSTDIR\Artwork" matchedArt
 	StrCmp $ARTPATH "$INSTDIR\Artwork\" matchedArt
-	ReadRegStr $ARTPATH HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" ArtPath
+	ReadRegStr $ARTPATH HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" ArtPath
 	StrCmp $ARTPATH "$INSTDIR\Artwork" matchedArt
 	StrCmp $ARTPATH "$INSTDIR\Artwork\" matchedArt
 	goto skipreg
 	matchedArt:
-	DeleteRegValue HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION}" "Artpath"
-	DeleteRegValue HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION}" "Artpath"
+	DeleteRegValue HKLM "SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "Artpath"
+	DeleteRegValue HKLM "SOFTWARE\Microsoft\Microsoft Games\Allegiance\${VERSION2}" "Artpath"
 
 	skipreg:
 	StrCmp $INSTDIR "" skipdel
@@ -617,7 +619,7 @@ Section Uninstall
 	  RMDir "$INSTDIR"
 
  	 DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Allegiance Zone"
- 	 DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\Allegiance\${VERSION}"
+ 	 DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\Allegiance\${VERSION2}"
   
 	${GameExplorer_RemoveGame} all "$INSTDIR\Allegiance.exe" "$INSTDIR" "$INSTDIR\Allegiance.exe" "" 
 	SetAutoClose true
