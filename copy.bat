@@ -33,6 +33,8 @@ cd E:\alleg_build\Artwork_detailed
 git pull "origin"
 cd E:\alleg_build\Artwork_minimal
 git pull "origin"
+cd E:\alleg_build\Artwork_event
+git pull "origin"
 
 7z a -t7z E:\alleg_build\Package\Pdb_%1.7z E:\scanner\installers\artifacts\*.pdb -mx8 -m0=LZMA
 7z a -t7z E:\alleg_build\Package\Client_%1.7z E:\alleg_build\Package\Client\* -x!*.pdb -xr!*.git -mx8 -m0=LZMA
