@@ -1,5 +1,6 @@
 copy E:\scanner\installers\artifacts\Allegiance.exe E:\alleg_build\Package\Client\Allegiance.exe /Y
 copy E:\scanner\installers\artifacts\Reloader.exe E:\alleg_build\Package\Client\Reloader.exe /Y
+
 copy E:\scanner\installers\artifacts\AllSrv.exe E:\alleg_build\Package\Server\AllSrv.exe /Y
 copy E:\scanner\installers\artifacts\AllSrvUI.exe E:\alleg_build\Package\Server\AllSrvUI.exe /Y
 copy E:\scanner\installers\artifacts\PigAccts.exe E:\alleg_build\Package\Server\PigAccts.exe /Y
@@ -9,8 +10,13 @@ copy E:\scanner\installers\artifacts\PigsLib.dll E:\alleg_build\Package\Server\P
 copy E:\scanner\installers\artifacts\TCObj.dll E:\alleg_build\Package\Server\TCObj.dll /Y
 copy E:\scanner\installers\artifacts\AutoUpdate.exe E:\alleg_build\Package\Server\AutoUpdate.exe /Y
 copy E:\scanner\installers\artifacts\AGC.dll E:\alleg_build\Package\Server\AGC.dll /Y
+
 copy E:\scanner\installers\artifacts\AllLobby.exe E:\alleg_build\Package\Lobby\AllLobby.exe /Y
 copy E:\scanner\installers\artifacts\AllClub.exe E:\alleg_build\Package\Lobby\AllClub.exe /Y
+
+copy E:\scanner\installers\artifacts\AllClub.exe E:\alleg_build\Package\Tools\cvh.exe /Y
+copy E:\scanner\installers\artifacts\AllClub.exe E:\alleg_build\Package\Tools\mdlc.exe /Y
+copy E:\scanner\installers\artifacts\AllClub.exe E:\alleg_build\Package\Tools\mdledit.exe /Y
 
 copy E:\scanner\installers\artifacts\vcruntime140.dll E:\alleg_build\Package\redist\vcruntime140.dll /Y
 copy E:\scanner\installers\artifacts\ucrtbase.dll E:\alleg_build\Package\redist\ucrtbase.dll /Y

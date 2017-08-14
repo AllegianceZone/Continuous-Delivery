@@ -57,6 +57,7 @@ while (1) {
         		print "make an installer...\n";
         		my %counter = %{retrieve('E:\\scanner\\build\\alleg_counter.txt')};
         		system("E:\\scanner\\sync_alleg.bat"); #hard coded stupid ;-)
+        		print "waiting\n";
         		sleep 120;
         		open(VER,"E:\\scanner\\installers\\alleg_version.txt");
         		my $ver = <VER>;
@@ -92,7 +93,6 @@ while (1) {
         		system("E:\\Continuous-Delivery\\nsis-build.pl $build $count $ver E:\\alleg_build");
         		print "creating installer for version $ver\n";
         		system("E:\\NSIS\\makensis.exe /V2 E:\\alleg_build\\installer.nsi");
-        		sleep 1;
         		print "updating motd\n";
         		system("E:\\Continuous-Delivery\\makemotd.pl $count $ver E:\\alleg_build");
         		print "updating cfg\n";
