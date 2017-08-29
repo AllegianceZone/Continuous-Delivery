@@ -3,20 +3,20 @@ use Win32::ChangeNotify;
 use Storable;
 #use Net::GitHub::V3;
 use Try::Tiny;
-use WebService::Gitter;
+#use WebService::Gitter;
 use File::Copy;
 
-open(PWD,"C:\\pass.txt");
-my $gitpass = <PWD>;
-close PWD;
+#open(PWD,"C:\\pass.txt");
+#my $gitpass = <PWD>;
+#close PWD;
 
-open(PWD,"C:\\token.txt");
-my $gitterpass = <PWD>;
-close PWD;
+#open(PWD,"C:\\token.txt");
+#my $gitterpass = <PWD>;
+#close PWD;
 
-open(PWD,"C:\\emailpass.txt");
-my $emailpass = <PWD>;
-close PWD;
+#open(PWD,"C:\\emailpass.txt");
+#my $emailpass = <PWD>;
+#close PWD;
 
 
 my %counter;
